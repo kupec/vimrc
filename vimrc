@@ -18,6 +18,7 @@ Plugin 'leafgarland/typescript-vim'
 " [install]: npm i -g livedown
 " [help]: :Livedown*
 Plugin 'shime/vim-livedown'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 

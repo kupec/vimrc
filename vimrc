@@ -14,6 +14,10 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'leafgarland/typescript-vim'
+" markdown preview
+" [install]: npm i -g livedown
+" [help]: :Livedown*
+Plugin 'shime/vim-livedown'
 
 call vundle#end()
 

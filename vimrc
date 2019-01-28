@@ -11,6 +11,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 " format
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'isRuslan/vim-es6'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 " fuzy search
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -23,6 +26,9 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'shime/vim-livedown'
 " git plugin
 Plugin 'tpope/vim-fugitive'
+" linter
+" [help]: :ALEToggle
+Plugin 'w0rp/ale'
 
 call vundle#end()
 

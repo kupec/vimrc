@@ -9,15 +9,19 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+" format
 Plugin 'editorconfig/editorconfig-vim'
+" fuzy search
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+" file manager
 Plugin 'scrooloose/nerdtree'
 Plugin 'leafgarland/typescript-vim'
 " markdown preview
 " [install]: npm i -g livedown
 " [help]: :Livedown*
 Plugin 'shime/vim-livedown'
+" git plugin
 Plugin 'tpope/vim-fugitive'
 
 call vundle#end()

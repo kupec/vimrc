@@ -58,11 +58,16 @@ inoremap AA <esc>A
 " wrap words
 nnoremap <leader>w' bi'<esc>ea'<esc>
 nnoremap <leader>w" bi"<esc>ea"<esc>
+nnoremap <leader>w{ bi{<esc>ea}<esc>
 
 " add empty lines
-noremap <F2> <esc>O<esc>j
-noremap <F3> <esc>o<esc>k
-noremap <F4> <esc>O<esc>j<esc>o<esc>k
+nnoremap <F2> m`O<esc>``
+nnoremap <F3> m`o<esc>``
+nnoremap <F4> m`O<esc>``m`o<esc>``
+
+inoremap <F2> <esc>m`O<esc>``a
+inoremap <F3> <esc>m`o<esc>``a
+inoremap <F4> <esc>m`o<esc>``m`O<esc>``a
 
 " abbrev for funcs and propTypes
 abbrev ASF async function() {}

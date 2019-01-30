@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 function npm-install {
 	if ! which "$1" >/dev/null; then

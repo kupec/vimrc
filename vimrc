@@ -65,21 +65,21 @@ nnoremap <leader>w" bi"<esc>ea"<esc>
 nnoremap <leader>w{ bi{<esc>ea}<esc>
 
 " add empty lines
-nnoremap <F2> m`O<esc>``
-nnoremap <F3> m`o<esc>``
+nnoremap <F2> m`o<esc>``
+nnoremap <F3> m`O<esc>``
 nnoremap <F4> m`O<esc>``m`o<esc>``
 
-inoremap <F2> <esc>m`O<esc>``a
-inoremap <F3> <esc>m`o<esc>``a
+inoremap <F2> <esc>m`o<esc>``a
+inoremap <F3> <esc>m`O<esc>``a
 inoremap <F4> <esc>m`o<esc>``m`O<esc>``a
 
 " remove near lines
-nnoremap <C-F2> m`kdd``
-nnoremap <C-F3> m`jdd``
+nnoremap <C-F2> m`jdd``
+nnoremap <C-F3> m`kdd``
 nnoremap <C-F4> m`kdd``m`jdd``
 
-inoremap <C-F2> <esc>m`kdd``a
-inoremap <C-F3> <esc>m`jdd``a
+inoremap <C-F2> <esc>m`jdd``a
+inoremap <C-F3> <esc>m`kdd``a
 inoremap <C-F4> <esc>m`kdd``m`jdd``a
 
 " abbrev for funcs and propTypes

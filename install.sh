@@ -7,6 +7,20 @@ function npm-install {
 	fi;
 }
 
+function package-install {
+	local NEED_INSTALL=""
+	for x; do
+		if ! dpkg-query -s $x; then
+			NEED_INSTALL=yes
+			break
+		fi;
+	done;
+
+	if [[ $NEED_INSTALL == "yes" ]]; then
+		sudo apt install "$@" -y
+	fi;
+}
+
 ROOTDIR="~/.vim"
 BUNDLEDIR="$ROOTDIR/bundle"
 
@@ -14,13 +28,16 @@ cat > ~/.vimrc <<EOF
 source $ROOTDIR/vimrc
 EOF
 
-if [[ -d "$BUNDLEDIR/Vundle.vim" ]]; then
-	git clone https://github.com/VundleVim/Vundle.vim.git "$BUNDLEDIR/Vundle.vim"
+if ! which apt >/dev/null; then
+	echo "[error]: No apt. Script works for ubuntu only" >&2
+	exit 1;
 fi;
 
-if ! which npm >/dev/null; then
-	echo "[error]: Please install npm" >&2
-	exit 1;
+sudo apt update
+package-install git npm
+
+if [[ -d "$BUNDLEDIR/Vundle.vim" ]]; then
+	git clone https://github.com/VundleVim/Vundle.vim.git "$BUNDLEDIR/Vundle.vim"
 fi;
 
 # vim-livedown (markdown live)
@@ -28,5 +45,8 @@ npm-install livedown
 
 # vim-prettier
 npm-install prettier
+
+# ag (fzf)
+package-install silversearcher-ag
 
 vim +PluginInstall +qall

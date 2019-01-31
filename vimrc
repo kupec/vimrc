@@ -82,6 +82,9 @@ inoremap <C-F2> <esc>m`jdd``a
 inoremap <C-F3> <esc>m`kdd``a
 inoremap <C-F4> <esc>m`kdd``m`jdd``a
 
+" console.log
+inoremap <C-\>cl console.log('AAA', );<esc>T,a
+
 " abbrev for funcs and propTypes
 abbrev ASF async function() {}
 abbrev FU function() {}

@@ -31,6 +31,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'shime/vim-livedown'
 " git plugin
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 " linter
 " [help]: :ALEToggle
 Plugin 'w0rp/ale'

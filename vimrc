@@ -2,6 +2,8 @@ set tabstop=2
 set shiftwidth=2
 set number
 set hlsearch
+syntax enable
+"""" colorscheme solarized
 
 let mapleader=","
 
@@ -35,6 +37,8 @@ Plugin 'airblade/vim-gitgutter'
 " linter
 " [help]: :ALEToggle
 Plugin 'w0rp/ale'
+" color scheme
+Plugin 'altercation/vim-colors-solarized'
 
 
 call vundle#end()

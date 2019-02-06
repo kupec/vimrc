@@ -101,6 +101,15 @@ abbrev PTN PropTypes.number,
 abbrev PTS PropTypes.string,
 abbrev PTR isRequired,
 
+"""" util functions
+
+function! Random(min, max)
+	let l:a = system('echo -n $RANDOM')
+	return l:a % (1 + a:max - a:min) + a:min
+endfunction
+
+
+""" dirty
 
 function! Ide()
 	execute 'NERDTree'

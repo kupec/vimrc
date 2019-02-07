@@ -21,6 +21,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 " editing
 Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-surround'
 " fuzy search
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'

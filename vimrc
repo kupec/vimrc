@@ -5,6 +5,8 @@ set hlsearch
 syntax enable
 """" colorscheme solarized
 
+let g:netrw_browsex_viewer="setsid xdg-open"
+
 let mapleader=","
 
 set nocompatible

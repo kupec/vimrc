@@ -63,6 +63,11 @@ nnoremap <leader>rcl :so $MYVIMRC<CR>
 nnoremap <leader>rco <C-W>v:e ~/.vim/vimrc<CR>
 nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
+" fzf
+nnoremap <CR><CR> :GFiles<CR>
+nnoremap <CR><space> :Files<CR>
+nnoremap <space><CR> :Buffers<CR>
+nnoremap <space><space> :Ag<CR>
 
 inoremap II <esc>I
 inoremap AA <esc>A

@@ -112,6 +112,8 @@ abbrev FU function() {}
 abbrev CP const {} = props
 abbrev CTP const {} = this.props
 abbrev PTF PropTypes.func.isRequired,
+abbrev PTO PropTypes.object.isRequired,
+abbrev PTo PropTypes.object,
 abbrev PTB PropTypes.bool,
 abbrev PTN PropTypes.number,
 abbrev PTS PropTypes.string,

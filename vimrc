@@ -69,6 +69,10 @@ nnoremap <CR><space> :Files<CR>
 nnoremap <space><CR> :Buffers<CR>
 nnoremap <space><space> :Ag<CR>
 
+" nerdtree
+nnoremap <leader>ne :NERDTreeFocus<CR>
+nnoremap <leader>nf :NERDTreeFind<CR>
+
 inoremap II <esc>I
 inoremap AA <esc>A
 

@@ -73,8 +73,12 @@ nnoremap <space><space> :Ag<CR>
 nnoremap <leader>ne :NERDTreeFocus<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
+" fast home/end
 inoremap II <esc>I
 inoremap AA <esc>A
+
+" paste current filename
+inoremap <C-\>fn <C-R>=expand("%:t:r")<CR>
 
 " wrap words
 nnoremap <leader>w' bi'<esc>ea'<esc>

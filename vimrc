@@ -24,9 +24,10 @@ Plugin 'mxw/vim-jsx'
 " editing
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-surround'
-" fuzy search
+" search
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'mileszs/ack.vim'
 " file manager
 Plugin 'scrooloose/nerdtree'
 Plugin 'leafgarland/typescript-vim'
@@ -49,7 +50,7 @@ call vundle#end()
 filetype plugin indent on
 
 
-
+let g:ackprg = 'ag --vimgrep'
 
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {

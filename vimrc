@@ -24,6 +24,7 @@ Plugin 'mxw/vim-jsx'
 " editing
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-abolish'
 " search
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'

@@ -60,6 +60,9 @@ let g:user_emmet_settings = {
     \  },
   \}
 
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
 
 " vimrc
 nnoremap <leader>rcl :so $MYVIMRC<CR>

@@ -69,9 +69,11 @@ nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 nnoremap <CR><CR> :GFiles<CR>
 nnoremap <CR><space> :Files<CR>
 nnoremap <space><CR> :Buffers<CR>
-nnoremap <space><space> :Ag<CR>
+nnoremap <space><space> :Ack<space>
+nnoremap <space><tab> :Ack <C-R><C-W><CR>
 
 " nerdtree
+nnoremap <leader>nE :NERDTree<CR>
 nnoremap <leader>ne :NERDTreeFocus<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 

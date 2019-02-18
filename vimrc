@@ -1,6 +1,7 @@
 set tabstop=2
 set shiftwidth=2
 set number
+set cursorline
 set hlsearch
 syntax enable
 """" colorscheme solarized

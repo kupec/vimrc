@@ -75,6 +75,7 @@ nnoremap <CR><space> :Files<CR>
 nnoremap <space><CR> :Buffers<CR>
 nnoremap <space><space> :Ack<space>
 nnoremap <space><tab> :Ack <C-R><C-W><CR>
+vnoremap <space><tab> "wy:Ack '<C-R>w'<CR>
 
 " nerdtree
 nnoremap <leader>nE :NERDTree<CR>

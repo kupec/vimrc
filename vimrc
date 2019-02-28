@@ -70,8 +70,10 @@ nnoremap <leader>rco <C-W>v:e ~/.vim/vimrc<CR>
 nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
 " fzf
-nnoremap <CR><CR> :GFiles<CR>
-nnoremap <CR><space> :Files<CR>
+nnoremap <CR><CR> :FZF<CR>
+nnoremap <CR><tab> :FZF -q <C-R><C-W><CR>
+vnoremap <CR><tab> "wy:FZF -q <C-R>w<CR>
+nnoremap <CR><space> :GFiles<CR>
 nnoremap <space><CR> :Buffers<CR>
 nnoremap <space><space> :Ack<space>
 nnoremap <space><tab> :Ack <C-R><C-W><CR>

@@ -45,7 +45,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'w0rp/ale'
 " color scheme
 Plugin 'altercation/vim-colors-solarized'
-
+Plugin 'jonathanfilip/vim-lucius'
 
 call vundle#end()
 

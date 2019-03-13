@@ -137,6 +137,9 @@ abbrev PTN PropTypes.number,
 abbrev PTS PropTypes.string,
 abbrev PTR isRequired,
 
+" abbrev for node
+abbrev ME module.exports =
+
 """" util functions
 
 function! Random(min, max)

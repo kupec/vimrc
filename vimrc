@@ -4,7 +4,6 @@ set number
 set cursorline
 set hlsearch
 syntax enable
-"""" colorscheme solarized
 
 let g:netrw_browsex_viewer="setsid xdg-open"
 
@@ -63,6 +62,10 @@ let g:user_emmet_settings = {
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
+
+
+colorscheme lucius
+
 
 " vimrc
 nnoremap <leader>rcl :so $MYVIMRC<CR>

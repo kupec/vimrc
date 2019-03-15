@@ -153,6 +153,7 @@ function! OpenFileByRelativePath(relPath)
 	return l:path
 endfunction
 
+command! -range JsonToKeys <line1>,<line2>!python3 -c 'import json;import sys;s = "".join(x for x in sys.stdin);a = json.loads(s);print("\n".join(x for x in a.keys()))'
 
 """ dirty
 

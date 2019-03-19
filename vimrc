@@ -45,6 +45,8 @@ Plugin 'w0rp/ale'
 " color scheme
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jonathanfilip/vim-lucius'
+" environment
+Plugin 'vim-scripts/tcd.vim'
 
 call vundle#end()
 

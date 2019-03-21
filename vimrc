@@ -47,6 +47,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'jonathanfilip/vim-lucius'
 " environment
 Plugin 'vim-scripts/tcd.vim'
+" windows
+Plugin 'wesQ3/vim-windowswap'
 
 call vundle#end()
 

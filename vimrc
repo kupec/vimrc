@@ -94,7 +94,7 @@ nnoremap <leader>nf :NERDTreeFind<CR>
 " navigation
 
 nnoremap <leader>rj<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w.js')<CR>
-nnoremap <leader>rf<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w.js')<CR>
+nnoremap <leader>rf<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w')<CR>
 
 " fast home/end
 inoremap II <esc>I

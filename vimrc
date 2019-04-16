@@ -174,6 +174,7 @@ command! -range JsonToKeys <line1>,<line2>!python3 -c 'import json;import sys;s 
 """ css functions
 
 command! CssAbsolute :normal i position: absolute;<CR>left: 0;<CR>top: 0;<CR>width: 100%;<CR>height: 100%;<CR>
+command! CssFlex :normal i display: flex;<CR>flex-flow: column;<CR>justify-content: center;<CR>align-items: center;
 
 """ dirty
 

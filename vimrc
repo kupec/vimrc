@@ -171,6 +171,10 @@ endfunction
 
 command! -range JsonToKeys <line1>,<line2>!python3 -c 'import json;import sys;s = "".join(x for x in sys.stdin);a = json.loads(s);print("\n".join(x for x in a.keys()))'
 
+""" css functions
+
+command! CssAbsolute :normal i position: absolute;<CR>left: 0;<CR>top: 0;<CR>width: 100%;<CR>height: 100%;<CR>
+
 """ dirty
 
 function! Ide()

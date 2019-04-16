@@ -153,6 +153,9 @@ abbrev PTR isRequired,
 " abbrev for node
 abbrev ME module.exports =
 
+" abbrev for css
+abbrev BG background: url(./assets/) no-repeat center / contain;
+
 """" util functions
 
 function! Random(min, max)

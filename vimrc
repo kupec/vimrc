@@ -137,6 +137,9 @@ inoremap <C-F4> <esc>m`kdd``m`jdd``a
 " console.log
 inoremap <C-\>cl console.log('AAA', );<esc>T,a
 
+" abbrev git
+abbrev GPC Partial commit
+
 " abbrev for funcs and propTypes
 abbrev ASF async function() {}
 abbrev FU function() {}

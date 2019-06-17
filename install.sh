@@ -3,7 +3,7 @@ set -e
 
 function npm-install {
 	if ! which "$1" >/dev/null; then
-		npm i -g "$1"
+		sudo npm i -g "$1"
 	fi;
 }
 
@@ -34,9 +34,10 @@ if ! which apt >/dev/null; then
 fi;
 
 sudo apt update
-package-install git npm
+package-install git
+[[ which npm ]] || package-install npm
 
-if [[ -d "$BUNDLEDIR/Vundle.vim" ]]; then
+if [[ ! -d "$BUNDLEDIR/Vundle.vim" ]]; then
 	git clone https://github.com/VundleVim/Vundle.vim.git "$BUNDLEDIR/Vundle.vim"
 fi;
 

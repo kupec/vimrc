@@ -3,6 +3,7 @@ set shiftwidth=2
 set number
 set cursorline
 set hlsearch
+set t_Co=256
 syntax enable
 
 let g:netrw_browsex_viewer="setsid xdg-open"
@@ -109,7 +110,7 @@ inoremap II <esc>I
 inoremap AA <esc>A
 
 " paste current filename
-inoremap <C-\>fn <C-R>=expand("%:t:r")<CR>
+inoremap <C-\><C-f><C-n> <C-R>=expand("%:t:r")<CR>
 
 " wrap words
 nnoremap <leader>w' bi'<esc>ea'<esc>

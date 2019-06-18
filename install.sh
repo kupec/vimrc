@@ -10,7 +10,7 @@ function npm-install {
 function package-install {
 	local NEED_INSTALL=""
 	for x; do
-		if ! dpkg-query -s $x; then
+		if ! dpkg-query -s $x >/dev/null; then
 			NEED_INSTALL=yes
 			break
 		fi;
@@ -21,10 +21,10 @@ function package-install {
 	fi;
 }
 
-ROOTDIR="~/.vim"
+ROOTDIR="$HOME/.vim"
 BUNDLEDIR="$ROOTDIR/bundle"
 
-cat > ~/.vimrc <<EOF
+cat > $HOME/.vimrc <<EOF
 source $ROOTDIR/vimrc
 EOF
 

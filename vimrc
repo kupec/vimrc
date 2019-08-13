@@ -154,6 +154,7 @@ abbrev PTo PropTypes.object,
 abbrev PTB PropTypes.bool,
 abbrev PTN PropTypes.number,
 abbrev PTS PropTypes.string,
+abbrev PTA PropTypes.array,
 abbrev PTR isRequired,
 
 " abbrev for node

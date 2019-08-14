@@ -6,6 +6,8 @@ set cursorline
 set hlsearch
 set t_Co=256
 set autoread
+set guioptions -=m 
+set guioptions -=T
 syntax enable
 
 let g:netrw_browsex_viewer="setsid xdg-open"

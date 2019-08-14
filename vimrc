@@ -56,6 +56,10 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/tcd.vim'
 " windows
 Plugin 'wesQ3/vim-windowswap'
+" snippets
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
 
 call vundle#end()
 
@@ -75,6 +79,10 @@ let g:ale_linters = {
 \}
 let g:airline_theme='ayu_mirage'
 
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
 
 colorscheme lucius
 

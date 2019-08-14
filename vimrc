@@ -115,6 +115,7 @@ nmap <leader>cts va"<esc>`<BcwclassName<esc>f"lcs"{lsstyles.<esc>WX
 " fast home/end
 inoremap II <esc>I
 inoremap AA <esc>A
+nnoremap 0 ^
 
 " paste current filename
 inoremap <C-\><C-f><C-n> <C-R>=expand("%:t:r")<CR>

@@ -48,6 +48,8 @@ Plugin 'w0rp/ale'
 " color scheme
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jonathanfilip/vim-lucius'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " environment
 Plugin 'vim-scripts/tcd.vim'
 " windows

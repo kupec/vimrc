@@ -71,6 +71,7 @@ let g:user_emmet_settings = {
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
+let g:airline_theme='ayu_mirage'
 
 
 colorscheme lucius

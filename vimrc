@@ -81,7 +81,7 @@ colorscheme lucius
 
 " vimrc
 nnoremap <leader>rcl :so $MYVIMRC<CR>
-nnoremap <leader>rco <C-W>v:e ~/.vim/vimrc<CR>
+nnoremap <leader>rco :tabnew ~/.vim/vimrc<CR>
 nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
 " fzf

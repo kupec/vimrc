@@ -34,6 +34,10 @@ Plugin 'tpope/vim-abolish'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
+" denite
+Plugin 'Shougo/denite.nvim'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
 " file manager
 Plugin 'scrooloose/nerdtree'
 Plugin 'leafgarland/typescript-vim'

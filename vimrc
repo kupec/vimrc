@@ -6,9 +6,12 @@ set cursorline
 set hlsearch
 set t_Co=256
 set autoread
-set guioptions -=m 
-set guioptions -=T
 syntax enable
+
+if !has('nvim')
+  set guioptions -=m 
+  set guioptions -=T
+endif
 
 let g:netrw_browsex_viewer="setsid xdg-open"
 
@@ -89,6 +92,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 colorscheme lucius
+set background=light
 
 
 " vimrc

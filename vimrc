@@ -57,6 +57,7 @@ Plugin 'w0rp/ale'
 " color scheme
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jonathanfilip/vim-lucius'
+Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 " environment
@@ -84,14 +85,14 @@ let g:user_emmet_settings = {
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
-let g:airline_theme='ayu_mirage'
+let g:airline_theme='papercolor'
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
-colorscheme lucius
+colorscheme PaperColor
 set background=light
 
 

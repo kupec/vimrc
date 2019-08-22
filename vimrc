@@ -68,7 +68,6 @@ Plugin 'wesQ3/vim-windowswap'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
-
 call vundle#end()
 
 filetype plugin indent on
@@ -162,6 +161,16 @@ inoremap <C-F4> <esc>m`kdd``m`jdd``a
 
 " console.log
 inoremap <C-\>cl console.log('AAA', );<esc>T,a
+
+" terminal
+autocmd TermOpen * startinsert
+
+command! TerminalBufferDirectory :call TerminalBufferDirectory()
+function! TerminalBufferDirectory()
+  let l:dir = expand('%:h')
+  vnew
+  call termopen('cd '.l:dir.'; $SHELL -i')
+endfunction
 
 " abbrev git
 abbrev GPC Partial commit

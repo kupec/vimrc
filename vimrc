@@ -163,7 +163,9 @@ inoremap <C-F4> <esc>m`kdd``m`jdd``a
 inoremap <C-\>cl console.log('AAA', );<esc>T,a
 
 " terminal
-autocmd TermOpen * startinsert
+if has('nvim')
+    autocmd TermOpen * startinsert
+endif
 
 command! TerminalBufferDirectory :call TerminalBufferDirectory()
 function! TerminalBufferDirectory()

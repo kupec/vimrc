@@ -29,6 +29,8 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'prettier/vim-prettier'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
+" movement
+Plugin 'easymotion/vim-easymotion'
 " editing
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-surround'
@@ -93,6 +95,9 @@ let g:UltiSnipsEditSplit="vertical"
 
 colorscheme PaperColor
 set background=light
+
+" motion
+nmap <leader>m <Plug>(easymotion-overwin-f2)
 
 
 " vimrc

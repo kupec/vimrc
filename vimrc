@@ -112,9 +112,9 @@ nnoremap <CR><tab> :FZF -q <C-R><C-W><CR>
 vnoremap <CR><tab> "wy:FZF -q <C-R>w<CR>
 nnoremap <CR><space> :GFiles<CR>
 nnoremap <space><CR> :Buffers<CR>
-nnoremap <space><space> :Ack!<space>
-nnoremap <space><tab> :Ack! <C-R><C-W><CR>
-vnoremap <space><tab> "wy:Ack! '<C-R>w'<CR>
+nnoremap <space><space> :Ack!<space>""<Left>
+nnoremap <space><tab> :Ack! "<C-R><C-W>"<CR>
+vnoremap <space><tab> "wy:Ack! "<C-R>w"<CR>
 
 " nerdtree
 nnoremap <leader>nE :NERDTree<CR>

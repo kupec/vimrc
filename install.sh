@@ -59,6 +59,8 @@ package-install silversearcher-ag
 # Denite.nvim
 package-install python3 python3-pip
 
+pip3 install neovim
+
 # Install neovim
 mkdir -p "$BINDIR"
 if [[ ! -f "$BINDIR/nvim.appimage" ]]; then

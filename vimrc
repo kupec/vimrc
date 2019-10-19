@@ -36,6 +36,8 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-abolish'
+" autocomplete
+Plugin 'wellle/tmux-complete.vim'
 " search
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -223,6 +225,30 @@ command! -range JsonToKeys <line1>,<line2>!python3 -c 'import json;import sys;s 
 
 command! CssAbsolute :normal i position: absolute;<CR>left: 0;<CR>top: 0;<CR>width: 100%;<CR>height: 100%;<CR>
 command! CssFlex :normal i display: flex;<CR>flex-flow: column;<CR>justify-content: center;<CR>align-items: center;
+
+
+""" compile/run/test functions
+
+command! StartNear :call StartNear()
+command! StopNear :call StopNear()
+
+function! StartNear()
+    execute "belowright :vnew"
+    let g:near_term = termopen($SHELL)
+    execute "normal! \<C-W>t"
+    stopinsert
+endfunction
+
+function! StopNear()
+    call chanclose(g:near_term)
+endfunction
+
+function! RunNear(prog)
+    call chansend(g:near_term, "\f" . a:prog . "\n")
+endfunction
+
+nnoremap <leader>c :call RunNear(b:compile_prog)<CR>
+nnoremap <leader>t :call RunNear(b:test_prog)<CR>
 
 """ dirty
 

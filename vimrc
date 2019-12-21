@@ -65,6 +65,8 @@ Plugin 'jonathanfilip/vim-lucius'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+" highlight
+Plugin 'lfv89/vim-interestingwords'
 " environment
 Plugin 'vim-scripts/tcd.vim'
 " windows
@@ -101,7 +103,6 @@ set background=light
 
 " motion
 nmap <leader>m <Plug>(easymotion-overwin-f2)
-
 
 " vimrc
 nnoremap <leader>rcl :so $MYVIMRC<CR>

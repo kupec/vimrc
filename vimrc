@@ -131,6 +131,9 @@ nnoremap <leader>rf<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w
 nnoremap ]l :ALENext<CR>
 nnoremap [l :ALEPrevious<CR>
 
+" coc
+inoremap <silent><expr> <c-space> coc#refresh()
+
 " emmet
 
 nmap <leader>cts va"<esc>`<BcwclassName<esc>f"lcs"{lsstyles.<esc>WX

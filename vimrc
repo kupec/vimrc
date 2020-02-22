@@ -1,3 +1,4 @@
+set nocompatible
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -17,67 +18,62 @@ let g:netrw_browsex_viewer="setsid xdg-open"
 
 let mapleader=","
 
-set nocompatible
-filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
 " format
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'prettier/vim-prettier'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'fatih/vim-go'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'prettier/vim-prettier'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'fatih/vim-go'
 " movement
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 " editing
-Plugin 'mattn/emmet-vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-abolish'
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 " autocomplete
-Plugin 'wellle/tmux-complete.vim'
+Plug 'wellle/tmux-complete.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " search
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'mileszs/ack.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
 " denite
-Plugin 'Shougo/denite.nvim'
-Plugin 'roxma/nvim-yarp'
-Plugin 'roxma/vim-hug-neovim-rpc'
+Plug 'Shougo/denite.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 " file manager
-Plugin 'scrooloose/nerdtree'
-Plugin 'leafgarland/typescript-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'leafgarland/typescript-vim'
 " markdown preview
 " [install]: npm i -g livedown
 " [help]: :Livedown*
-Plugin 'shime/vim-livedown'
+Plug 'shime/vim-livedown'
 " git plugin
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 " linter
 " [help]: :ALEToggle
-Plugin 'w0rp/ale'
+Plug 'w0rp/ale'
 " color scheme
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'jonathanfilip/vim-lucius'
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
+Plug 'jonathanfilip/vim-lucius'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " highlight
-Plugin 'lfv89/vim-interestingwords'
+Plug 'lfv89/vim-interestingwords'
 " environment
-Plugin 'vim-scripts/tcd.vim'
+Plug 'vim-scripts/tcd.vim'
 " windows
-Plugin 'wesQ3/vim-windowswap'
+Plug 'wesQ3/vim-windowswap'
 " snippets
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
-call vundle#end()
-
-filetype plugin indent on
+call plug#end()
 
 
 let g:ackprg = 'ag --vimgrep -Q'
@@ -97,6 +93,8 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
+
+execute "CocInstall coc-tsserver coc-json coc-html coc-css"
 
 colorscheme PaperColor
 set background=light

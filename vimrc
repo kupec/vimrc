@@ -87,6 +87,11 @@ let g:user_emmet_settings = {
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_fix_on_save = 1
+
 let g:airline_theme='papercolor'
 
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -94,7 +99,7 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
-execute "CocInstall coc-tsserver coc-json coc-html coc-css"
+execute 'CocInstall coc-tsserver coc-json coc-html coc-css'
 
 colorscheme PaperColor
 set background=light

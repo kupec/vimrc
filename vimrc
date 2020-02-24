@@ -99,8 +99,6 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
-execute 'CocInstall coc-tsserver coc-json coc-html coc-css'
-
 colorscheme PaperColor
 set background=light
 

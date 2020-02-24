@@ -22,7 +22,7 @@ function package-install {
 }
 
 ROOTDIR="$HOME/.vim"
-NVIM_AUTOLOAD_PLUGIN_DIR="~/.local/share/nvim/site/autoload"
+NVIM_AUTOLOAD_PLUGIN_DIR="$HOME/.local/share/nvim/site/autoload"
 NVIM_PLUG_VIM="$NVIM_AUTOLOAD_PLUGIN_DIR/plug.vim"
 NVIMDIR="$HOME/.config/nvim"
 NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/v0.3.8/nvim.appimage"
@@ -48,6 +48,12 @@ if [[ ! -f "$NVIM_PLUG_VIM" ]]; then
     curl -fLo $NVIM_PLUG_VIM --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi;
 
+# add coc extensions
+(
+cd "$HOME/.config/coc/extensions";
+npm install;
+)
+
 # vim-livedown (markdown live)
 npm-install livedown
 
@@ -57,7 +63,6 @@ npm-install prettier
 # ag (fzf)
 package-install silversearcher-ag
 
-# Denite.nvim
 package-install python3 python3-pip
 
 # Install neovim

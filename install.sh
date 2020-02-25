@@ -50,6 +50,7 @@ fi;
 
 # add coc extensions
 (
+mkdir -p "$HOME/.config/coc/extensions";
 cd "$HOME/.config/coc/extensions";
 npm install;
 )

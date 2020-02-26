@@ -21,6 +21,8 @@ let mapleader=","
 
 call plug#begin('~/.vim/plugged')
 
+" sudo
+Plug 'lambdalisue/suda.vim'
 " format
 Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier'
@@ -75,6 +77,7 @@ Plug 'honza/vim-snippets'
 
 call plug#end()
 
+let g:suda#prefix = ['suda://', 'sudo://']
 
 let g:ackprg = 'ag --vimgrep -Q'
 

@@ -127,6 +127,7 @@ vnoremap <space><tab> "wy:Ack! "<C-R>w"<CR>
 nnoremap <leader>nE :NERDTree<CR>
 nnoremap <leader>ne :NERDTreeFocus<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
+nnoremap <leader>nc :NERDTreeClose<CR>
 
 " navigation
 

@@ -40,7 +40,7 @@ if ! which apt >/dev/null; then
 fi;
 
 sudo apt update
-package-install git curl
+package-install git curl xsel
 # check if npm installed from other sources first (download manually, for example)
 which npm || package-install npm
 

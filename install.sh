@@ -25,7 +25,6 @@ ROOTDIR="$HOME/.vim"
 NVIM_AUTOLOAD_PLUGIN_DIR="$HOME/.local/share/nvim/site/autoload"
 NVIM_PLUG_VIM="$NVIM_AUTOLOAD_PLUGIN_DIR/plug.vim"
 NVIMDIR="$HOME/.config/nvim"
-NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/v0.3.8/nvim.appimage"
 
 cat > $HOME/.vimrc <<EOF
 source $ROOTDIR/vimrc

@@ -25,6 +25,8 @@ ROOTDIR="$HOME/.vim"
 NVIM_AUTOLOAD_PLUGIN_DIR="$HOME/.local/share/nvim/site/autoload"
 NVIM_PLUG_VIM="$NVIM_AUTOLOAD_PLUGIN_DIR/plug.vim"
 NVIMDIR="$HOME/.config/nvim"
+NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+NVIM_APPIMAGE_DIR="$HOME/.local/bin"
 
 cat > $HOME/.vimrc <<EOF
 source $ROOTDIR/vimrc
@@ -39,7 +41,7 @@ if ! which apt >/dev/null; then
 fi;
 
 sudo apt update
-package-install git curl xsel
+package-install git curl xsel python3 python3-pip
 # check if npm installed from other sources first (download manually, for example)
 which npm || package-install npm
 
@@ -63,10 +65,14 @@ npm-install prettier
 # ag (fzf)
 package-install silversearcher-ag
 
-package-install python3 python3-pip
-
-# Install neovim
+# Install neovim python modules
 pip3 install neovim
+
+(
+cd "$NVIM_APPIMAGE_DIR";
+wget "$NVIM_APPIMAGE_URL" -O nvim;
+chmod +x nvim;
+)
 
 # Install neovim gui wrapper
 if [[ ! -d neovim-gnome-terminal ]]; then
@@ -79,4 +85,4 @@ if [[ ! -d neovim-gnome-terminal ]]; then
   )
 fi;
 
-nvim +PlugInstall +qall
+$NVIM_APPIMAGE_DIR/nvim +PlugInstall +qall

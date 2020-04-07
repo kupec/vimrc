@@ -1,0 +1,80 @@
+priority -100
+
+############
+#  COMMON  #
+############
+
+# The smart snippets use a global options called
+# "g:ultisnips_javascript.{option}" which can control the format
+# of trailing semicolon, space before function paren, etc.
+#
+# e.g.
+# let g:ultisnips_javascript = {
+#      \ 'keyword-spacing': 'always',
+#      \ 'semi': 'never',
+#      \ 'space-before-function-paren': 'always',
+#      \ }
+
+
+global !p
+from javascript_snippets import (
+	semi, space_before_function_paren, keyword_spacing
+)
+endglobal
+
+###########################################################################
+#                            TextMate Snippets                            #
+###########################################################################
+
+snippet ptc ""
+.propTypes = {
+};
+endsnippet
+
+snippet irp ""
+import PropTypes from 'prop-types'
+endsnippet
+
+snippet ptf ""
+PropTypes.func,
+endsnippet
+
+snippet ptrf ""
+PropTypes.func.isRequired,
+endsnippet
+
+snippet pto ""
+PropTypes.object,
+endsnippet
+
+snippet ptro ""
+PropTypes.object.isRequired,
+endsnippet
+
+snippet pta ""
+PropTypes.array,
+endsnippet
+
+snippet ptra ""
+PropTypes.array.isRequired,
+endsnippet
+
+snippet pts ""
+PropTypes.string,
+endsnippet
+
+snippet ptrs ""
+PropTypes.string.isRequired,
+endsnippet
+
+snippet ptn ""
+PropTypes.number,
+endsnippet
+
+snippet ptrn ""
+PropTypes.number.isRequired,
+endsnippet
+
+
+
+# vim:ft=snippets:

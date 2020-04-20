@@ -180,6 +180,16 @@ inoremap <C-F4> <esc>m`kdd``m`jdd``a
 " console.log
 inoremap <C-\>cl console.log('AAA', );<esc>T,a
 
+
+
+" Triger `autoread` when files changes on disk
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+  \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+" Notification after file change
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
 " terminal
 if has('nvim')
     autocmd TermOpen * startinsert

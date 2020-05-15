@@ -81,6 +81,7 @@ call plug#end()
 let g:suda#prefix = ['suda://', 'sudo://']
 
 let g:ackprg = 'ag --vimgrep -Q'
+let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
 
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {

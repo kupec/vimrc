@@ -29,6 +29,8 @@ Plug 'prettier/vim-prettier'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'fatih/vim-go'
+Plug 'frazrepo/vim-rainbow'
+Plug 'vim-syntastic/syntastic'
 " movement
 Plug 'easymotion/vim-easymotion'
 " editing
@@ -91,6 +93,7 @@ let g:user_emmet_settings = {
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'python': ['flake8'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],

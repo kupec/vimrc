@@ -102,6 +102,8 @@ let g:ale_fix_on_save = 1
 
 let g:airline_theme='papercolor'
 
+let g:rainbow_active = 1
+
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"

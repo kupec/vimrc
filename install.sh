@@ -7,6 +7,12 @@ function npm-install {
 	fi;
 }
 
+function pip-install {
+	if ! which "$1" >/dev/null; then
+		sudo pip3 install "$1"
+	fi;
+}
+
 function package-install {
 	local NEED_INSTALL=""
 	for x; do
@@ -65,8 +71,8 @@ npm-install prettier
 # ag (fzf)
 package-install silversearcher-ag
 
-# Install neovim python modules
-pip3 install neovim
+# Install neovim python modules + plugin modules
+pip-install neovim flake8 autopep8
 
 (
 cd "$NVIM_APPIMAGE_DIR";

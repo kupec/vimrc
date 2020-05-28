@@ -97,12 +97,15 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'python': ['autopep8'],
 \}
 let g:ale_fix_on_save = 1
 
 let g:airline_theme='papercolor'
 
 let g:rainbow_active = 1
+
+let g:prettier#exec_cmd_async = 1
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"

@@ -30,7 +30,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'fatih/vim-go'
 Plug 'frazrepo/vim-rainbow'
-Plug 'vim-syntastic/syntastic'
 " movement
 Plug 'easymotion/vim-easymotion'
 " editing
@@ -99,13 +98,14 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'python': ['autopep8'],
 \}
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 let g:airline_theme='papercolor'
 
 let g:rainbow_active = 1
 
 let g:prettier#exec_cmd_async = 1
+autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"

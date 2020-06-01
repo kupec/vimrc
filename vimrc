@@ -115,6 +115,9 @@ let g:UltiSnipsEditSplit="vertical"
 colorscheme PaperColor
 set background=light
 
+" console
+tnoremap <Esc> <C-\><C-N>
+
 " motion
 nmap <leader>m <Plug>(easymotion-overwin-f2)
 

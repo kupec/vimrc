@@ -91,4 +91,5 @@ if [[ ! -d neovim-gnome-terminal ]]; then
   )
 fi;
 
+$NVIM_APPIMAGE_DIR/nvim -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html|q'
 $NVIM_APPIMAGE_DIR/nvim +PlugInstall +qall

@@ -116,7 +116,7 @@ colorscheme PaperColor
 set background=light
 
 " console
-tnoremap <Esc> <C-\><C-N>
+tnoremap <C-J> <C-\><C-N>
 
 " motion
 nmap <leader>m <Plug>(easymotion-overwin-f2)

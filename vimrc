@@ -76,10 +76,14 @@ Plug 'wesQ3/vim-windowswap'
 " snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+" terminal
+Plug 'kassio/neoterm'
 
 call plug#end()
 
 let g:suda#prefix = ['suda://', 'sudo://']
+
+let g:neoterm_default_mod = 'botright'
 
 let g:ackprg = 'ag --vimgrep -Q'
 let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
@@ -146,6 +150,12 @@ nnoremap <leader>nc :NERDTreeClose<CR>
 
 nnoremap <leader>rj<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w.js')<CR>
 nnoremap <leader>rf<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w')<CR>
+
+" tests
+
+nnoremap <leader>to <C-W>n:Tnew<CR>
+nnoremap <leader>tr :Tclear
+nnoremap <leader>tt :Ttoggle
 
 " ALE
 nnoremap ]l :ALENext<CR>

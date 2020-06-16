@@ -153,9 +153,9 @@ nnoremap <leader>rf<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w
 
 " tests
 
-nnoremap <leader>to <C-W>n:Tnew<CR>
-nnoremap <leader>tr :Tclear
-nnoremap <leader>tt :Ttoggle
+nnoremap <leader>to :Tnew<CR>
+nnoremap <leader>tr :Tclear<CR>
+nnoremap <leader>tt :Ttoggle<CR>
 
 " ALE
 nnoremap ]l :ALENext<CR>

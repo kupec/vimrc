@@ -83,8 +83,6 @@ call plug#end()
 
 let g:suda#prefix = ['suda://', 'sudo://']
 
-let g:neoterm_default_mod = 'botright'
-
 let g:ackprg = 'ag --vimgrep -Q'
 let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
 

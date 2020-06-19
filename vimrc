@@ -159,7 +159,7 @@ nnoremap <leader>tt :Ttoggle<CR>
 nnoremap ]l :ALENext<CR>
 nnoremap [l :ALEPrevious<CR>
 nnoremap <leader>ll :ALEHover<CR>
-nnoremap <leader>ld :ALEDetail<CR>
+nnoremap <leader>ld :ALEDetail<CR><C-W>J
 
 " coc
 inoremap <silent><expr> <c-space> coc#refresh()

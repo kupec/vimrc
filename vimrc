@@ -7,6 +7,8 @@ set cursorline
 set hlsearch
 set t_Co=256
 set autoread
+set splitright
+set splitbelow
 syntax enable
 
 if !has('nvim')
@@ -137,6 +139,9 @@ nnoremap <space><CR> :Buffers<CR>
 nnoremap <space><space> :Ack!<space>""<Left>
 nnoremap <space><tab> :Ack! "<C-R><C-W>"<CR>
 vnoremap <space><tab> "wy:Ack! "<C-R>w"<CR>
+nnoremap <space><leader><space> :Ag<CR>
+nnoremap <space><leader><tab> :Ag <C-R><C-W><CR>
+vnoremap <space><leader><tab> "wy:Ag <C-R>w<CR>
 
 " nerdtree
 nnoremap <leader>nE :NERDTree<CR>

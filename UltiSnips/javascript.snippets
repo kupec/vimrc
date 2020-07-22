@@ -187,18 +187,15 @@ describe('`!p base_file_name()` - render', () => {
 endsnippet
 
 snippet jsdesc ""
-describe('', () => {
+describe('`!p base_file_name()` - ${1}', () => {
 	test('', () => {
-        ${1}
-	});
-
-	test('', () => {
+        ${2}
 	});
 });
 endsnippet
 
 snippet jstest ""
-test('', () => {
+test('${2}', () => {
     ${1}
 });
 endsnippet

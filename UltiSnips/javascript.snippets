@@ -206,4 +206,10 @@ test('${2}', () => {
 });
 endsnippet
 
+
+snippet printdom ""
+const {prettyDOM} = require('@testing-library/dom');
+console.log(prettyDOM(document.body, 1e10));
+endsnippet
+
 # vim:ft=snippets:

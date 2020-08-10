@@ -130,6 +130,12 @@ nnoremap <leader>rcl :so $MYVIMRC<CR>
 nnoremap <leader>rco :tabnew ~/.vim/vimrc<CR>
 nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
+" todo
+command! TODO :tabnew ~/proj/TODO
+nnoremap <leader>rcl :so $MYVIMRC<CR>
+nnoremap <leader>rco :tabnew ~/.vim/vimrc<CR>
+nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
+
 " fzf
 nnoremap <CR><CR> :FZF<CR>
 nnoremap <CR><tab> :FZF -q <C-R><C-W><CR>
@@ -267,12 +273,6 @@ function! OpenFileByRelativePath(relPath)
 endfunction
 
 command! -range JsonToKeys <line1>,<line2>!python3 -c 'import json;import sys;s = "".join(x for x in sys.stdin);a = json.loads(s);print("\n".join(x for x in a.keys()))'
-
-""" css functions
-
-command! CssAbsolute :normal i position: absolute;<CR>left: 0;<CR>top: 0;<CR>width: 100%;<CR>height: 100%;<CR>
-command! CssFlex :normal i display: flex;<CR>flex-flow: column;<CR>justify-content: center;<CR>align-items: center;
-
 
 """ compile/run/test functions
 

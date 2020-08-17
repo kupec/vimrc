@@ -175,19 +175,71 @@ export default function `!p base_file_name()`(props) {
 
 endsnippet
 
-snippet jsreacttest ""
+snippet jsrctest ""
 import React from 'react';
 import `!p base_file_name()` from './`!p base_file_name()`';
 import {render, act, fireEvent} from '@testing-library/react';
 
 function render`!p base_file_name()`({}) {
-    return render(<`!p base_file_name()` />);
+    const renderResult = render(<`!p base_file_name()` />);
+
+	return {
+		...renderResult,
+	};
 }
 
 describe('`!p base_file_name()` - render', () => {
-    test('', () => {
+    test('${1}', () => {
         const {} = render`!p base_file_name()`({});
-        ${1}
+        ${2}
+    });
+});
+endsnippet
+
+snippet jsrcreduxtest ""
+import React from 'react';
+import `!p base_file_name()` from './`!p base_file_name()`';
+import {act, fireEvent} from '@testing-library/react';
+import renderWithRedux from '../../testing/renderWithRedux';
+import {
+    createMockApiResponse,
+    addMockApiResponse,
+    listApiResponse,
+    apiResponse,
+    apiResponseProcessing,
+} from '../../testing/mock/makeRequest';
+import makeRequest from '../../sources/backend/makeRequest';
+import matchURL from '../../testing/expect/matchURL';
+
+jest.mock('../../sources/backend/makeRequest');
+
+const FETCH_LIST_REQUEST = {
+    path: '/___/?limit=10',
+    method: 'GET',
+};
+
+function render`!p base_file_name()`() {
+    const renderResult = renderWithRedux(<`!p base_file_name()` />, {}, {withSaga: true});
+
+    const spinner = renderResult.queryByRole('progressbar');
+
+    return {
+        ...renderResult,
+        spinner,
+    };
+}
+
+describe('`!p base_file_name()` - render', () => {
+    beforeEach(() => {
+        createMockApiResponse(FETCH_LIST_REQUEST, listApiResponse([]));
+    });
+
+    test('loading', () => {
+        createMockApiResponse(FETCH_LIST_REQUEST, apiResponseProcessing());
+
+        const {spinner} = render`!p base_file_name()`();
+
+        expect(spinner).toBeInTheDocument();
     });
 });
 endsnippet

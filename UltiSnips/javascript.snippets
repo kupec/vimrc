@@ -21,8 +21,47 @@ from javascript_snippets import (
 	semi, space_before_function_paren, keyword_spacing
 )
 
+
 def base_file_name():
-    snip.rv = snip.basename.split('.')[0];
+    snip.rv = snip.basename.split('.')[0]
+
+
+def path_to(file_path):
+    snip.rv = _path_to(path, file_path)
+
+
+def _path_to(from_path, to_path):
+    from_path_tokens = _get_path_tokens(from_path)
+    to_path_tokens = _get_path_tokens(to_path)
+
+    while len(from_path_tokens) > 0 and len(to_path_tokens) > 0:
+        if from_path_tokens[0] != to_path_tokens[0]:
+            break
+
+        from_path_tokens.pop(0)
+        to_path_tokens.pop(0)
+
+    if from_path_tokens == [] or to_path_tokens == []:
+        return ''
+
+    folder_path = _find_folder_path_to(from_path_tokens, to_path_tokens)
+
+    return folder_path + to_path_tokens[-1]
+
+
+def _find_folder_path_to(from_path_tokens, to_path_tokens):
+    parent_jump_count = len(from_path_tokens) - 1
+
+    if parent_jump_count == 0:
+        return './'
+
+    parent_chain = '../' * parent_jump_count
+    child_folder_path = '/'.join(to_path_tokens[0:-1]) + '/'
+    return parent_chain + child_folder_path
+
+
+def _get_path_tokens(path):
+    return path.split('/')
 endglobal
 
 ###########################################################################
@@ -200,7 +239,7 @@ snippet jsrcreduxtest ""
 import React from 'react';
 import `!p base_file_name()` from './`!p base_file_name()`';
 import {act, fireEvent} from '@testing-library/react';
-import renderWithRedux from '../../testing/renderWithRedux';
+import renderWithRedux from '`!p path_to('src/testing/renderWithRedux')`';
 import {
     createMockApiResponse,
     addMockApiResponse,
@@ -208,10 +247,10 @@ import {
     apiResponse,
     apiResponseProcessing,
 } from '../../testing/mock/makeRequest';
-import makeRequest from '../../sources/backend/makeRequest';
-import matchURL from '../../testing/expect/matchURL';
+import makeRequest from '`!p path_to('src/sources/backend/makeRequest')`';
+import matchURL from '`!p path_to('src/testing/expect/matchURL')`';
 
-jest.mock('../../sources/backend/makeRequest');
+jest.mock('`!p path_to('src/sources/backend/makeRequest')`');
 
 const FETCH_LIST_REQUEST = {
     path: '/___/?limit=10',

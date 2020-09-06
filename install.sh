@@ -1,5 +1,13 @@
 #!/bin/bash
-set -e
+set -ex
+
+function is-ubuntu {
+	which apt-get;
+}
+
+function is-macos {
+	which port;
+}
 
 function npm-install {
 	if ! which "$1" >/dev/null; then
@@ -14,25 +22,35 @@ function pip-install {
 }
 
 function package-install {
-	local NEED_INSTALL=""
-	for x; do
-		if ! dpkg-query -s $x >/dev/null; then
-			NEED_INSTALL=yes
-			break
-		fi;
-	done;
+	if is-ubuntu; then
+		local NEED_INSTALL=""
+		for x; do
+			if ! dpkg-query -s $x >/dev/null; then
+				NEED_INSTALL=yes
+				break
+			fi;
+		done;
 
-	if [[ $NEED_INSTALL == "yes" ]]; then
-		sudo apt install "$@" -y
+		if [[ $NEED_INSTALL == "yes" ]]; then
+			sudo apt install "$@" -y
+		fi;
+	elif is-macos; then
+		sudo port install "$@"
 	fi;
+	
 }
 
 ROOTDIR="$HOME/.vim"
 NVIM_AUTOLOAD_PLUGIN_DIR="$HOME/.local/share/nvim/site/autoload"
 NVIM_PLUG_VIM="$NVIM_AUTOLOAD_PLUGIN_DIR/plug.vim"
 NVIMDIR="$HOME/.config/nvim"
-NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
-NVIM_APPIMAGE_DIR="$HOME/.local/bin"
+
+NVIM=nvim
+if is-ubuntu; then
+	NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+	NVIM_APPIMAGE_DIR="$HOME/.local/bin"
+	NVIM="$NVIM_APPIMAGE_DIR/nvim"
+fi;
 
 cat > $HOME/.vimrc <<EOF
 source $ROOTDIR/vimrc
@@ -41,13 +59,18 @@ EOF
 mkdir -p "$NVIMDIR"
 cp "$ROOTDIR/init.vim" "$NVIMDIR"
 
-if ! which apt >/dev/null; then
-	echo "[error]: No apt. Script works for ubuntu only" >&2
-	exit 1;
+if is-ubuntu; then
+	sudo apt update
 fi;
 
-sudo apt update
-package-install git curl xsel python3 python3-pip
+PYTHON3=python3
+PIP3=python3-pip
+if is-macos; then
+    PYTHON3=python37
+    PIP3=py37-pip
+fi;
+
+package-install git curl xsel $PYTHON3 $PIP3
 # check if npm installed from other sources first (download manually, for example)
 which npm || package-install npm
 
@@ -69,27 +92,36 @@ npm-install livedown
 npm-install prettier
 
 # ag (fzf)
-package-install silversearcher-ag
+if is-ubuntu; then
+	AG_PACKAGE=silversearcher-ag
+else
+	AG_PACKAGE=the_silver_searcher
+fi;
+
+package-install "$AG_PACKAGE"
 
 # Install neovim python modules + plugin modules
 pip-install neovim flake8 autopep8
 
-(
-cd "$NVIM_APPIMAGE_DIR";
-wget "$NVIM_APPIMAGE_URL" -O nvim;
-chmod +x nvim;
-)
+if is-ubuntu; then
+	(
+	cd "$NVIM_APPIMAGE_DIR";
+	wget "$NVIM_APPIMAGE_URL" -O nvim;
+	chmod +x nvim;
+	)
 
-# Install neovim gui wrapper
-if [[ ! -d neovim-gnome-terminal ]]; then
-  (
-  git clone https://github.com/fmoralesc/neovim-gnome-terminal-wrapper.git neovim-gnome-terminal;
-  cd neovim-gnome-terminal;
-  sudo cp nvim-wrapper /usr/bin/nvim-wrapper;
-  sudo cp neovim.desktop /usr/share/applications/neovim.desktop;
-  sudo cp neovim.svg /usr/share/icons/neovim.svg;
-  )
+	# Install neovim gui wrapper
+	if [[ ! -d neovim-gnome-terminal ]]; then
+	  (
+	  git clone https://github.com/fmoralesc/neovim-gnome-terminal-wrapper.git neovim-gnome-terminal;
+	  cd neovim-gnome-terminal;
+	  sudo cp nvim-wrapper /usr/bin/nvim-wrapper;
+	  sudo cp neovim.desktop /usr/share/applications/neovim.desktop;
+	  sudo cp neovim.svg /usr/share/icons/neovim.svg;
+	  )
+	fi;
 fi;
 
-$NVIM_APPIMAGE_DIR/nvim -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html|q'
-$NVIM_APPIMAGE_DIR/nvim +PlugInstall +qall
+"$NVIM" +PlugInstall +qall
+"$NVIM" -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html|q'
+

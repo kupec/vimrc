@@ -102,7 +102,7 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'python': ['autopep8', 'isort'],
 \}
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 let g:airline_theme='papercolor'
 

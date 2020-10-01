@@ -32,6 +32,8 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'fatih/vim-go'
 Plug 'frazrepo/vim-rainbow'
+Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
 " movement
 Plug 'easymotion/vim-easymotion'
 " editing
@@ -52,7 +54,6 @@ Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 " file manager
 Plug 'scrooloose/nerdtree'
-Plug 'leafgarland/typescript-vim'
 " markdown preview
 " [install]: npm i -g livedown
 " [help]: :Livedown*

@@ -45,7 +45,7 @@ Plug 'arthurxavierx/vim-caser'
 Plug 'wellle/tmux-complete.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " search
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 " denite

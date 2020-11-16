@@ -187,11 +187,6 @@ inoremap <C-\><C-f><C-n> <C-R>=expand("%:t:r")<CR>
 " find on mdn
 nnoremap <silent> <leader>dm :execute "!" g:netrw_browsex_viewer "'https://developer.mozilla.org/en-US/search?q=<C-R><C-W>'"<CR>
 
-" wrap words
-nnoremap <leader>w' bi'<esc>ea'<esc>
-nnoremap <leader>w" bi"<esc>ea"<esc>
-nnoremap <leader>w{ bi{<esc>ea}<esc>
-
 " add empty lines
 nnoremap <F2> m`o<esc>``
 nnoremap <F3> m`O<esc>``
@@ -209,10 +204,6 @@ nnoremap <C-F4> m`kdd``m`jdd``
 inoremap <C-F2> <esc>m`jdd``a
 inoremap <C-F3> <esc>m`kdd``a
 inoremap <C-F4> <esc>m`kdd``m`jdd``a
-
-" console.log
-inoremap <C-\>cl console.log('AAA', );<esc>T,a
-
 
 
 " Triger `autoread` when files changes on disk
@@ -234,30 +225,6 @@ function! TerminalBufferDirectory()
   vnew
   call termopen('cd '.l:dir.'; $SHELL -i')
 endfunction
-
-" abbrev git
-abbrev GPC Partial commit
-
-" abbrev for funcs and propTypes
-abbrev ASF async function() {}
-abbrev FU function() {}
-abbrev CP const {} = props
-abbrev CTP const {} = this.props
-abbrev PTF PropTypes.func.isRequired,
-abbrev PTO PropTypes.object.isRequired,
-abbrev PTo PropTypes.object,
-abbrev PTB PropTypes.bool,
-abbrev PTN PropTypes.number,
-abbrev PTS PropTypes.string,
-abbrev PTA PropTypes.array.isRequired,
-abbrev PTa PropTypes.array,
-abbrev PTR isRequired,
-
-" abbrev for node
-abbrev ME module.exports =
-
-" abbrev for css
-abbrev BG background: url(./assets/) no-repeat center / contain;
 
 """" util functions
 

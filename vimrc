@@ -205,6 +205,19 @@ inoremap <C-F2> <esc>m`jdd``a
 inoremap <C-F3> <esc>m`kdd``a
 inoremap <C-F4> <esc>m`kdd``m`jdd``a
 
+" Project tabs
+
+command! -nargs=1 -complete=file OpenProject :call OpenProject(<q-args>)
+function! OpenProject(path)
+   let l:pwd = getcwd()
+   execute "Tcd " . l:pwd
+   execute "tabnew " . a:path
+   execute "Tcd " . a:path
+endfunction
+
+nnoremap <leader>op :OpenProject ~/proj/
+nnoremap <leader>oo :cd ~/proj/
+
 
 " Triger `autoread` when files changes on disk
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *

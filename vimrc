@@ -20,20 +20,25 @@ let g:netrw_browsex_viewer="setsid xdg-open"
 
 let mapleader=","
 
-
 call plug#begin('~/.vim/plugged')
 
 " sudo
 Plug 'lambdalisue/suda.vim'
+
 " format
 Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'fatih/vim-go'
 Plug 'frazrepo/vim-rainbow'
+" format js
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
+" format go
+Plug 'fatih/vim-go'
+" format python
+Plug 'vim-python/python-syntax'
+
 " movement
 Plug 'easymotion/vim-easymotion'
 " editing
@@ -61,8 +66,6 @@ Plug 'airblade/vim-gitgutter'
 " [help]: :ALEToggle
 Plug 'w0rp/ale'
 " color scheme
-Plug 'altercation/vim-colors-solarized'
-Plug 'jonathanfilip/vim-lucius'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -105,6 +108,8 @@ let g:airline_theme='papercolor'
 
 let g:rainbow_active = 1
 
+let g:python_highlight_all = 1
+
 let g:prettier#exec_cmd_async = 1
 autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>
 
@@ -113,8 +118,8 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
-colorscheme PaperColor
 set background=light
+autocmd VimEnter * colorscheme PaperColor
 
 " console
 tnoremap <C-J> <C-\><C-N>
@@ -205,6 +210,15 @@ inoremap <C-F2> <esc>m`jdd``a
 inoremap <C-F3> <esc>m`kdd``a
 inoremap <C-F4> <esc>m`kdd``m`jdd``a
 
+" fast macro
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+
 " Project tabs
 
 command! -nargs=1 -complete=file OpenProject :call OpenProject(<q-args>)
@@ -291,10 +305,3 @@ endfunction
 
 nnoremap <leader>c :call RunNear(b:compile_prog)<CR>
 nnoremap <leader>t :call RunNear(b:test_prog)<CR>
-
-""" dirty
-
-function! Ide()
-	execute 'NERDTree'
-endfunction
-" autocmd VimEnter * NERDTree

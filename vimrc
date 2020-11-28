@@ -111,6 +111,7 @@ let g:rainbow_active = 1
 let g:python_highlight_all = 1
 
 let g:prettier#exec_cmd_async = 1
+let g:prettier#autoformat_config_present = 1
 autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>
 
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -158,9 +159,69 @@ nnoremap <leader>nf :NERDTreeFind<CR>
 nnoremap <leader>nc :NERDTreeClose<CR>
 
 " navigation
+"
+function! s:get_delimited_word_under_cursor(delimiters)
+    let line = getline(".")
+    let col = col(".")
 
-nnoremap <leader>rj<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w.js')<CR>
-nnoremap <leader>rf<tab> vi'"wy:execute ':new ' . OpenFileByRelativePath('<C-R>w')<CR>
+    let left = col - 1
+    while left >= 0
+        let found_delimiter = 0
+        for d in a:delimiters
+            if line[left] == d
+                let found_delimiter = 1
+                break
+            endif
+        endfor
+
+        if found_delimiter
+            break
+        endif
+
+        let left -= 1
+    endwhile
+    let left += 1
+
+    let right = col - 1
+    while right < len(line)
+        let found_delimiter = 0
+        for d in a:delimiters
+            if line[right] == d
+                let found_delimiter = 1
+                break
+            endif
+        endfor
+
+        if found_delimiter
+            break
+        endif
+
+        let right += 1
+    endwhile
+    let right -= 1
+
+    return line[left:right]
+endfunction
+
+function! CreateFileUnderCursor(file_ext)
+    let file_path = s:get_delimited_word_under_cursor(["'", '"', " "])
+    let file_ext = a:file_ext != "" ? a:file_ext : input("Type file extension: ")
+
+    if len(file_ext) > 0
+        let file_path = file_path . "." . file_ext
+    endif
+
+    let cur_path = expand("%:p:h")
+    let file_path = fnamemodify(cur_path . "/" . file_path, ":.")
+    let dir_path = fnamemodify(file_path, ":h")
+
+    echom system("mkdir -p " . dir_path)
+    execute "new " . file_path
+    write
+endfunction
+
+nnoremap <leader>cf :call CreateFileUnderCursor("")<CR>
+nnoremap <leader>cjf :call CreateFileUnderCursor("js")<CR>
 
 " tests
 
@@ -258,12 +319,6 @@ endfunction
 function! Random(min, max)
 	let l:a = system('echo -n $RANDOM')
 	return l:a % (1 + a:max - a:min) + a:min
-endfunction
-
-function! OpenFileByRelativePath(relPath)
-	let l:bufferCwd = expand('%:p:h')
-	let l:path = system('node -e "console.log(path.resolve(\"' .  l:bufferCwd .  '\", \"' . a:relPath . '\"))"')
-	return l:path
 endfunction
 
 command! -range JsonToKeys <line1>,<line2>!python3 -c 'import json;import sys;s = "".join(x for x in sys.stdin);a = json.loads(s);print("\n".join(x for x in a.keys()))'

@@ -152,6 +152,10 @@ nnoremap <space><leader><space> :Ag<CR>
 nnoremap <space><leader><tab> :Ag <C-R><C-W><CR>
 vnoremap <space><leader><tab> "wy:Ag <C-R>w<CR>
 
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
 " nerdtree
 nnoremap <leader>nE :NERDTree<CR>
 nnoremap <leader>ne :NERDTreeFocus<CR>
@@ -220,8 +224,30 @@ function! CreateFileUnderCursor(file_ext)
     write
 endfunction
 
-nnoremap <leader>cf :call CreateFileUnderCursor("")<CR>
-nnoremap <leader>cjf :call CreateFileUnderCursor("js")<CR>
+function! s:do_import_js_file(file_path)
+    let cur_path = expand("%:p:h")
+    let file_path = fnamemodify(a:file_path, ":p")
+    let rel_path = trim(system("realpath -m --relative-to " . cur_path . " " . file_path))
+
+    echom "rel = " . rel_path
+
+    if rel_path[0] != '.'
+        let rel_path = "./" . rel_path
+    endif
+
+    let import_line = "import {} from " . '"' . rel_path . '";'
+    call append(line("."), import_line)
+endfunction
+
+command! -nargs=1 DoImportJsFile :call s:do_import_js_file(<q-args>)
+
+function! ImportJsFile()
+    call fzf#run({'sink': 'DoImportJsFile', 'options': '--multi'})
+endfunction
+
+nnoremap <expr> <leader>cf CreateFileUnderCursor("")
+nnoremap <expr> <leader>cjf CreateFileUnderCursor("js")
+nnoremap <leader>ijf :call ImportJsFile()<CR>
 
 " tests
 
@@ -358,5 +384,5 @@ function! RunNear(prog)
     call chansend(g:near_term, "\f" . a:prog . "\n")
 endfunction
 
-nnoremap <leader>c :call RunNear(b:compile_prog)<CR>
-nnoremap <leader>t :call RunNear(b:test_prog)<CR>
+nnoremap <expr> <leader>c RunNear(b:compile_prog)
+nnoremap <expr> <leader>t RunNear(b:test_prog)

@@ -112,9 +112,10 @@ let g:rainbow_active = 1
 
 let g:python_highlight_all = 1
 
+let g:prettier#exec_cmd_path = 0
 if prettier#PrettierCli('--version') < '2.0'
   let g:prettier#config#arrow_parens = 'avoid'
-end
+endif
 let g:prettier#exec_cmd_async = 1
 let g:prettier#quickfix_auto_focus = 0
 autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>
@@ -127,8 +128,8 @@ let g:UltiSnipsEditSplit="vertical"
 set background=light
 autocmd VimEnter * colorscheme PaperColor
 
-command! -nargs=1 -complete=file OpenProject :call OpenProject(<q-args>)
-function! OpenProject(path)
+command! -nargs=1 OpenProjectInNewTab :call OpenProjectInNewTab(<q-args>)
+function! OpenProjectInNewTab(path)
    let l:pwd = getcwd()
    execute "Tcd " . l:pwd
    execute "tabnew " . a:path
@@ -146,7 +147,7 @@ nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 
 " vimrc
 nnoremap <leader>rcl :so $MYVIMRC<CR>
-nnoremap <leader>rco :OpenProject ~/.vim<CR>:e ~/.vim/vimrc<CR>
+nnoremap <leader>rco :OpenProjectInNewTab ~/.vim<CR>:e ~/.vim/vimrc<CR>
 nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
 " todo
@@ -299,7 +300,6 @@ nnoremap <F4> m`O<esc>``m`o<esc>``
 
 inoremap <F2> <esc>m`o<esc>``a
 inoremap <F3> <esc>m`O<esc>``a
-inoremap <F4> <esc>m`o<esc>``m`O<esc>``a
 
 " remove near lines
 nnoremap <C-F2> m`jdd``
@@ -321,8 +321,12 @@ endfunction
 
 " Project tabs
 
-nnoremap <leader>op :OpenProject ~/proj/
-nnoremap <leader>oo :cd ~/proj/
+function! SelectProjectAndRun(command)
+    call fzf#run({'source': 'find ~/proj -mindepth 1 -maxdepth 1', 'sink': a:command})
+endfunction
+
+nnoremap <leader>op :call SelectProjectAndRun("OpenProjectInNewTab")<CR>
+nnoremap <leader>oo :call SelectProjectAndRun("cd")<CR>
 
 
 " Triger `autoread` when files changes on disk

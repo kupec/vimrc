@@ -104,14 +104,19 @@ let g:ale_fixers = {
 \}
 let g:ale_fix_on_save = 0
 
+let g:windowswap_map_keys = 0
+
 let g:airline_theme='papercolor'
 
 let g:rainbow_active = 1
 
 let g:python_highlight_all = 1
 
+if prettier#PrettierCli('--version') < '2.0'
+  let g:prettier#config#arrow_parens = 'avoid'
+end
 let g:prettier#exec_cmd_async = 1
-let g:prettier#autoformat_config_present = 1
+let g:prettier#quickfix_auto_focus = 0
 autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>
 
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -122,22 +127,30 @@ let g:UltiSnipsEditSplit="vertical"
 set background=light
 autocmd VimEnter * colorscheme PaperColor
 
+command! -nargs=1 -complete=file OpenProject :call OpenProject(<q-args>)
+function! OpenProject(path)
+   let l:pwd = getcwd()
+   execute "Tcd " . l:pwd
+   execute "tabnew " . a:path
+   execute "Tcd " . a:path
+endfunction
+
 " console
 tnoremap <C-J> <C-\><C-N>
 
-" motion
+" motion 
 nmap <leader>m <Plug>(easymotion-overwin-f2)
+
+" windows
+nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 
 " vimrc
 nnoremap <leader>rcl :so $MYVIMRC<CR>
-nnoremap <leader>rco :tabnew ~/.vim/vimrc<CR>
+nnoremap <leader>rco :OpenProject ~/.vim<CR>:e ~/.vim/vimrc<CR>
 nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
 " todo
 command! TODO :tabnew ~/proj/TODO
-nnoremap <leader>rcl :so $MYVIMRC<CR>
-nnoremap <leader>rco :tabnew ~/.vim/vimrc<CR>
-nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
 " fzf
 nnoremap <CR><CR> :FZF<CR>
@@ -307,14 +320,6 @@ function! ExecuteMacroOverVisualRange()
 endfunction
 
 " Project tabs
-
-command! -nargs=1 -complete=file OpenProject :call OpenProject(<q-args>)
-function! OpenProject(path)
-   let l:pwd = getcwd()
-   execute "Tcd " . l:pwd
-   execute "tabnew " . a:path
-   execute "Tcd " . a:path
-endfunction
 
 nnoremap <leader>op :OpenProject ~/proj/
 nnoremap <leader>oo :cd ~/proj/

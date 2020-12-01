@@ -249,7 +249,9 @@ function! s:do_import_js_file(file_path)
         let rel_path = "./" . rel_path
     endif
 
-    let import_line = "import {} from " . '"' . rel_path . '";'
+    let rel_path = substitute(rel_path, '\(\.js\|\.jsx\|\.ts\|\.tsx\)$', '', '')
+
+    let import_line = "import {} from " . "'" . rel_path . "';"
     call append(line("."), import_line)
 endfunction
 

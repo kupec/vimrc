@@ -220,10 +220,10 @@ import `!p base_file_name()` from './`!p base_file_name()`';
 import {render, act, fireEvent} from '@testing-library/react';
 
 function render`!p base_file_name()`({}) {
-    const renderResult = render(<`!p base_file_name()` />);
+    const qs = render(<`!p base_file_name()` />);
 
 	return {
-		...renderResult,
+		...qs,
 	};
 }
 
@@ -240,13 +240,11 @@ import React from 'react';
 import `!p base_file_name()` from './`!p base_file_name()`';
 import {act, fireEvent} from '@testing-library/react';
 import renderWithRedux from '`!p path_to('src/testing/renderWithRedux')`';
-import {
-    createMockApiResponse,
-    addMockApiResponse,
+import mockApi, {
     listApiResponse,
     apiResponse,
     apiResponseProcessing,
-} from '../../testing/mock/makeRequest';
+} from '../../testing/mock/mockApi';
 import makeRequest from '`!p path_to('src/sources/backend/makeRequest')`';
 import matchURL from '`!p path_to('src/testing/expect/matchURL')`';
 
@@ -258,23 +256,23 @@ const FETCH_LIST_REQUEST = {
 };
 
 function render`!p base_file_name()`() {
-    const renderResult = renderWithRedux(<`!p base_file_name()` />, {}, {withSaga: true});
+    const qs = renderWithRedux(<`!p base_file_name()` />, {}, {withSaga: true});
 
-    const spinner = renderResult.queryByRole('progressbar');
+    const spinner = qs.queryByRole('progressbar');
 
     return {
-        ...renderResult,
+        ...qs,
         spinner,
     };
 }
 
 describe('`!p base_file_name()` - render', () => {
     beforeEach(() => {
-        createMockApiResponse(FETCH_LIST_REQUEST, listApiResponse([]));
+		mockApi.reset();
     });
 
     test('loading', () => {
-        createMockApiResponse(FETCH_LIST_REQUEST, apiResponseProcessing());
+        mockApi.mock(FETCH_LIST_REQUEST, apiResponseProcessing());
 
         const {spinner} = render`!p base_file_name()`();
 
@@ -298,9 +296,9 @@ test('${2}', () => {
 endsnippet
 
 
-snippet printdom ""
+snippet pdom ""
 const {prettyDOM} = require('@testing-library/dom');
-console.log(prettyDOM(document.body, 1e10));
+console.log(prettyDOM(${1:document.body}, 1e10));
 endsnippet
 
 # vim:ft=snippets:

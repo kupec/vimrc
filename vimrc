@@ -238,7 +238,7 @@ function! CreateFileUnderCursor(file_ext)
     write
 endfunction
 
-function! s:do_import_js_file(file_path)
+function! s:get_import_js_file_path(file_path)
     let cur_path = expand("%:p:h")
     let file_path = fnamemodify(a:file_path, ":p")
     let rel_path = trim(system("realpath -m --relative-to " . cur_path . " " . file_path))
@@ -249,9 +249,20 @@ function! s:do_import_js_file(file_path)
         let rel_path = "./" . rel_path
     endif
 
-    let rel_path = substitute(rel_path, '\(\.js\|\.jsx\|\.ts\|\.tsx\)$', '', '')
+    return substitute(rel_path, '\(\.js\|\.jsx\|\.ts\|\.tsx\)$', '', '')
+endfunction
 
-    let import_line = "import {} from " . "'" . rel_path . "';"
+function! s:do_import_js_file(file_path)
+    let rel_path = s:get_import_js_file_path(a:file_path)
+
+    let import_line = "import {} from '" . rel_path . "';"
+    call append(line("."), import_line)
+endfunction
+
+function! s:do_mock_js_file(file_path)
+    let rel_path = s:get_import_js_file_path(a:file_path)
+
+    let import_line = "jest.mock('" . rel_path . "');"
     call append(line("."), import_line)
 endfunction
 
@@ -261,9 +272,16 @@ function! ImportJsFile()
     call fzf#run({'sink': 'DoImportJsFile', 'options': '--multi'})
 endfunction
 
+command! -nargs=1 DoMockFsFile :call s:do_mock_js_file(<q-args>)
+
+function! MockFsFile()
+    call fzf#run({'sink': 'DoMockFsFile', 'options': '--multi'})
+endfunction
+
 nnoremap <leader>cf :call CreateFileUnderCursor("")<CR>
 nnoremap <leader>cjf :call CreateFileUnderCursor("js")<CR>
 nnoremap <leader>ijf :call ImportJsFile()<CR>
+nnoremap <leader>imj :call MockFsFile()<CR>
 
 " tests
 

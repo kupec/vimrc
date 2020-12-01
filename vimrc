@@ -233,8 +233,8 @@ function! CreateFileUnderCursor(file_ext)
     let file_path = fnamemodify(cur_path . "/" . file_path, ":.")
     let dir_path = fnamemodify(file_path, ":h")
 
-    echom system("mkdir -p " . dir_path)
-    execute "new " . file_path
+    call system("mkdir -p " . dir_path)
+    execute "new " . file_path 
     write
 endfunction
 
@@ -259,8 +259,8 @@ function! ImportJsFile()
     call fzf#run({'sink': 'DoImportJsFile', 'options': '--multi'})
 endfunction
 
-nnoremap <expr> <leader>cf CreateFileUnderCursor("")
-nnoremap <expr> <leader>cjf CreateFileUnderCursor("js")
+nnoremap <leader>cf :call CreateFileUnderCursor("")<CR>
+nnoremap <leader>cjf :call CreateFileUnderCursor("js")<CR>
 nnoremap <leader>ijf :call ImportJsFile()<CR>
 
 " tests

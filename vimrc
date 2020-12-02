@@ -136,6 +136,9 @@ function! OpenProjectInNewTab(path)
    execute "Tcd " . a:path
 endfunction
 
+" search
+nnoremap <leader>/ :noh<CR>
+
 " console
 tnoremap <C-J> <C-\><C-N>
 

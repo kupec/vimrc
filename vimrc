@@ -267,8 +267,9 @@ endfunction
 
 function! s:do_import_js_file(file_path)
     let rel_path = s:get_import_js_file_path(a:file_path)
+    let base_file_name = fnamemodify(rel_path, ":p:t:r")
 
-    let import_line = "import {} from '" . rel_path . "';"
+    let import_line = "import " . base_file_name . " from '" . rel_path . "';"
     call append(line("."), import_line)
 endfunction
 

@@ -85,8 +85,18 @@ call plug#end()
 
 let g:suda#prefix = ['suda://', 'sudo://']
 
-let g:ackprg = 'ag --vimgrep -Q'
-let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
+let g:ackprg = 'rg --vimgrep -Q'
+
+function! s:is_ubuntu()
+    return trim(system('which apt >/dev/null && echo 1')) == '1'
+endfunction
+
+let fzf_command_args = '--type file --hidden --exclude .git'
+if s:is_ubuntu()
+    let $FZF_DEFAULT_COMMAND = 'fdfind ' . fzf_command_args
+else
+    let $FZF_DEFAULT_COMMAND = 'fd ' . fzf_command_args
+endif
 
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
@@ -349,7 +359,7 @@ function! SelectProjectAndRun(command)
 endfunction
 
 nnoremap <leader>op :call SelectProjectAndRun("OpenProjectInNewTab")<CR>
-nnoremap <leader>oo :call SelectProjectAndRun("cd")<CR>
+nnoremap <leader>oo :call SelectProjectAndRun("Tcd")<CR>
 
 
 " Triger `autoread` when files changes on disk

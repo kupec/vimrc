@@ -91,14 +91,15 @@ npm-install livedown
 # vim-prettier
 npm-install prettier
 
-# ag (fzf)
+# fd (fzf)
 if is-ubuntu; then
-	AG_PACKAGE=silversearcher-ag
+	FD_PACKAGE=fd-find
 else
-	AG_PACKAGE=the_silver_searcher
+	FD_PACKAGE=fd
 fi;
 
-package-install "$AG_PACKAGE"
+package-install "$FD_PACKAGE"
+package-install ripgrep
 
 # Install neovim python modules + plugin modules
 pip-install pynvim flake8 autopep8 isort

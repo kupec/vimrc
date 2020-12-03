@@ -91,7 +91,7 @@ function! s:is_ubuntu()
     return trim(system('which apt >/dev/null && echo 1')) == '1'
 endfunction
 
-let fzf_command_args = '--type file --hidden --exclude .git'
+let fzf_command_args = '--type file --hidden --exclude .git --exclude node_modules'
 if s:is_ubuntu()
     let $FZF_DEFAULT_COMMAND = 'fdfind ' . fzf_command_args
 else

@@ -11,11 +11,6 @@ set splitright
 set splitbelow
 syntax enable
 
-if !has('nvim')
-  set guioptions -=m 
-  set guioptions -=T
-endif
-
 let g:netrw_browsex_viewer="setsid xdg-open"
 
 let mapleader=","
@@ -372,9 +367,7 @@ autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " terminal
-if has('nvim')
-    autocmd TermOpen * startinsert
-endif
+autocmd TermOpen * startinsert
 
 command! TerminalBufferDirectory :call TerminalBufferDirectory()
 function! TerminalBufferDirectory()
@@ -384,28 +377,7 @@ function! TerminalBufferDirectory()
 endfunction
 
 """" util functions
-
-function! Random(min, max)
-	let l:a = system('echo -n $RANDOM')
-	return l:a % (1 + a:max - a:min) + a:min
-endfunction
-
-command! -range JsonToKeys <line1>,<line2>!python3 -c 'import json;import sys;s = "".join(x for x in sys.stdin);a = json.loads(s);print("\n".join(x for x in a.keys()))'
-
-command! -nargs=* ColorOpacify call ColorOpacify(<f-args>)
-
-function! ColorOpacify(hex_color, opacity) 
-    execute "read !node -e '" .
-        \ "const hex = process.argv[1];" .
-        \ "const opacity = parseInt(process.argv[2]) / 100;" .
-        \ "const parse = (i) => parseInt(hex.slice(i, i+2), 16);" .
-        \ "const colors = [parse(0), parse(2), parse(4)];" .
-        \ "const mappedColors = colors.map(c => Math.round(c * opacity));" .
-        \ 'const result = mappedColors.map(c => c.toString(16)).join("");' .
-        \ "console.log(result);"
-        \ "'"
-        \ " " . a:hex_color . " " . a:opacity
-endfunction
+runtime conf/qp_util.vim
 
 """ compile/run/test functions
 

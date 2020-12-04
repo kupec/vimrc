@@ -251,18 +251,16 @@ import matchURL from '`!p path_to('src/testing/expect/matchURL')`';
 jest.mock('`!p path_to('src/sources/backend/makeRequest')`');
 
 const FETCH_LIST_REQUEST = {
-    path: '/___/?limit=10',
+    path: '/',
     method: 'GET',
 };
 
 function render`!p base_file_name()`() {
     const qs = renderWithRedux(<`!p base_file_name()` />, {}, {withSaga: true});
 
-    const spinner = qs.queryByRole('progressbar');
-
     return {
         ...qs,
-        spinner,
+        querySpinner: () => qs.queryByRole('progressbar'),
     };
 }
 
@@ -274,9 +272,9 @@ describe('`!p base_file_name()` - render', () => {
     test('loading', () => {
         mockApi.mock(FETCH_LIST_REQUEST, apiResponseProcessing());
 
-        const {spinner} = render`!p base_file_name()`();
+        const qs = render`!p base_file_name()`();
 
-        expect(spinner).toBeInTheDocument();
+        expect(qs.querySpinner()).toBeInTheDocument();
     });
 });
 endsnippet

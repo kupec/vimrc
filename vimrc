@@ -85,7 +85,7 @@ call plug#end()
 
 let g:suda#prefix = ['suda://', 'sudo://']
 
-let g:ackprg = 'rg --vimgrep -Q'
+let g:ackprg = 'rg --vimgrep --fixed-strings'
 
 function! s:is_ubuntu()
     return trim(system('which apt >/dev/null && echo 1')) == '1'

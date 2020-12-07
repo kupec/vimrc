@@ -95,19 +95,24 @@ endfunction
 
 command! -nargs=1 DoMockFsFile :call s:do_mock_js_file(<q-args>)
 
-function! MockFsFile()
+function! MockJsFile()
     call fzf#run({'sink': 'DoMockFsFile', 'options': '--multi'})
 endfunction
 
 function! s:find_js_import_current_file()
     let file_name = expand('%:t:r')
-    call fzf#run({'source': "rg -l 'import.*" . file_name . "'", 'sink': 'new'})
+    let import_pattern = shellescape('import.*' . file_name . "'")
+    let file_pattern = shellescape('\b' . file_name . '\b')
+
+    call fzf#run(fzf#wrap({ 
+                \'source': "rg -l " . import_pattern,
+                \'options': ['--preview', 'rg -C 5 --color always ' . file_pattern . ' {}' ],
+                \}))
 endfunction
 
 nnoremap <leader>cf :call CreateFileUnderCursor("")<CR>
 nnoremap <leader>cjf :call CreateFileUnderCursor("js")<CR>
 nnoremap <leader>ijf :call ImportJsFile()<CR>
-nnoremap <leader>imj :call MockFsFile()<CR>
+nnoremap <leader>imj :call MockJsFile()<CR>
 
-command! FindJsImportCurrentFile :call <SID>find_js_import_current_file()
-nnoremap <leader>imj :call MockFsFile()<CR>
+nnoremap <leader>fif :call <SID>find_js_import_current_file()<CR>

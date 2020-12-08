@@ -41,7 +41,7 @@ function! s:get_delimited_word_under_cursor(delimiters)
     return line[left:right]
 endfunction
 
-function! CreateFileUnderCursor(file_ext)
+function! s:create_file_under_cursor(file_ext)
     let file_path = s:get_delimited_word_under_cursor(["'", '"', " "])
     let file_ext = a:file_ext != "" ? a:file_ext : input("Type file extension: ")
 
@@ -80,6 +80,10 @@ function! s:do_import_js_file(file_path)
     call append(line("."), import_line)
 endfunction
 
+function! s:import_js_file()
+    call fzf#run({'sink': function('s:do_import_js_file'), 'options': '--multi'})
+endfunction
+
 function! s:do_mock_js_file(file_path)
     let rel_path = s:get_import_js_file_path(a:file_path)
 
@@ -87,16 +91,8 @@ function! s:do_mock_js_file(file_path)
     call append(line("."), import_line)
 endfunction
 
-command! -nargs=1 DoImportJsFile :call s:do_import_js_file(<q-args>)
-
-function! ImportJsFile()
-    call fzf#run({'sink': 'DoImportJsFile', 'options': '--multi'})
-endfunction
-
-command! -nargs=1 DoMockFsFile :call s:do_mock_js_file(<q-args>)
-
-function! MockJsFile()
-    call fzf#run({'sink': 'DoMockFsFile', 'options': '--multi'})
+function! s:mock_js_file()
+    call fzf#run({'sink': function('s:do_mock_js_file'), 'options': '--multi'})
 endfunction
 
 function! s:find_js_import_current_file()
@@ -110,9 +106,9 @@ function! s:find_js_import_current_file()
                 \}))
 endfunction
 
-nnoremap <leader>cf :call CreateFileUnderCursor("")<CR>
-nnoremap <leader>cjf :call CreateFileUnderCursor("js")<CR>
-nnoremap <leader>ijf :call ImportJsFile()<CR>
-nnoremap <leader>imj :call MockJsFile()<CR>
+nnoremap <silent> <leader>cf :call <SID>create_file_under_cursor("")<CR>
+nnoremap <silent> <leader>cjf :call <SID>create_file_under_cursor("js")<CR>
+nnoremap <silent> <leader>ijf :call <SID>import_js_file()<CR>
+nnoremap <silent> <leader>imj :call <SID>mock_js_file()<CR>
 
-nnoremap <leader>fif :call <SID>find_js_import_current_file()<CR>
+nnoremap <silent> <leader>fif :call <SID>find_js_import_current_file()<CR>

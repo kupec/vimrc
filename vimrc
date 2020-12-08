@@ -173,6 +173,7 @@ vnoremap <space><tab> "wy:Ack! "<C-R>w"<CR>
 nnoremap <space><leader><space> :Rg<CR>
 nnoremap <space><leader><tab> :Rg <C-R><C-W><CR>
 vnoremap <space><leader><tab> "wy:Rg <C-R>w<CR>
+nnoremap <space>/ :Lines<CR>
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)

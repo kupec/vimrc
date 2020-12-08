@@ -1,3 +1,5 @@
+let s:script_dir = expand('<sfile>:h')
+
 function! s:get_delimited_word_under_cursor(delimiters)
     let line = getline(".")
     let col = col(".")
@@ -84,6 +86,60 @@ function! s:import_js_file()
     call fzf#run({'sink': function('s:do_import_js_file'), 'options': '--multi'})
 endfunction
 
+function! s:do_import_js_lib(lib)
+    let import_part = a:lib
+
+    echom "FILE=". s:script_dir . '/qp_js_import_lib'
+    let config = readfile(s:script_dir . '/qp_js_import_lib')
+    let special_imports = {}
+
+    for line in config
+        let tokens = split(line, '\v\s{2,}')
+        if len(tokens) != 2
+            continue
+        endif
+
+        let [config_lib, config_import_part] = tokens
+        if config_lib ==# a:lib
+            let import_part = trim(config_import_part)
+            break
+        endif
+    endfor
+
+    let import_line = "import " . import_part . " from '" . a:lib . "';"
+    call append(line("."), import_line)
+endfunction
+
+function! s:import_js_lib()
+    let cur_dir = expand("%:h")
+    let dir_count = len(split(cur_dir, '/')) + 1
+
+    let i = 0
+    while i < dir_count
+        let package_json_file = cur_dir . '/package.json'
+        if filereadable(package_json_file)
+            let package_json = json_decode(readfile(package_json_file))
+            break
+        endif
+
+        let [cur_dir] = systemlist('realpath -m ' . cur_dir . '/..')
+        let i += 1
+    endwhile
+
+    if ! exists("package_json")
+        echom "Cannot find package.json"
+        return
+    endif
+
+    let lib_list = keys(package_json.dependencies) + keys(package_json.devDependencies)
+
+    call fzf#run({
+        \'source': lib_list,
+        \'sink': function('s:do_import_js_lib'),
+        \'options': '--multi'
+        \})
+endfunction
+
 function! s:do_mock_js_file(file_path)
     let rel_path = s:get_import_js_file_path(a:file_path)
 
@@ -109,6 +165,7 @@ endfunction
 nnoremap <silent> <leader>cf :call <SID>create_file_under_cursor("")<CR>
 nnoremap <silent> <leader>cjf :call <SID>create_file_under_cursor("js")<CR>
 nnoremap <silent> <leader>ijf :call <SID>import_js_file()<CR>
+nnoremap <silent> <leader>ijn :call <SID>import_js_lib()<CR>
 nnoremap <silent> <leader>imj :call <SID>mock_js_file()<CR>
 
 nnoremap <silent> <leader>fif :call <SID>find_js_import_current_file()<CR>

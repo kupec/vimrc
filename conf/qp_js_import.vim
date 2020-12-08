@@ -53,15 +53,15 @@ function! s:create_file_under_cursor(file_ext)
     let file_path = fnamemodify(cur_path . "/" . file_path, ":.")
     let dir_path = fnamemodify(file_path, ":h")
 
-    call system("mkdir -p " . dir_path)
-    execute "new " . file_path 
+    call system("mkdir -p " . shellescape(dir_path))
+    execute "vnew " . file_path 
     write
 endfunction
 
 function! s:get_import_js_file_path(file_path)
     let cur_path = expand("%:p:h")
     let file_path = fnamemodify(a:file_path, ":p")
-    let rel_path = trim(system("realpath -m --relative-to " . cur_path . " " . file_path))
+    let rel_path = trim(system("realpath -m --relative-to " . shellescape(cur_path) . " " . shellescape(file_path)))
 
     echom "rel = " . rel_path
 

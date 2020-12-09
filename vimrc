@@ -9,6 +9,7 @@ set t_Co=256
 set autoread
 set splitright
 set splitbelow
+set lazyredraw
 syntax enable
 
 let g:netrw_browsex_viewer="setsid xdg-open"

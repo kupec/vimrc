@@ -181,7 +181,7 @@ nnoremap <space><space> :Ack!<space>""<Left>
 nnoremap <space><tab> :Ack! "<C-R><C-W>"<CR>
 vnoremap <space><tab> "wy:Ack! "<C-R>w"<CR>
 nnoremap <space><leader><space> :Rg<CR>
-nnoremap <space><leader><tab> :Rg <C-R><C-W><CR>
+nnoremap <space><leader><tab> :Rg \b<C-R><C-W>\b<CR>
 vnoremap <space><leader><tab> "wy:Rg <C-R>w<CR>
 nnoremap <space>/ :Lines<CR>
 

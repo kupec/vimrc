@@ -67,8 +67,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " highlight
 Plug 'lfv89/vim-interestingwords'
-" environment
-Plug 'vim-scripts/tcd.vim'
 " windows
 Plug 'wesQ3/vim-windowswap'
 " snippets
@@ -87,12 +85,15 @@ function! s:is_ubuntu()
     return trim(system('which apt >/dev/null && echo 1')) == '1'
 endfunction
 
-let fzf_command_args = '--type file --hidden --exclude .git --exclude node_modules'
 if s:is_ubuntu()
-    let $FZF_DEFAULT_COMMAND = 'fdfind ' . fzf_command_args
+    let g:fd_prog = 'fdfind'
 else
-    let $FZF_DEFAULT_COMMAND = 'fd ' . fzf_command_args
+    let g:fd_prog = 'fd'
 endif
+
+
+let fzf_command_args = '--type file --hidden --exclude .git --exclude node_modules'
+let $FZF_DEFAULT_COMMAND = g:fd_prog . ' --type file --hidden --exclude .git --exclude node_modules'
 
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
@@ -134,12 +135,20 @@ let g:UltiSnipsEditSplit="vertical"
 set background=light
 autocmd VimEnter * colorscheme PaperColor
 
-command! -nargs=1 OpenProjectInNewTab :call OpenProjectInNewTab(<q-args>)
-function! OpenProjectInNewTab(path)
-   let l:pwd = getcwd()
-   execute "Tcd " . l:pwd
-   execute "tabnew " . a:path
-   execute "Tcd " . a:path
+function! s:open_project(path)
+   execute "tcd " . a:path
+
+   call append(0, ["Project: " . a:path, "Please open a file"])
+   set nomodified
+endfunction
+
+function! s:open_project_in_new_tab(path)
+   let pwd = getcwd()
+   execute "tcd " . pwd
+
+   execute "tabnew"
+
+   call s:open_project(a:path)
 endfunction
 
 " search
@@ -155,9 +164,9 @@ nmap <leader>m <Plug>(easymotion-overwin-f2)
 nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 
 " vimrc
-nnoremap <leader>rcl :so $MYVIMRC<CR>
-nnoremap <leader>rco :OpenProjectInNewTab ~/.vim<CR>:e ~/.vim/vimrc<CR>
-nnoremap <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
+nnoremap <silent> <leader>rcl :so $MYVIMRC<CR>
+nnoremap <silent> <leader>rco :call <SID>open_project_in_new_tab("~/.vim")<CR>:e ~/.vim/vimrc<CR>
+nnoremap <silent> <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
 
 " todo
 command! TODO :tabnew ~/proj/TODO
@@ -247,12 +256,16 @@ endfunction
 
 " Project tabs
 
-function! SelectProjectAndRun(command)
-    call fzf#run({'source': 'find ~/proj -mindepth 1 -maxdepth 1', 'sink': a:command})
+function! s:select_project_and_run(sink)
+    call fzf#run({
+                \'source': g:fd_prog . ' . ~/proj --type d --max-depth 1',
+                \'sink': a:sink,
+                \'options': ['--preview', 'cat {}/README.md'],
+                \})
 endfunction
 
-nnoremap <leader>op :call SelectProjectAndRun("OpenProjectInNewTab")<CR>
-nnoremap <leader>oo :call SelectProjectAndRun("Tcd")<CR>
+nnoremap <leader>op :call <SID>select_project_and_run(function("<SID>open_project_in_new_tab"))<CR>
+nnoremap <leader>oo :call <SID>select_project_and_run(function("<SID>open_project"))<CR>
 
 
 " Triger `autoread` when files changes on disk

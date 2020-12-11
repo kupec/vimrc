@@ -197,6 +197,7 @@ nnoremap <leader>nc :NERDTreeClose<CR>
 
 " navigation
 runtime conf/qp_js_import.vim
+runtime conf/qp_js_test_view.vim
 
 " tests
 

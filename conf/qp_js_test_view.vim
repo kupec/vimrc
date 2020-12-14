@@ -19,10 +19,17 @@ function! s:find_oneline_test_lines()
     return items
 endfunction
 
+function! s:do_find_test_lines(test_line)
+    let [test_line_nr; _] = split(a:test_line, ':')
+    let curpos = getpos('.')
+    let curpos[1] = str2nr(test_line_nr)
+    call setpos('.', curpos)
+endfunction
+
 function! s:find_test_lines()
     call fzf#run({
                 \'source': s:find_oneline_test_lines(),
-                \'sink': 'echo',
+                \'sink': function('s:do_find_test_lines'),
                 \})
 endfunction
 

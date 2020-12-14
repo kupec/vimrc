@@ -167,7 +167,7 @@ nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 
 function! s:vimrc_commit_and_push()
     Git add --all
-    autocmd BufWritePost .git/COMMIT_EDITMSG ++once execute "Gpush | tabclose"
+    autocmd BufWritePost .git/COMMIT_EDITMSG ++once execute "Gpush | echom 'pushed!'"
     Gcommit
 endfunction
 

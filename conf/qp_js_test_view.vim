@@ -27,9 +27,12 @@ function! s:do_find_test_lines(test_line)
 endfunction
 
 function! s:find_test_lines()
+    let cur_file = expand('%')
+
     call fzf#run({
                 \'source': s:find_oneline_test_lines(),
                 \'sink': function('s:do_find_test_lines'),
+                \'options': ['--preview', 'tail -n +$(echo {} | sed ''s/^\([^:]\+\):.*$/\1/'') ' . cur_file],
                 \})
 endfunction
 

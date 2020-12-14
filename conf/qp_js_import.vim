@@ -131,7 +131,7 @@ function! s:import_js_lib()
         return
     endif
 
-    let lib_list = keys(package_json.dependencies) + keys(package_json.devDependencies)
+    let lib_list = keys(get(package_json, 'dependencies', {})) + keys(get(package_json, 'devDependencies', {}))
 
     call fzf#run({
         \'source': lib_list,

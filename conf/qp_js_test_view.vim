@@ -11,7 +11,7 @@ function! s:find_oneline_test_lines()
         endif
 
         let test_line = getline(test_line_nr)
-        call insert(items, test_line_nr . ":" . test_line, 0)
+        call insert(items, [test_line_nr, test_line], 0)
     endwhile
 
     call setpos('.', old_pos)
@@ -19,21 +19,29 @@ function! s:find_oneline_test_lines()
     return items
 endfunction
 
-function! s:do_find_test_lines(test_line)
+function! s:find_test_lines()
+    let test_list = s:find_oneline_test_lines()
+    call sort(test_list, {i1, i2 -> i2[0] >= i1[0] ? 1 : -1})
+    call map(test_list, {_, val -> val[0] . ":" . val[1]})
+    return test_list
+endfunction
+
+function! s:do_show_test_lines(test_line)
     let [test_line_nr; _] = split(a:test_line, ':')
     let curpos = getpos('.')
     let curpos[1] = str2nr(test_line_nr)
     call setpos('.', curpos)
+    normal zz
 endfunction
 
-function! s:find_test_lines()
+function! s:show_test_lines()
     let cur_file = expand('%')
 
     call fzf#run({
-                \'source': s:find_oneline_test_lines(),
-                \'sink': function('s:do_find_test_lines'),
+                \'source': s:find_test_lines(),
+                \'sink': function('s:do_show_test_lines'),
                 \'options': ['--preview', 'tail -n +$(echo {} | sed ''s/^\([^:]\+\):.*$/\1/'') ' . cur_file],
                 \})
 endfunction
 
-nnoremap <space>t :call <SID>find_test_lines()<CR>
+nnoremap <space>t :call <SID>show_test_lines()<CR>

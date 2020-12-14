@@ -164,9 +164,16 @@ nmap <leader>m <Plug>(easymotion-overwin-f2)
 nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 
 " vimrc
+
+function! s:vimrc_commit_and_push()
+    Git add --all
+    autocmd BufWritePost .git/index ++once execute "Gpush | tabclose"
+    Gcommit
+endfunction
+
 nnoremap <silent> <leader>rcl :so $MYVIMRC<CR>
 nnoremap <silent> <leader>rco :call <SID>open_project_in_new_tab("~/.vim")<CR>:e ~/.vim/vimrc<CR>
-nnoremap <silent> <leader>rcg :w<CR>:Gwrite<CR>:Gcommit -v<CR>
+nnoremap <silent> <leader>rcg :call <SID>vimrc_commit_and_push()<CR>
 
 " todo
 command! TODO :tabnew ~/proj/TODO

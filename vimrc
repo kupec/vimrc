@@ -137,9 +137,12 @@ autocmd VimEnter * colorscheme PaperColor
 
 function! s:open_project(path)
    execute "tcd " . a:path
+   new
 
    call append(0, ["Project: " . a:path, "Please open a file"])
    set nomodified
+
+   execute "normal \<C-W>o"
 endfunction
 
 function! s:open_project_in_new_tab(path)

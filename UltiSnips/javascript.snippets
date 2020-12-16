@@ -202,7 +202,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function `!p base_file_name()`(props) {
-	const classes = useStyles(props);
+	const classes = useStyles();
 
     return (
 		<div className={classes.root}>`!p base_file_name()`</div>
@@ -264,11 +264,11 @@ function render`!p base_file_name()`() {
     };
 }
 
-describe('`!p base_file_name()` - render', () => {
-    beforeEach(() => {
-		mockApi.reset();
-    });
+beforeEach(() => {
+	mockApi.reset();
+});
 
+describe('`!p base_file_name()` - render', () => {
     test('loading', () => {
         mockApi.mock(FETCH_LIST_REQUEST, apiResponseProcessing());
 

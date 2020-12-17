@@ -17,7 +17,7 @@ function npm-install {
 
 function pip-install {
 	if ! which "$1" >/dev/null; then
-		sudo pip3 install "$1"
+		sudo python3 -m pip install --user "$1"
 	fi;
 }
 
@@ -66,8 +66,8 @@ fi;
 PYTHON3=python3
 PIP3=python3-pip
 if is-macos; then
-    PYTHON3=python37
-    PIP3=py37-pip
+    PYTHON3=python39
+    PIP3=py39-pip
 fi;
 
 package-install git curl xsel $PYTHON3 $PIP3

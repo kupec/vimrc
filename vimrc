@@ -138,8 +138,14 @@ autocmd VimEnter * colorscheme PaperColor
 function! s:open_project(path)
    execute "tcd " . a:path
    new
+   setlocal nonumber
 
-   call append(0, ["Project: " . a:path, "Please open a file"])
+   for i in range(winheight('.') / 2 - 1)
+       call append(0, '')
+   endfor
+
+   call append(line('$'), ["Project: " . a:path, "Please open a file"])
+   execute "$-1,$center" winwidth('.')
    set nomodified
 
    execute "normal \<C-W>o"

@@ -20,6 +20,7 @@ global !p
 from javascript_snippets import (
 	semi, space_before_function_paren, keyword_spacing
 )
+import subprocess
 
 
 def base_file_name():
@@ -27,42 +28,12 @@ def base_file_name():
 
 
 def path_to(file_path):
-    snip.rv = _path_to(path, file_path)
+	proc = subprocess.run(['realpath', '-m', '--relative-to', path, file_path], capture_output=True, text=True)
 
+	snip.rv = proc.stdout if proc.returncode == 0 else f'Cannot run "realpath": {proc.stderr}'
 
-def _path_to(from_path, to_path):
-    from_path_tokens = _get_path_tokens(from_path)
-    to_path_tokens = _get_path_tokens(to_path)
-
-    while len(from_path_tokens) > 0 and len(to_path_tokens) > 0:
-        if from_path_tokens[0] != to_path_tokens[0]:
-            break
-
-        from_path_tokens.pop(0)
-        to_path_tokens.pop(0)
-
-    if from_path_tokens == [] or to_path_tokens == []:
-        return ''
-
-    folder_path = _find_folder_path_to(from_path_tokens, to_path_tokens)
-
-    return folder_path + to_path_tokens[-1]
-
-
-def _find_folder_path_to(from_path_tokens, to_path_tokens):
-    parent_jump_count = len(from_path_tokens) - 1
-
-    if parent_jump_count == 0:
-        return './'
-
-    parent_chain = '../' * parent_jump_count
-    child_folder_path = '/'.join(to_path_tokens[0:-1]) + '/'
-    return parent_chain + child_folder_path
-
-
-def _get_path_tokens(path):
-    return path.split('/')
 endglobal
+
 
 ###########################################################################
 #                            TextMate Snippets                            #
@@ -244,7 +215,7 @@ import mockApi, {
     listApiResponse,
     apiResponse,
     apiResponseProcessing,
-} from '../../testing/mock/mockApi';
+} from '`!p path_to('src/testing/mock/mockApi')`';
 import makeRequest from '`!p path_to('src/sources/backend/makeRequest')`';
 import matchURL from '`!p path_to('src/testing/expect/matchURL')`';
 

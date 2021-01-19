@@ -163,12 +163,12 @@ function! s:find_js_import_current_file()
 endfunction
 
 function! s:find_js_target_of_current_test_file()
-    let file_name = expand('%:t:r:r')
+    let file_path = expand('%:r:r')
     let js_exts = ['js', 'jsx', 'ts', 'tsx']
     let js_exts_flags = join(map(js_exts, {_, ext -> '-e ' . ext}))
 
     call fzf#run(fzf#wrap({ 
-                \'source': join([g:fd_prog, js_exts_flags, "-E '*.test.*'", file_name]),
+                \'source': join([g:fd_prog, js_exts_flags, "-p -F -E '*.test.*'", shellescape(file_path)]),
                 \}))
 endfunction
 

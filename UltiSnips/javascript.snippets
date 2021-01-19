@@ -21,6 +21,7 @@ from javascript_snippets import (
 	semi, space_before_function_paren, keyword_spacing
 )
 import subprocess
+import os
 
 
 def base_file_name():
@@ -28,9 +29,10 @@ def base_file_name():
 
 
 def path_to(file_path):
-	proc = subprocess.run(['realpath', '-m', '--relative-to', path, file_path], capture_output=True, text=True)
+    base_dir = os.path.dirname(path)
+    proc = subprocess.run(['realpath', '-m', '--relative-to', base_dir, file_path], capture_output=True, text=True)
 
-	snip.rv = proc.stdout if proc.returncode == 0 else f'Cannot run "realpath": {proc.stderr}'
+    snip.rv = proc.stdout.strip() if proc.returncode == 0 else f'Cannot run "realpath": {proc.stderr}'
 
 endglobal
 

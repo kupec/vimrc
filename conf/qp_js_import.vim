@@ -162,6 +162,16 @@ function! s:find_js_import_current_file()
                 \}))
 endfunction
 
+function! s:find_js_target_of_current_test_file()
+    let file_name = expand('%:t:r:r')
+    let js_exts = ['js', 'jsx', 'ts', 'tsx']
+    let js_exts_flags = join(map(js_exts, {_, ext -> '-e ' . ext}))
+
+    call fzf#run(fzf#wrap({ 
+                \'source': join([g:fd_prog, js_exts_flags, "-E '*.test.*'", file_name]),
+                \}))
+endfunction
+
 nnoremap <silent> <leader>cf :call <SID>create_file_under_cursor("")<CR>
 nnoremap <silent> <leader>cjf :call <SID>create_file_under_cursor("js")<CR>
 nnoremap <silent> <leader>ijf :call <SID>import_js_file()<CR>
@@ -169,3 +179,4 @@ nnoremap <silent> <leader>ijn :call <SID>import_js_lib()<CR>
 nnoremap <silent> <leader>imj :call <SID>mock_js_file()<CR>
 
 nnoremap <silent> <leader>fif :call <SID>find_js_import_current_file()<CR>
+nnoremap <silent> <leader>ftt :call <SID>find_js_target_of_current_test_file()<CR>

@@ -2,6 +2,7 @@ classnames  clsx
 immer  produce
 @material-ui/core  {}
 mockdate  MockDate
+prop-types  PropTypes
 react  React
 react-redux  {useSelector, useDispatch}
 react-router-dom  {Link, useHistory, useLocation, useParams}

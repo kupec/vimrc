@@ -153,7 +153,7 @@ endfunction
 
 function! s:find_js_import_current_file()
     let file_name = expand('%:t:r')
-    let import_pattern = shellescape('import.*' . file_name . "'")
+    let import_pattern = shellescape('(import|require).*' . file_name)
     let file_pattern = shellescape('\b' . file_name . '\b')
 
     call fzf#run(fzf#wrap({ 

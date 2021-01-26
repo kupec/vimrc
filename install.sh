@@ -98,8 +98,7 @@ else
 	FD_PACKAGE=fd
 fi;
 
-package-install "$FD_PACKAGE"
-package-install ripgrep
+package-install "$FD_PACKAGE" ripgrep watchman
 
 # Install neovim python modules + plugin modules
 pip-install pynvim flake8 autopep8 isort

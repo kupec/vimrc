@@ -82,8 +82,15 @@ function! s:do_import_js_file(file_path)
     call append(line("."), import_line)
 endfunction
 
-function! s:import_js_file()
-    call fzf#run({'sink': function('s:do_import_js_file'), 'options': '--multi'})
+function! s:import_js_file(...)
+    let fzf_run_dict = {'sink': function('s:do_import_js_file'), 'options': '--multi'}
+
+    if a:0 == 1
+        let search_root = a:1
+        call extend(fzf_run_dict, {'source': g:fd_prog . ' -g ' . shellescape('*') . ' ' . search_root})
+    endif
+
+    call fzf#run(fzf_run_dict)
 endfunction
 
 function! s:do_import_js_lib(lib)
@@ -175,6 +182,7 @@ endfunction
 nnoremap <silent> <leader>cf :call <SID>create_file_under_cursor("")<CR>
 nnoremap <silent> <leader>cjf :call <SID>create_file_under_cursor("js")<CR>
 nnoremap <silent> <leader>ijf :call <SID>import_js_file()<CR>
+nnoremap <silent> <leader>iid :call <SID>import_js_file('node_modules/intdev')<CR>
 nnoremap <silent> <leader>ijn :call <SID>import_js_lib()<CR>
 nnoremap <silent> <leader>imj :call <SID>mock_js_file()<CR>
 

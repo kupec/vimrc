@@ -61,14 +61,16 @@ function! s:create_file_under_cursor(file_ext)
 endfunction
 
 function! s:get_import_js_file_path(file_path)
-    let cur_path = expand("%:p:h")
-    let file_path = fnamemodify(a:file_path, ":p")
-    let rel_path = trim(system("realpath -m --relative-to " . shellescape(cur_path) . " " . shellescape(file_path)))
+    if a:file_path =~ '^node_modules'
+        let rel_path = substitute(a:file_path, '^node_modules/', '', '')
+    else
+        let cur_path = expand("%:p:h")
+        let file_path = fnamemodify(a:file_path, ":p")
+        let rel_path = trim(system("realpath -m --relative-to " . shellescape(cur_path) . " " . shellescape(file_path)))
 
-    echom "rel = " . rel_path
-
-    if rel_path[0] != '.'
-        let rel_path = "./" . rel_path
+        if rel_path[0] != '.'
+            let rel_path = "./" . rel_path
+        endif
     endif
 
     return substitute(rel_path, '\(\.js\|\.jsx\|\.ts\|\.tsx\)$', '', '')

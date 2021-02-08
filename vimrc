@@ -229,6 +229,7 @@ nnoremap <leader>ld :ALEDetail<CR><C-W>J
 
 " coc
 inoremap <silent><expr> <c-space> coc#refresh()
+noremap <silent> <leader>R :CocAction<cr>
 
 " emmet
 

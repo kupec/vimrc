@@ -199,7 +199,7 @@ import React from 'react';
 import `!p base_file_name()` from './`!p base_file_name()`';
 import {render, act, fireEvent} from '@testing-library/react';
 
-function render`!p base_file_name()`({}) {
+function renderComponent({}) {
     const qs = render(<`!p base_file_name()` />);
 
 	return {
@@ -209,7 +209,7 @@ function render`!p base_file_name()`({}) {
 
 describe('`!p base_file_name()` - render', () => {
     test('${1}', () => {
-        const {} = render`!p base_file_name()`({});
+        const {} = renderComponent({});
         ${2}
     });
 });
@@ -223,18 +223,15 @@ import mockApi, {
     listApiResponse,
     apiResponse,
     apiResponseProcessing,
-} from '`!p path_to('src/testing/mock/mockApi')`';
-import makeRequest from '`!p path_to('src/sources/backend/makeRequest')`';
-import matchURL from '`!p path_to('src/testing/expect/matchURL')`';
-
-jest.mock('`!p path_to('src/sources/backend/makeRequest')`');
+} from '@infra/intdev/testing/mock/mockApi';
+import makeRequest from '@infra/intdev/sources/makeRequest';
 
 const FETCH_LIST_REQUEST = {
     path: '/',
     method: 'GET',
 };
 
-function render`!p base_file_name()`() {
+function renderComponent() {
     const qs = renderBuilder().withRedux().render(`!p base_file_name()`);
 
     return {
@@ -243,15 +240,11 @@ function render`!p base_file_name()`() {
     };
 }
 
-beforeEach(() => {
-	mockApi.reset();
-});
-
 describe('`!p base_file_name()` - render', () => {
     test('loading', () => {
         mockApi.mock(FETCH_LIST_REQUEST, apiResponseProcessing());
 
-        const qs = render`!p base_file_name()`();
+        const qs = renderComponent();
 
         expect(qs.querySpinner()).toBeInTheDocument();
     });

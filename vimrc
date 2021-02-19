@@ -160,6 +160,12 @@ function! s:open_project_in_new_tab(path)
    call s:open_project(a:path)
 endfunction
 
+" global
+noremap <c-c> <esc>
+inoremap <c-c> <esc>
+noremap <esc> <c-c>
+inoremap <esc> <c-c>
+
 " search
 nnoremap <leader>/ :noh<CR>
 

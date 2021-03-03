@@ -251,6 +251,7 @@ inoremap <C-\><C-f><C-n> <C-R>=expand("%:t:r")<CR>
 
 " find on mdn
 nnoremap <silent> <leader>dm :execute "!" g:netrw_browsex_viewer "'https://developer.mozilla.org/en-US/search?q=<C-R><C-W>'"<CR>
+nnoremap <silent> <leader>dn :execute "!" g:netrw_browsex_viewer "'https://www.npmjs.com/package/<C-R><C-W>'"<CR>
 
 " add empty lines
 nnoremap <F2> m`o<esc>``

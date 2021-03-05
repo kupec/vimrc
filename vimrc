@@ -107,7 +107,7 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
-\   'python': ['autopep8', 'isort'],
+\   'python': ['autopep8'],
 \}
 let g:ale_fix_on_save = 0
 

@@ -249,9 +249,10 @@ nnoremap 0 ^
 " paste current filename
 inoremap <C-\><C-f><C-n> <C-R>=expand("%:t:r")<CR>
 
-" find on mdn
+" find documentation
 nnoremap <silent> <leader>dm :execute "!" g:netrw_browsex_viewer "'https://developer.mozilla.org/en-US/search?q=<C-R><C-W>'"<CR>
 nnoremap <silent> <leader>dn :execute "!" g:netrw_browsex_viewer "'https://www.npmjs.com/package/<C-R><C-W>'"<CR>
+nnoremap <silent> <leader>dp :execute "!" g:netrw_browsex_viewer "'https://docs.python.org/3/search.html?check_keywords=yes&area=default&q=<C-R><C-W>'"<CR>
 
 " add empty lines
 nnoremap <F2> m`o<esc>``

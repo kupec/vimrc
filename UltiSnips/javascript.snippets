@@ -194,6 +194,30 @@ export default function `!p base_file_name()`() {
 }
 endsnippet
 
+snippet useef ""
+useEffect(() => {
+    ${1}
+}, []);
+endsnippet
+
+snippet useme ""
+useMemo(() => {
+    ${1}
+}, []);
+endsnippet
+
+snippet useca ""
+const ${1} = useCallback(() => {
+    ${2}
+}, []);
+endsnippet
+
+snippet usest ""
+const [${1}, set${1}] = useState(${2});
+endsnippet
+
+# test
+
 snippet jsrctest ""
 import React from 'react';
 import `!p base_file_name()` from './`!p base_file_name()`';

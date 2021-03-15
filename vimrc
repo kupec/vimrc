@@ -103,7 +103,7 @@ let g:user_emmet_settings = {
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'python': ['flake8'],
+\   'python': ['flake8', 'mypy'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],

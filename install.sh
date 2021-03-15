@@ -123,5 +123,5 @@ if is-ubuntu; then
 fi;
 
 "$NVIM" +PlugInstall +qall
-"$NVIM" -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html|q'
+"$NVIM" -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html coc-python|q'
 

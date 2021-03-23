@@ -101,7 +101,7 @@ fi;
 package-install "$FD_PACKAGE" ripgrep watchman
 
 # Install neovim python modules + plugin modules
-pip-install pynvim flake8 autopep8 isort
+pip-install pynvim flake8 autopep8 isort jedi
 
 if is-ubuntu; then
 	(

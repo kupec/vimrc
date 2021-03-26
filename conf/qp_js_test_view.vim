@@ -45,10 +45,20 @@ function! s:find_multiline_test_each_lines()
     return items
 endfunction
 
+function! s:pad_left(str, width, ...)
+    let pad_char = get(a:, 3, ' ')
+
+    if len(a:str) >= a:width
+        return a:str
+    endif
+
+    return repeat(pad_char, a:width - len(a:str)) . a:str
+endfunction
+
 function! s:find_test_lines()
     let test_list = s:find_oneline_test_lines() + s:find_multiline_test_each_lines()
     call sort(test_list, {i1, i2 -> i2[0] >= i1[0] ? 1 : -1})
-    call map(test_list, {_, val -> val[0] . ":" . val[1]})
+    call map(test_list, {_, val -> s:pad_left(string(val[0]), 4) . ":" . val[1]})
     return test_list
 endfunction
 
@@ -66,7 +76,7 @@ function! s:show_test_lines()
     call fzf#run({
                 \'source': s:find_test_lines(),
                 \'sink': function('s:do_show_test_lines'),
-                \'options': ['--preview', 'tail -n +$(echo {} | sed ''s/^\([^:]\+\):.*$/\1/'') ' . cur_file],
+                \'options': ['--preview', 'tail -n +$(echo {} | sed ''s/^\s*\([^:]\+\):.*$/\1/'') ' . cur_file],
                 \})
 endfunction
 

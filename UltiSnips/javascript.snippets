@@ -241,6 +241,30 @@ describe('`!p base_file_name()` - render', () => {
 });
 endsnippet
 
+snippet tsrctest ""
+import React from 'react';
+import `!p base_file_name()` from './`!p base_file_name()`';
+import {render, act, fireEvent} from '@testing-library/react';
+
+interface RenderOptions {
+}
+
+function renderComponent({}: RenderOptions = {}) {
+    const qs = render(<`!p base_file_name()` />);
+
+	return {
+		...qs,
+	};
+}
+
+describe('`!p base_file_name()` - render', () => {
+    test('${1}', () => {
+        const {} = renderComponent({});
+        ${2}
+    });
+});
+endsnippet
+
 snippet jsrcreduxtest2 ""
 import `!p base_file_name()` from './`!p base_file_name()`';
 import {act, fireEvent} from '@testing-library/react';

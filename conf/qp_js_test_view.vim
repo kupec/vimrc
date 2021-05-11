@@ -24,7 +24,7 @@ function! s:find_multiline_test_each_lines()
     call cursor(1, 1)
 
     let items = []
-    let test_each_pattern = '^\s*\%(describe\|test\|it\).each`'
+    let test_each_pattern = '^\s*\%(describe\|test\|it\).each[`(]'
 
     while 1
         let test_line_nr = search(test_each_pattern, 'W')

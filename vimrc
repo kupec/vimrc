@@ -42,6 +42,10 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'arthurxavierx/vim-caser'
+Plug 'heavenshell/vim-jsdoc', { 
+  \ 'for': ['javascript', 'javascript.jsx','typescript'], 
+  \ 'do': 'make install'
+\}
 " autocomplete
 Plug 'wellle/tmux-complete.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}

@@ -97,6 +97,7 @@ endfunction
 
 function! s:do_import_js_lib(lib)
     let import_part = a:lib
+    let import_path = a:lib
 
     echom "FILE=". s:script_dir . '/qp_js_import_lib'
     let config = readfile(s:script_dir . '/qp_js_import_lib')
@@ -104,18 +105,23 @@ function! s:do_import_js_lib(lib)
 
     for line in config
         let tokens = split(line, '\v\s{2,}')
-        if len(tokens) != 2
+        if len(tokens) < 2
             continue
         endif
 
-        let [config_lib, config_import_part] = tokens
+        let [config_lib, config_import_part] = tokens[0:1]
+
         if config_lib ==# a:lib
             let import_part = trim(config_import_part)
+            if len(tokens) == 3
+                let import_path = tokens[2]
+            endif
+
             break
         endif
     endfor
 
-    let import_line = "import " . import_part . " from '" . a:lib . "';"
+    let import_line = "import " . import_part . " from '" . import_path . "';"
     call append(line("."), import_line)
 endfunction
 

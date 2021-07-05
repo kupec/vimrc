@@ -80,4 +80,4 @@ function! s:show_test_lines()
                 \})
 endfunction
 
-nnoremap <space>t :call <SID>show_test_lines()<CR>
+autocmd FileType javascript,javascript.jsx,typescript,typescript.tsx nnoremap <space>t :call <SID>show_test_lines()<CR>

@@ -107,7 +107,7 @@ let g:user_emmet_settings = {
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'python': ['flake8', 'mypy'],
+\   'python': ['flake8'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
@@ -225,6 +225,11 @@ nnoremap <leader>nc :NERDTreeClose<CR>
 runtime conf/qp_js_import.vim
 runtime conf/qp_js_test_view.vim
 runtime conf/qp_python_test_view.vim
+
+" temp
+nmap <F5> viwgscaAction<esc>b~
+let @e = '0i[A],j0'
+let @w = ':s/|/,/ggv:s/[${}]//ggv`<0gv@e'
 
 " tests
 

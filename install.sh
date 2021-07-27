@@ -52,10 +52,6 @@ if is-ubuntu; then
 	NVIM="$NVIM_APPIMAGE_DIR/nvim"
 fi;
 
-cat > $HOME/.vimrc <<EOF
-source $ROOTDIR/vimrc
-EOF
-
 mkdir -p "$NVIMDIR"
 cp "$ROOTDIR/init.vim" "$NVIMDIR"
 

@@ -1,4 +1,4 @@
-function! s:find_lines(regexp)
+function! FindLinesByRegexp(regexp)
     let old_pos = getcurpos()
     call cursor(1, 1)
 
@@ -29,8 +29,14 @@ function! s:pad_left(str, width, ...)
     return repeat(pad_char, a:width - len(a:str)) . a:str
 endfunction
 
-function! s:prepare_lines(regexp)
-    let lines = s:find_lines(a:regexp)
+function! s:prepare_lines(regexp_or_list)
+    if type(a:regexp_or_list) == 1
+        let regexp = a:regexp_or_list
+        let lines = FindLinesByRegexp(regexp)
+    else
+        let lines = a:regexp_or_list
+    endif
+
     call sort(lines, {i1, i2 -> i2[0] >= i1[0] ? 1 : -1})
     call map(lines, {_, val -> s:pad_left(string(val[0]), 4) . ":" . val[1]})
     return lines
@@ -44,12 +50,11 @@ function! s:go_to_line(line)
     normal zz
 endfunction
 
-function! QpShowFileLines(regexp)
-    echom a:regexp
+function! QpShowFileLines(regexp_or_list)
     let cur_file = expand('%')
 
     call fzf#run({
-                \'source': s:prepare_lines(a:regexp),
+                \'source': s:prepare_lines(a:regexp_or_list),
                 \'sink': function('s:go_to_line'),
                 \'options': ['--preview', 'tail -n +$(echo {} | sed ''s/^\s*\([^:]\+\):.*$/\1/'') ' . cur_file],
                 \})

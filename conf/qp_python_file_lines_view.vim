@@ -1,4 +1,4 @@
-autocmd FileType python nnoremap <space>t :call QpShowFileLines("\vdef test_")<cr>
+autocmd FileType python nnoremap <space>t :call QpShowFileLines('\vdef test_')<cr>
 
 function s:symbols_regexp()
     return '\v(<class>|<def>|^\w+\s*\=)'

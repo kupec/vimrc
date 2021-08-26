@@ -8,3 +8,4 @@ react-redux  {useSelector, useDispatch}
 react-router-dom  {Link, useHistory, useLocation, useParams}
 @testing-library/react  {render, act, fireEvent}
 ts-jest  {mocked}  ts-jest/utils
+type-fest  {PromiseValue}

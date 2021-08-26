@@ -155,6 +155,25 @@ function! s:import_js_lib()
         \})
 endfunction
 
+function! s:do_import_lodash_lib(lib)
+    let import_line = "import " . a:lib . " from 'lodash/" . a:lib . "';"
+    call append(line("."), import_line)
+endfunction
+
+function! s:import_lodash_lib()
+    let files = split(glob('node_modules/lodash/*'), '\n')
+    let lodash_items = filter(
+                \map(files, {_,val -> fnamemodify(val, ':t:r')}),
+                \'v:val =~# "^[a-z]"'
+                \)
+
+    call fzf#run({
+        \'source': lodash_items,
+        \'sink': function('s:do_import_lodash_lib'),
+        \'options': '--multi'
+        \})
+endfunction
+
 function! s:do_mock_js_file(file_path)
     let rel_path = s:get_import_js_file_path(a:file_path)
 
@@ -192,6 +211,7 @@ nnoremap <silent> <leader>cjf :call <SID>create_file_under_cursor("js")<CR>
 nnoremap <silent> <leader>ijf :call <SID>import_js_file()<CR>
 nnoremap <silent> <leader>iid :call <SID>import_js_file('node_modules/@infra/intdev')<CR>
 nnoremap <silent> <leader>ijn :call <SID>import_js_lib()<CR>
+nnoremap <silent> <leader>ijl :call <SID>import_lodash_lib()<CR>
 nnoremap <silent> <leader>imj :call <SID>mock_js_file()<CR>
 
 nnoremap <silent> <leader>fif :call <SID>find_js_import_current_file()<CR>

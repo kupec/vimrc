@@ -60,13 +60,17 @@ function! s:create_file_under_cursor(file_ext)
     write
 endfunction
 
+function! s:get_relative_path(file_path)
+    let cur_path = expand("%:p:h")
+    let file_path = fnamemodify(a:file_path, ":p")
+    return trim(system("realpath -m --relative-to " . shellescape(cur_path) . " " . shellescape(file_path)))
+endfunction
+
 function! s:get_import_js_file_path(file_path)
     if a:file_path =~ '^node_modules'
         let rel_path = substitute(a:file_path, '^node_modules/', '', '')
     else
-        let cur_path = expand("%:p:h")
-        let file_path = fnamemodify(a:file_path, ":p")
-        let rel_path = trim(system("realpath -m --relative-to " . shellescape(cur_path) . " " . shellescape(file_path)))
+        let rel_path = s:get_relative_path(a:file_path)
 
         if rel_path[0] != '.'
             let rel_path = "./" . rel_path
@@ -91,6 +95,19 @@ function! s:import_js_file(...)
         let search_root = a:1
         call extend(fzf_run_dict, {'source': g:fd_prog . ' -g ' . shellescape('*') . ' ' . search_root})
     endif
+
+    call fzf#run(fzf_run_dict)
+endfunction
+
+function! s:write_import_js_file_path(...)
+    let fzf_run_dict = {}
+
+    function fzf_run_dict.sink(file_path) dict
+        let rel_path = s:get_import_js_file_path(a:file_path)
+
+        let line = getline('.')
+        call setline('.', strpart(line, 0, col('.')) . rel_path . strpart(line, col('.')))
+    endfunction
 
     call fzf#run(fzf_run_dict)
 endfunction
@@ -208,6 +225,7 @@ endfunction
 
 nnoremap <silent> <leader>cf :call <SID>create_file_under_cursor("")<CR>
 nnoremap <silent> <leader>cjf :call <SID>create_file_under_cursor("js")<CR>
+nnoremap <silent> <leader>iff :call <SID>write_import_js_file_path()<CR>
 nnoremap <silent> <leader>ijf :call <SID>import_js_file()<CR>
 nnoremap <silent> <leader>iid :call <SID>import_js_file('node_modules/@infra/intdev')<CR>
 nnoremap <silent> <leader>ijn :call <SID>import_js_lib()<CR>

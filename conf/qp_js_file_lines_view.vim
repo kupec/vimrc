@@ -15,7 +15,7 @@ function! s:find_multiline_test_each_lines()
             break
         endif
 
-        let end_test_line_nr = searchpair(test_each_pattern, '', '\v^\s*`', 'W')
+        let end_test_line_nr = searchpair(test_each_pattern, '', '\v^\s*(`|\]\))', 'W')
 
         let test_line = getline(test_line_nr)
         let end_test_line = getline(end_test_line_nr)

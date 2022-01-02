@@ -36,7 +36,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " search
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'mileszs/ack.vim'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
 " file manager
 Plug 'scrooloose/nerdtree'
 " markdown preview
@@ -67,8 +71,6 @@ call plug#end()
 
 let g:suda#prefix = ['suda://', 'sudo://']
 
-let g:ackprg = 'rg --vimgrep --fixed-strings'
-
 function! s:is_ubuntu()
     return trim(system('which apt-get >/dev/null && echo 1')) == '1'
 endfunction
@@ -82,6 +84,8 @@ endif
 
 let fzf_command_args = '--type file --hidden --exclude .git --exclude node_modules'
 let $FZF_DEFAULT_COMMAND = g:fd_prog . ' --type file --hidden --exclude .git --exclude node_modules'
+
+lua require('telescope').load_extension('fzf')
 
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
@@ -181,15 +185,12 @@ nnoremap <silent> <leader>rcg :call <SID>vimrc_commit_and_push()<CR>
 " todo
 command! TODO :tabnew ~/proj/TODO
 
+" telescope
+nnoremap <CR><CR> :Telescope find_files<CR>
+nnoremap <space><tab> :Telescope grep_string<CR>
+nnoremap <space><space> :Telescope live_grep<CR>
 " fzf
-nnoremap <CR><CR> :FZF<CR>
-nnoremap <CR><tab> :FZF -q <C-R><C-W><CR>
 vnoremap <CR><tab> "wy:FZF -q <C-R>w<CR>
-nnoremap <CR><space> :GFiles<CR>
-nnoremap <space><CR> :Buffers<CR>
-nnoremap <space><space> :Ack!<space>""<Left>
-nnoremap <space><tab> :Ack! "<C-R><C-W>"<CR>
-vnoremap <space><tab> "wy:Ack! "<C-R>w"<CR>
 nnoremap <space><leader><space> :Rg<CR>
 nnoremap <space><leader><tab> :Rg \b<C-R><C-W>\b<CR>
 vnoremap <space><leader><tab> "wy:Rg <C-R>w<CR>

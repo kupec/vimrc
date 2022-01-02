@@ -1,19 +1,3 @@
-set nocompatible
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set number
-set cursorline
-set hlsearch
-set t_Co=256
-set autoread
-set splitright
-set splitbelow
-set lazyredraw
-syntax enable
-
-let g:netrw_browsex_viewer="setsid xdg-open"
-
 let mapleader=","
 
 call plug#begin(stdpath('data') . '/plugged')

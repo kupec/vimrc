@@ -3,6 +3,6 @@
 To install:
 
 ```bash
-git clone https://github.com/kupec/vimrc.git ~/.vim
-~/.vim/install.sh
+git clone https://github.com/kupec/vimrc.git ~/.config/nvim
+~/.config/nvim/install.sh
 ```

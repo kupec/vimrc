@@ -40,7 +40,6 @@ function package-install {
 	
 }
 
-ROOTDIR="$HOME/.vim"
 NVIM_AUTOLOAD_PLUGIN_DIR="$HOME/.local/share/nvim/site/autoload"
 NVIM_PLUG_VIM="$NVIM_AUTOLOAD_PLUGIN_DIR/plug.vim"
 NVIMDIR="$HOME/.config/nvim"
@@ -51,9 +50,6 @@ if is-ubuntu; then
 	NVIM_APPIMAGE_DIR="$HOME/.local/bin"
 	NVIM="$NVIM_APPIMAGE_DIR/nvim"
 fi;
-
-mkdir -p "$NVIMDIR"
-cp "$ROOTDIR/init.vim" "$NVIMDIR"
 
 if is-ubuntu; then
 	sudo apt update

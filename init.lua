@@ -1,4 +1,4 @@
-require('plugins')
+require 'plugins'
 if vim.env.NVIM_INSTALL_PLUGIN_MODE == 'yes' then
     vim.cmd [[
         autocmd User PackerComplete quitall
@@ -22,5 +22,7 @@ vim.opt.lazyredraw = true
 vim.cmd 'syntax enable'
 
 vim.g.netrw_browsex_viewer = "setsid xdg-open"
+
+require 'plugins.lspconfig'
 
 vim.cmd 'runtime legacy.init.vim'

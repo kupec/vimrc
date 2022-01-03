@@ -69,14 +69,6 @@ PACKAGES+=("$FD_PACKAGE" ripgrep watchman)
 
 packages-install "${PACKAGES[@]}"
 
-# add coc extensions
-echo "Installing coc.nvim extensions"
-(
-mkdir -p "$HOME/.config/coc/extensions";
-cd "$HOME/.config/coc/extensions";
-npm install;
-)
-
 # Install neovim python modules + plugin modules
 pip-install pynvim flake8 autopep8 isort jedi
 
@@ -130,6 +122,3 @@ fi;
 
 echo "Installing/updating nvim plugins"
 NVIM_INSTALL_PLUGIN_MODE=yes "$NVIM" --headless; echo
-echo "Installing coc.nvim extensions"
-"$NVIM" --headless -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html coc-python | quitall'
-

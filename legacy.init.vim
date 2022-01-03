@@ -168,10 +168,6 @@ nnoremap [l :ALEPrevious<CR>
 nnoremap <leader>ll :ALEHover<CR>
 nnoremap <leader>ld :ALEDetail<CR><C-W>J
 
-" coc
-inoremap <silent><expr> <c-space> coc#refresh()
-noremap <silent> <leader>R :CocAction<cr>
-
 " emmet
 
 nmap <leader>cts va"<esc>`<BcwclassName<esc>f"lcs"{lsstyles.<esc>WX

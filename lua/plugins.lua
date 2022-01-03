@@ -4,6 +4,10 @@ return require('packer').startup(function(use)
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
+    -- LSP
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/nvim-lsp-installer'
+
     -- sudo
     use 'lambdalisue/suda.vim'
 
@@ -43,10 +47,6 @@ return require('packer').startup(function(use)
 
     -- autocomplete
     use 'wellle/tmux-complete.vim'
-    use {
-        'neoclide/coc.nvim',
-        branch = 'release',
-    }
 
     -- search
     use {

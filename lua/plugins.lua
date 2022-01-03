@@ -1,6 +1,6 @@
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function(use)
+require('packer').startup(function(use)
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
@@ -97,4 +97,6 @@ return require('packer').startup(function(use)
     -- terminal
     use 'kassio/neoterm'
 end)
+
+
 

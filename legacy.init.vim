@@ -51,9 +51,6 @@ let g:rainbow_active = 1
 let g:python_highlight_all = 1
 
 let g:prettier#exec_cmd_path = 0
-if prettier#PrettierCli('--version') < '2.0'
-  let g:prettier#config#arrow_parens = 'avoid'
-endif
 let g:prettier#exec_cmd_async = 1
 let g:prettier#quickfix_auto_focus = 0
 autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>

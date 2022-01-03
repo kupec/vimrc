@@ -9,12 +9,6 @@ function is-macos {
 	which port;
 }
 
-function npm-install {
-	if ! which "$1" >/dev/null; then
-		sudo npm i -g "$1"
-	fi;
-}
-
 function pip-install {
 	if ! which "$1" >/dev/null; then
 		sudo python3 -m pip install --user "$1"
@@ -40,17 +34,6 @@ function package-install {
 	
 }
 
-NVIM_AUTOLOAD_PLUGIN_DIR="$HOME/.local/share/nvim/site/autoload"
-NVIM_PLUG_VIM="$NVIM_AUTOLOAD_PLUGIN_DIR/plug.vim"
-NVIMDIR="$HOME/.config/nvim"
-
-NVIM=nvim
-if is-ubuntu; then
-	NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
-	NVIM_APPIMAGE_DIR="$HOME/.local/bin"
-	NVIM="$NVIM_APPIMAGE_DIR/nvim"
-fi;
-
 if is-ubuntu; then
 	sudo apt update
 fi;
@@ -66,22 +49,12 @@ package-install git curl xsel $PYTHON3 $PIP3
 # check if npm installed from other sources first (download manually, for example)
 which npm || package-install npm
 
-if [[ ! -f "$NVIM_PLUG_VIM" ]]; then
-    curl -fLo $NVIM_PLUG_VIM --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi;
-
 # add coc extensions
 (
 mkdir -p "$HOME/.config/coc/extensions";
 cd "$HOME/.config/coc/extensions";
 npm install;
 )
-
-# vim-livedown (markdown live)
-npm-install livedown
-
-# vim-prettier
-npm-install prettier
 
 # fd (fzf)
 if is-ubuntu; then
@@ -95,12 +68,25 @@ package-install "$FD_PACKAGE" ripgrep watchman
 # Install neovim python modules + plugin modules
 pip-install pynvim flake8 autopep8 isort jedi
 
+NVIM=nvim
 if is-ubuntu; then
-	(
-	cd "$NVIM_APPIMAGE_DIR";
-	wget "$NVIM_APPIMAGE_URL" -O nvim;
-	chmod +x nvim;
-	)
+    NVIM_APPIMAGE_DIR="$HOME/.local/bin"
+    NVIM="$NVIM_APPIMAGE_DIR/nvim"
+    NVIM_VERSION_FILE="$NVIM_APPIMAGE_DIR/.nvim.version"
+    NVIM_APPIMAGE_DESC_URL="https://api.github.com/repos/neovim/neovim/releases/latest"
+    NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+
+    NVIM_NEW_VERSION=$(curl "$NVIM_APPIMAGE_DESC_URL" \
+        | "$PYTHON3" -c 'import sys; import json; print(json.load(sys.stdin)["html_url"])')
+    touch "$NVIM_VERSION_FILE"
+    NVIM_CUR_VERSION=$(<"$NVIM_VERSION_FILE")
+
+    if [[ $NVIM_NEW_VERSION != $NVIM_CUR_VERSION ]]; then
+        wget "$NVIM_APPIMAGE_URL" -O "$NVIM"
+        chmod +x "$NVIM"
+
+        echo $NVIM_NEW_VERSION > $NVIM_VERSION_FILE
+    fi;
 
 	# Install neovim gui wrapper
 	if [[ ! -d neovim-gnome-terminal ]]; then
@@ -114,6 +100,15 @@ if is-ubuntu; then
 	fi;
 fi;
 
-"$NVIM" +PlugInstall +qall
-"$NVIM" -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html coc-python|q'
+NVIM_DATA_DIR=$("$NVIM" -u NONE --headless -c 'echo stdpath("data") | quitall' 2>&1)
+NVIM_PACKER="$NVIM_DATA_DIR/site/pack/packer/start/packer.nvim"
+
+if [[ ! -d "$NVIM_PACKER" ]]; then
+    git clone --depth 1 \
+        https://github.com/wbthomason/packer.nvim \
+        "$NVIM_PACKER"
+fi;
+
+NVIM_INSTALL_PLUGIN_MODE=yes "$NVIM" --headless
+"$NVIM" --headless -c 'CocInstall -sync coc-tsserver coc-css coc-json coc-html coc-python | quitall'
 

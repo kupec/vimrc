@@ -1,3 +1,13 @@
+require('plugins')
+if vim.env.NVIM_INSTALL_PLUGIN_MODE == 'yes' then
+    vim.cmd [[
+        autocmd User PackerComplete quitall
+        PackerSync
+    ]]
+    return
+end
+
+
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4

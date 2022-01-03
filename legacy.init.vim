@@ -16,7 +16,15 @@ endif
 let fzf_command_args = '--type file --hidden --exclude .git --exclude node_modules'
 let $FZF_DEFAULT_COMMAND = g:fd_prog . ' --type file --hidden --exclude .git --exclude node_modules'
 
-lua require('telescope').load_extension('fzf')
+lua << EOF
+local telescope = require('telescope')
+telescope.setup({
+    defaults = {
+        file_ignore_patterns = {"^%.git/"},
+    },
+})
+telescope.load_extension('fzf')
+EOF
 
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
@@ -117,7 +125,7 @@ nnoremap <silent> <leader>rcg :call <SID>vimrc_commit_and_push()<CR>
 command! TODO :tabnew ~/proj/TODO
 
 " telescope
-nnoremap <CR><CR> :Telescope find_files<CR>
+nnoremap <CR><CR> :Telescope find_files hidden=true<CR>
 nnoremap <space><tab> :Telescope grep_string<CR>
 nnoremap <space><space> :Telescope live_grep<CR>
 " fzf

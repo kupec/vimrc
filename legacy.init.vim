@@ -25,23 +25,6 @@ function! s:open_project_in_new_tab(path)
    call s:open_project(a:path)
 endfunction
 
-" global
-noremap <c-c> <esc>
-inoremap <c-c> <esc>
-noremap <esc> <c-c>
-inoremap <esc> <c-c>
-
-" search
-nnoremap <leader>/ :noh<CR>
-
-" console
-tnoremap <C-J> <C-\><C-N>
-
-" motion 
-nmap <leader>m <Plug>(easymotion-overwin-f2)
-
-" windows
-nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 
 " vimrc
 
@@ -55,90 +38,11 @@ nnoremap <silent> <leader>rcl :so $MYVIMRC<CR>
 nnoremap <silent> <leader>rco :call <SID>open_project_in_new_tab(stdpath("config"))<CR>:e $MYVIMRC<CR>
 nnoremap <silent> <leader>rcg :call <SID>vimrc_commit_and_push()<CR>
 
-" todo
-command! TODO :tabnew ~/proj/TODO
-
-" telescope
-nnoremap <tab>t :Telescope<CR>
-nnoremap <tab>c :Telescope commands<CR>
-nnoremap <CR><CR> :Telescope find_files hidden=true<CR>
-nnoremap <space><tab> :Telescope grep_string<CR>
-nnoremap <space><space> :Telescope live_grep<CR>
-" fzf
-vnoremap <CR><tab> "wy:FZF -q <C-R>w<CR>
-nnoremap <space><leader><space> :Rg<CR>
-nnoremap <space><leader><tab> :Rg \b<C-R><C-W>\b<CR>
-vnoremap <space><leader><tab> "wy:Rg <C-R>w<CR>
-nnoremap <space>/ :Lines<CR>
-
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" nerdtree
-nnoremap <leader>nE :NERDTree<CR>
-nnoremap <leader>ne :NERDTreeFocus<CR>
-nnoremap <leader>nf :NERDTreeFind<CR>
-nnoremap <leader>nc :NERDTreeClose<CR>
-
 " navigation
 runtime conf/qp_js_import.vim
 runtime conf/qp_file_lines_view.vim
 runtime conf/qp_js_file_lines_view.vim
 runtime conf/qp_python_file_lines_view.vim
-
-" temp
-nmap <F5> viwgscaAction<esc>b~
-let @e = '0i[A],j0'
-let @w = ':s/|/,/ggv:s/[${}]//ggv`<0gv@e'
-
-" tests
-
-nnoremap <leader>to :Tnew<CR>
-nnoremap <leader>tr :Tclear<CR>
-nnoremap <leader>tt :Ttoggle<CR>
-
-" ALE
-nnoremap ]l :ALENext<CR>
-nnoremap [l :ALEPrevious<CR>
-nnoremap <leader>ll :ALEHover<CR>
-nnoremap <leader>ld :ALEDetail<CR><C-W>J
-
-" emmet
-
-nmap <leader>cts va"<esc>`<BcwclassName<esc>f"lcs"{lsstyles.<esc>WX
-
-" fast home/end
-inoremap II <esc>I
-inoremap AA <esc>A
-nnoremap 0 ^
-
-" paste current filename
-inoremap <C-\><C-f><C-n> <C-R>=expand("%:t:r")<CR>
-
-" find on internet
-nnoremap <silent> <leader>dg :execute "!" g:netrw_browsex_viewer "'https://www.google.com/search?q=<C-R><C-W>'"<CR>
-nnoremap <silent> <leader>dm :execute "!" g:netrw_browsex_viewer "'https://developer.mozilla.org/en-US/search?q=<C-R><C-W>'"<CR>
-nnoremap <silent> <leader>dn :execute "!" g:netrw_browsex_viewer "'https://www.npmjs.com/package/<C-R><C-W>'"<CR>
-autocmd FileType python noremap <silent> <leader>dp :execute "!" g:netrw_browsex_viewer "'https://docs.python.org/3/search.html?check_keywords=yes&area=default&q=<C-R><C-W>'"<CR>
-autocmd FileType python noremap <silent> <leader>dy :execute "!" g:netrw_browsex_viewer "'https://pypi.org/search/?q=<C-R><C-W>'"<CR>
-
-" add empty lines
-nnoremap <F2> m`o<esc>``
-nnoremap <F3> m`O<esc>``
-nnoremap <F4> m`O<esc>``m`o<esc>``
-
-inoremap <F2> <esc>m`o<esc>``a
-inoremap <F3> <esc>m`O<esc>``a
-
-" remove near lines
-nnoremap <C-F2> m`jdd``
-nnoremap <C-F3> m`kdd``
-nnoremap <C-F4> m`kdd``m`jdd``
-
-inoremap <C-F2> <esc>m`jdd``a
-inoremap <C-F3> <esc>m`kdd``a
-inoremap <C-F4> <esc>m`kdd``m`jdd``a
 
 " fast macro
 
@@ -183,26 +87,3 @@ endfunction
 
 """" util functions
 runtime conf/qp_util.vim
-
-""" compile/run/test functions
-
-command! StartNear :call StartNear()
-command! StopNear :call StopNear()
-
-function! StartNear()
-    execute "belowright :vnew"
-    let g:near_term = termopen($SHELL)
-    execute "normal! \<C-W>t"
-    stopinsert
-endfunction
-
-function! StopNear()
-    call chanclose(g:near_term)
-endfunction
-
-function! RunNear(prog)
-    call chansend(g:near_term, "\f" . a:prog . "\n")
-endfunction
-
-nnoremap <expr> <leader>c RunNear(b:compile_prog)
-nnoremap <expr> <leader>t RunNear(b:test_prog)

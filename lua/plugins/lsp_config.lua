@@ -1,7 +1,6 @@
-local nvim_lsp = require 'lspconfig'
 local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -29,19 +28,45 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { 'pyright', 'tsserver', 'sumneko_lua' }
+local servers = {
+    pyright = {},
+    tsserver = {},
+    sumneko_lua = {
+        settings = {
+            Lua = {
+                runtime = {
+                    version = 'LuaJIT',
+                    path = vim.split(package.path, ';')
+                },
+                diagnostics = {
+                    globals = {'vim'}
+                },
+                workspace = {
+                    library = {
+                        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                    },
+                },
+            },
+        },
+    },
+}
 
-for _, lsp in ipairs(servers) do
+for lsp, lsp_opts in pairs(servers) do
     local available, server = lsp_installer_servers.get_server(lsp)
     if available then
-        server:on_ready(function ()
-            local opts = {}
-            server:setup {
-                on_attach = on_attach,
-                flags = {
-                  debounce_text_changes = 150,
-                }
+        local opts = {
+            on_attach = on_attach,
+            flags = {
+              debounce_text_changes = 150,
             }
+        }
+        for k, v in pairs(lsp_opts) do
+            opts[k] = v
+        end
+
+        server:on_ready(function ()
+            server:setup(opts)
         end)
         if not server:is_installed() then
             server:install()

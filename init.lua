@@ -8,8 +8,11 @@ if vim.env.NVIM_INSTALL_PLUGIN_MODE == 'yes' then
 end
 
 require 'options'
-require 'plugins.lspconfig'
+require 'mappings'
+
+require 'plugins.lsp_config'
 require 'plugins.settings'
+require 'plugins.mappings'
 
 vim.cmd 'syntax enable'
 

@@ -29,7 +29,7 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { 'pyright', 'tsserver' }
+local servers = { 'pyright', 'tsserver', 'sumneko_lua' }
 
 for _, lsp in ipairs(servers) do
     local available, server = lsp_installer_servers.get_server(lsp)

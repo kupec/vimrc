@@ -59,6 +59,8 @@ nnoremap <silent> <leader>rcg :call <SID>vimrc_commit_and_push()<CR>
 command! TODO :tabnew ~/proj/TODO
 
 " telescope
+nnoremap <tab>t :Telescope<CR>
+nnoremap <tab>c :Telescope commands<CR>
 nnoremap <CR><CR> :Telescope find_files hidden=true<CR>
 nnoremap <space><tab> :Telescope grep_string<CR>
 nnoremap <space><space> :Telescope live_grep<CR>

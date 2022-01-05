@@ -42,7 +42,7 @@ function packages-install {
             echo "All system packages are installed already"
         fi;
     elif is-macos; then
-        sudo brew install "$@"
+        brew install "$@"
     fi;
     
 }

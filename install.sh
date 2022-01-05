@@ -47,9 +47,9 @@ function packages-install {
     
 }
 
-PACKAGES=(git curl xsel python3)
+PACKAGES=(git curl wget xsel python3 ripgrep watchman)
 # check if npm installed from other sources first (download manually, for example)
-which npm >/dev/null || PACKAGES+=('npm')
+which npm >/dev/null || PACKAGES+=(npm)
 
 # python
 PYTHON3=python3
@@ -59,12 +59,10 @@ fi;
 
 # fd (fzf)
 if is-ubuntu; then
-    FD_PACKAGE=fd-find
+    PACKAGES+=(fd-find)
 else
-    FD_PACKAGE=fd
+    PACKAGES+=(fd)
 fi;
-
-PACKAGES+=("$FD_PACKAGE" ripgrep watchman)
 
 packages-install "${PACKAGES[@]}"
 
@@ -125,3 +123,4 @@ fi;
 
 echo "Installing/updating nvim plugins"
 NVIM_INSTALL_PLUGIN_MODE=yes "$NVIM" --headless; echo
+echo "Done"

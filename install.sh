@@ -47,16 +47,15 @@ function packages-install {
     
 }
 
-PYTHON3=python3
-PIP3=python3-pip
-if is-macos; then
-    PYTHON3=python39
-    PIP3=py39-pip
-fi;
-
-PACKAGES=(git curl xsel "$PYTHON3" "$PIP3")
+PACKAGES=(git curl xsel python3)
 # check if npm installed from other sources first (download manually, for example)
 which npm >/dev/null || PACKAGES+=('npm')
+
+# python
+PYTHON3=python3
+if is-ubuntu; then
+    PACKAGES+=(python3-pip)
+fi;
 
 # fd (fzf)
 if is-ubuntu; then

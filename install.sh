@@ -6,7 +6,7 @@ function is-ubuntu {
 }
 
 function is-macos {
-    which port >/dev/null;
+    which brew >/dev/null;
 }
 
 function pip-install {
@@ -42,7 +42,7 @@ function packages-install {
             echo "All system packages are installed already"
         fi;
     elif is-macos; then
-        sudo port install "$@"
+        sudo brew install "$@"
     fi;
     
 }
@@ -107,6 +107,10 @@ if is-ubuntu; then
         )
     fi;
 fi;
+
+if is-macos; then
+    packages-install neovim
+fi
 
 NVIM_DATA_DIR=$("$NVIM" -u NONE --headless -c 'echo stdpath("data") | quitall' 2>&1)
 NVIM_PACKER="$NVIM_DATA_DIR/site/pack/packer/start/packer.nvim"

@@ -6,7 +6,7 @@ function is-ubuntu {
 }
 
 function is-macos {
-    which port >/dev/null;
+    which brew >/dev/null;
 }
 
 function pip-install {
@@ -42,30 +42,27 @@ function packages-install {
             echo "All system packages are installed already"
         fi;
     elif is-macos; then
-        sudo port install "$@"
+        brew install "$@"
     fi;
     
 }
 
-PYTHON3=python3
-PIP3=python3-pip
-if is-macos; then
-    PYTHON3=python39
-    PIP3=py39-pip
-fi;
-
-PACKAGES=(git curl xsel "$PYTHON3" "$PIP3")
+PACKAGES=(git curl wget xsel python3 ripgrep watchman)
 # check if npm installed from other sources first (download manually, for example)
-which npm >/dev/null || PACKAGES+=('npm')
+which npm >/dev/null || PACKAGES+=(npm)
+
+# python
+PYTHON3=python3
+if is-ubuntu; then
+    PACKAGES+=(python3-pip)
+fi;
 
 # fd (fzf)
 if is-ubuntu; then
-    FD_PACKAGE=fd-find
+    PACKAGES+=(fd-find)
 else
-    FD_PACKAGE=fd
+    PACKAGES+=(fd)
 fi;
-
-PACKAGES+=("$FD_PACKAGE" ripgrep watchman)
 
 packages-install "${PACKAGES[@]}"
 
@@ -108,6 +105,10 @@ if is-ubuntu; then
     fi;
 fi;
 
+if is-macos; then
+    packages-install neovim
+fi
+
 NVIM_DATA_DIR=$("$NVIM" -u NONE --headless -c 'echo stdpath("data") | quitall' 2>&1)
 NVIM_PACKER="$NVIM_DATA_DIR/site/pack/packer/start/packer.nvim"
 
@@ -122,3 +123,4 @@ fi;
 
 echo "Installing/updating nvim plugins"
 NVIM_INSTALL_PLUGIN_MODE=yes "$NVIM" --headless; echo
+echo "Done"

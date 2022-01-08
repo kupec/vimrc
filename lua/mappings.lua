@@ -50,3 +50,5 @@ project.select_project_and_run(project.open_project)
 EOF
 ]])
 
+noremap('n', '<leader>ol', ':lua require"project".select_tab_by_project()<CR>')
+

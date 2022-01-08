@@ -53,4 +53,22 @@ function E.select_project_and_run(sink)
     })
 end
 
+function E.select_tab_by_project()
+    local tab_info_list = vim.fn.gettabinfo()
+    local source = {}
+    for _, info in ipairs(tab_info_list) do
+        local line = info.tabnr .. ':' .. vim.fn.getcwd(-1, info.tabnr)
+        table.insert(source, line)
+    end
+
+    vim.fn['fzf#run']({
+        source = source,
+        sink = function(line)
+            local next_token = string.gmatch(line, '[^:]+')
+            local tabnr = next_token()
+            vim.cmd(tabnr .. 'tabnext')
+        end,
+    })
+end
+
 return E

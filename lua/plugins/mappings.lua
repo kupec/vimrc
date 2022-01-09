@@ -22,9 +22,9 @@ noremap('n', '<space><leader><tab>', ':Rg \\b<C-R><C-W>\\b<CR>')
 noremap('v', '<space><leader><tab>', '"wy:Rg <C-R>w<CR>')
 noremap('n', '<space>/', ':Lines<CR>')
 
-map('i', '<c-x><c-k>', '<plug>(fzf-complete-word)')
-map('i', '<c-x><c-f>', '<plug>(fzf-complete-path)')
-map('i', '<c-x><c-l>', '<plug>(fzf-complete-line)')
+map('i', '<leader><c-k>', '<plug>(fzf-complete-word)')
+map('i', '<leader><c-f>', '<plug>(fzf-complete-path)')
+map('i', '<leader><c-l>', '<plug>(fzf-complete-line)')
 
 -- nerdtree
 noremap('n', '<leader>nE', ':NERDTree<CR>')

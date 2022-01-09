@@ -2,8 +2,10 @@ local builtin = require "telescope.builtin"
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local actions = require "telescope.actions"
+local action_set = require "telescope.actions.set"
 local action_state = require "telescope.actions.state"
 local conf = require("telescope.config").values
+local make_entry = require "telescope.make_entry"
 
 local E = {}
 
@@ -50,14 +52,31 @@ local function get_projects_dir()
     end
 end
 
-function E.select_project_and_run(sink)
-    local projects_dir = get_projects_dir()
+function E.select_project_and_run(sink, opts)
+    opts = opts or {}
+    opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
-    vim.fn['fzf#run']({
-        source = vim.g.fd_prog .. ' . ' .. projects_dir .. ' --type d --max-depth 1',
-        sink = sink,
-        options = {'--preview', 'cat {}/README.md'},
-    })
+    local projects_dir = get_projects_dir()
+    local find_cmd = {
+        vim.g.fd_prog,
+        '.', projects_dir,
+        '--type', 'd',
+        '--max-depth', '1',
+    }
+
+    pickers.new(opts, {
+        prompt_title = 'Select project',
+        finder = finders.new_oneshot_job(find_cmd, opts),
+        sorter = conf.generic_sorter(opts),
+        attach_mappings = function(prompt_bufnr)
+            action_set.select:replace(function()
+                actions.close(prompt_bufnr)
+                local selection = action_state.get_selected_entry()
+                sink(selection[1])
+            end)
+            return true
+        end,
+    }):find()
 end
 
 function E.select_tab_by_project(opts)
@@ -83,7 +102,7 @@ function E.select_tab_by_project(opts)
     end
 
     pickers.new(opts, {
-        prompt_title = "Select tab by project",
+        prompt_title = 'Select tab by project',
         finder = finders.new_table {
           results = source,
           entry_maker = function(value)

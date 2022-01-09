@@ -1,3 +1,10 @@
+local builtin = require "telescope.builtin"
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local conf = require("telescope.config").values
+
 local E = {}
 
 local possible_projects_dirs = {"~/proj", "~/projects"}
@@ -38,7 +45,7 @@ end
 local function get_projects_dir()
     for _, dir in ipairs(possible_projects_dirs) do
         if vim.fn.glob(dir) ~= "" then
-            return dir
+            return vim.fn.expand(dir)
         end
     end
 end
@@ -53,22 +60,61 @@ function E.select_project_and_run(sink)
     })
 end
 
-function E.select_tab_by_project()
+function E.select_tab_by_project(opts)
+    opts = opts or {}
+
     local tab_info_list = vim.fn.gettabinfo()
     local source = {}
     for _, info in ipairs(tab_info_list) do
-        local line = info.tabnr .. ':' .. vim.fn.getcwd(-1, info.tabnr)
-        table.insert(source, line)
+        local dir = vim.fn.getcwd(-1, info.tabnr)
+        local projects_dir = get_projects_dir()
+        local short_dir, count = string.gsub(dir, '^' .. projects_dir .. '/', '')
+        if count == 1 then
+            table.insert(source, {
+                tabnr = info.tabnr,
+                dir = dir,
+                short_dir = short_dir,
+            })
+        end
     end
 
-    vim.fn['fzf#run']({
-        source = source,
-        sink = function(line)
-            local next_token = string.gmatch(line, '[^:]+')
-            local tabnr = next_token()
-            vim.cmd(tabnr .. 'tabnext')
+    if #source == 0 then
+        return
+    end
+
+    pickers.new(opts, {
+        prompt_title = "Select tab by project",
+        finder = finders.new_table {
+          results = source,
+          entry_maker = function(value)
+              return {
+                  value = value,
+                  display = value.short_dir,
+                  ordinal = value.short_dir,
+              }
+          end,
+        },
+        sorter = conf.generic_sorter(opts),
+        attach_mappings = function(prompt_bufnr, map)
+            actions.select_default:replace(function()
+                actions.close(prompt_bufnr)
+                local selection = action_state.get_selected_entry()
+                local tabnr = selection.value.tabnr
+                vim.cmd(tabnr .. 'tabnext')
+            end)
+
+            local function find_files_in_project_directory()
+                actions.close(prompt_bufnr)
+                local selection = action_state.get_selected_entry()
+                builtin.find_files {cwd = selection.value.dir}
+                vim.cmd 'normal a'
+            end
+
+            map('i', '<c-o>', find_files_in_project_directory)
+
+            return true
         end,
-    })
+    }):find()
 end
 
 return E

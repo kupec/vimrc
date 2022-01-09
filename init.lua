@@ -13,6 +13,7 @@ require 'mappings'
 require 'plugins.lsp_config'
 require 'plugins.settings'
 require 'plugins.mappings'
+require 'plugins.autocompletion'
 
 vim.cmd 'syntax enable'
 

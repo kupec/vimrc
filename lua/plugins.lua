@@ -41,12 +41,24 @@ require('packer').startup(function(use)
     use 'arthurxavierx/vim-caser'
     use {
         'heavenshell/vim-jsdoc',
-        ft = {'javascript', 'javascript.jsx','typescript'}, 
+        ft = {'javascript', 'javascript.jsx','typescript'},
         run = 'make install',
     }
 
     -- autocomplete
     use 'wellle/tmux-complete.vim'
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+            'quangnguyen30192/cmp-nvim-ultisnips',
+            'octaltree/cmp-look',
+            'f3fora/cmp-spell',
+        }
+    }
 
     -- search
     use {
@@ -97,6 +109,4 @@ require('packer').startup(function(use)
     -- terminal
     use 'kassio/neoterm'
 end)
-
-
 

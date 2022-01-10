@@ -16,6 +16,7 @@ noremap('n', '<space><tab>', ':Telescope grep_string<CR>')
 noremap('n', '<space><space>', ':Telescope live_grep<CR>')
 
 -- fzf
+noremap('n', '<CR><tab>', ':FZF -q <C-R><C-W><CR>')
 noremap('v', '<CR><tab>', '"wy:FZF -q <C-R>w<CR>')
 noremap('n', '<space><leader><space>', ':Rg<CR>')
 noremap('n', '<space><leader><tab>', ':Rg \\b<C-R><C-W>\\b<CR>')

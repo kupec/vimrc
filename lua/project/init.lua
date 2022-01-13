@@ -51,6 +51,21 @@ local function get_projects_dir()
     end
 end
 
+local function find_files_in_project_directory(prompt_bufnr)
+    actions.close(prompt_bufnr)
+
+    local selection = action_state.get_selected_entry()
+    local cwd = selection.value
+    if cwd.dir then
+        cwd = cwd.dir
+    end
+
+    builtin.find_files {cwd = cwd}
+
+    -- due to <c-o> mapping
+    vim.cmd 'normal a'
+end
+
 function E.select_project_and_run(sink, opts)
     opts = opts or {}
     opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
@@ -67,12 +82,15 @@ function E.select_project_and_run(sink, opts)
         prompt_title = 'Select project',
         finder = finders.new_oneshot_job(find_cmd, opts),
         sorter = conf.generic_sorter(opts),
-        attach_mappings = function(prompt_bufnr)
+        attach_mappings = function(prompt_bufnr, map)
             action_set.select:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
                 sink(selection[1])
             end)
+
+            map('i', '<c-o>', find_files_in_project_directory)
+
             return true
         end,
     }):find()
@@ -114,19 +132,12 @@ function E.select_tab_by_project(opts)
         },
         sorter = conf.generic_sorter(opts),
         attach_mappings = function(prompt_bufnr, map)
-            actions.select_default:replace(function()
+            action_set.select:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
                 local tabnr = selection.value.tabnr
                 vim.cmd(tabnr .. 'tabnext')
             end)
-
-            local function find_files_in_project_directory()
-                actions.close(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-                builtin.find_files {cwd = selection.value.dir}
-                vim.cmd 'normal a'
-            end
 
             map('i', '<c-o>', find_files_in_project_directory)
 

@@ -107,7 +107,14 @@ local function find_buffers_in_project_tab(prompt_bufnr)
     for _, win in ipairs(windows) do
         local buf = vim.api.nvim_win_get_buf(win)
         local file = vim.api.nvim_buf_get_name(buf)
-        table.insert(file_list, file)
+        if #file > 0 then
+            table.insert(file_list, file)
+        end
+    end
+
+    if #file_list == 0 then
+        print 'No opened file buffers in the project tab'
+        return
     end
 
     local opts = {}
@@ -137,6 +144,7 @@ function E.select_tab_by_project(opts)
     end
 
     if #source == 0 then
+        print 'No tabs with opened projects'
         return
     end
 

@@ -24,13 +24,23 @@ function E.find_cword_on_site(site_fmt)
     end
 
     local cword = vim.fn.expand '<cword>'
-    table.insert(cmd, string.format(site_fmt, cword))
+    if #cword == 0 then
+        print('No word under the cursor')
+        return
+    end
 
+    table.insert(cmd, string.format(site_fmt, cword))
     vim.fn.system(cmd)
 end
 
 function E.find_cword_on_any_site(opts)
     opts = opts or themes.get_cursor()
+
+    local cword = vim.fn.expand '<cword>'
+    if #cword == 0 then
+        print('No word under the cursor')
+        return
+    end
 
     pickers.new(opts, {
         prompt_title = 'Select internet source',

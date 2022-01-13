@@ -96,6 +96,27 @@ function E.select_project_and_run(sink, opts)
     }):find()
 end
 
+local function find_buffers_in_project_tab(prompt_bufnr)
+    actions.close(prompt_bufnr)
+
+    local selection = action_state.get_selected_entry()
+    local tab = selection.value.tabnr
+    local windows = vim.api.nvim_tabpage_list_wins(tab)
+    local file_list = {}
+    for _, win in ipairs(windows) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        local file = vim.api.nvim_buf_get_name(buf)
+        table.insert(file_list, file)
+    end
+
+    local opts = {}
+    pickers.new(opts, {
+        prompt_title = 'Select opened file',
+        finder = finders.new_table {results = file_list},
+        sorter = conf.file_sorter(opts),
+    }):find()
+end
+
 function E.select_tab_by_project(opts)
     opts = opts or {}
 
@@ -140,6 +161,7 @@ function E.select_tab_by_project(opts)
             end)
 
             map('i', '<c-o>', find_files_in_project_directory)
+            map('i', '<c-p>', find_buffers_in_project_tab)
 
             return true
         end,

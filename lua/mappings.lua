@@ -22,11 +22,7 @@ noremap('n', '0', '^')
 noremap('i', '<C-\\><C-f><C-n>', '<C-R>=expand("%:t:r")<CR>')
 
 -- find on internet
-noremap('n', '<leader>dg', [[:execute "!" g:netrw_browsex_viewer "'https://www.google.com/search?q=<C-R><C-W>'"<CR>]])
-noremap('n', '<leader>dm', [[:execute "!" g:netrw_browsex_viewer "'https://developer.mozilla.org/en-US/search?q=<C-R><C-W>'"<CR>]])
-noremap('n', '<leader>dn', [[:execute "!" g:netrw_browsex_viewer "'https://www.npmjs.com/package/<C-R><C-W>'"<CR>]])
-noremap('n', '<leader>dp', [[:execute "!" g:netrw_browsex_viewer "'https://docs.python.org/3/search.html?check_keywords=yes&area=default&q=<C-R><C-W>'"<CR>]])
-noremap('n', '<leader>dy', [[:execute "!" g:netrw_browsex_viewer "'https://pypi.org/search/?q=<C-R><C-W>'"<CR>]])
+noremap('n', '<leader>dd', [[:lua require'docs.internet'.find_cword_on_any_site()<CR>]])
 
 -- vim config
 noremap('n', '<leader>rcl', ':so $MYVIMRC<CR>')

@@ -13,6 +13,7 @@ local internet_sources = {
     {'npm package', 'https://www.npmjs.com/package/%s'},
     {'python docs', 'https://docs.python.org/3/search.html?check_keywords=yes&area=default&q=%s'},
     {'pypi package', 'https://pypi.org/search/?q=%s'},
+    {'github', 'https://github.com/search?q=%s'},
 }
 
 function E.find_cword_on_site(site_fmt)

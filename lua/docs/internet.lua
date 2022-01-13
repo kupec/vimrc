@@ -4,6 +4,7 @@ local actions = require "telescope.actions"
 local action_set = require "telescope.actions.set"
 local action_state = require "telescope.actions.state"
 local conf = require("telescope.config").values
+local themes = require('telescope.themes')
 
 local E = {}
 
@@ -29,7 +30,7 @@ function E.find_cword_on_site(site_fmt)
 end
 
 function E.find_cword_on_any_site(opts)
-    opts = opts or {}
+    opts = opts or themes.get_cursor()
 
     pickers.new(opts, {
         prompt_title = 'Select internet source',

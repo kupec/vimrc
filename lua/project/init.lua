@@ -6,6 +6,7 @@ local action_set = require "telescope.actions.set"
 local action_state = require "telescope.actions.state"
 local conf = require("telescope.config").values
 local make_entry = require "telescope.make_entry"
+local themes = require('telescope.themes')
 
 local E = {}
 
@@ -67,7 +68,7 @@ local function find_files_in_project_directory(prompt_bufnr)
 end
 
 function E.select_project_and_run(sink, opts)
-    opts = opts or {}
+    opts = opts or themes.get_dropdown()
     opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
     local projects_dir = get_projects_dir()
@@ -118,7 +119,7 @@ local function find_buffers_in_project_tab(prompt_bufnr)
 end
 
 function E.select_tab_by_project(opts)
-    opts = opts or {}
+    opts = opts or themes.get_dropdown()
 
     local tab_info_list = vim.fn.gettabinfo()
     local source = {}

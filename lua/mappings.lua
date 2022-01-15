@@ -48,3 +48,7 @@ EOF
 
 noremap('n', '<leader>ol', ':lua require"search.project".select_tab_by_project()<CR>')
 
+-- js import
+noremap('n', '<leader>ijf', ':lua require"import.js".import_js_file()<CR>')
+noremap('n', '<leader>iid', ':lua require"import.js".import_js_file"node_modules/@infra/intdev"<CR>')
+

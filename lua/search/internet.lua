@@ -18,10 +18,7 @@ local internet_sources = {
 }
 
 function E.find_cword_on_site(site_fmt)
-    local cmd = {}
-    for token in string.gmatch(vim.g.netrw_browsex_viewer, '%S+') do
-        table.insert(cmd, token)
-    end
+    local cmd = vim.split(vim.g.netrw_browsex_viewer, '%s+')
 
     local cword = vim.fn.expand '<cword>'
     if #cword == 0 then

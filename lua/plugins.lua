@@ -105,8 +105,5 @@ require('packer').startup(function(use)
     -- snippets
     use 'SirVer/ultisnips'
     use 'honza/vim-snippets'
-
-    -- terminal
-    use 'kassio/neoterm'
 end)
 

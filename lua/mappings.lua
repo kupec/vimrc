@@ -47,6 +47,7 @@ EOF
 ]])
 
 noremap('n', '<leader>ol', ':lua require"search.project".select_tab_by_project()<CR>')
+noremap('n', '<leader>oc', ':tabc<CR>')
 
 -- js import
 noremap('n', '<leader>ijf', ':lua require"import.js".import_js_file()<CR>')

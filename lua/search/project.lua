@@ -31,8 +31,8 @@ function E.open_project(path)
         'Please open a file',
     })
     vim.cmd('$-2,$center ' .. win_width)
-    vim.bo.modified = false
-    vim.bo.modifiable = false
+    vim.bo.buftype = 'nofile'
+    vim.bo.bufhidden = 'wipe'
 end
 
 function E.open_project_in_new_tab(path)

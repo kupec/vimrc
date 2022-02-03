@@ -1,6 +1,6 @@
 vim.cmd [[packadd packer.nvim]]
 
-require('packer').startup(function(use)
+require('packer').startup(function(use, use_rocks)
     -- Packer itself
     use 'wbthomason/packer.nvim'
 

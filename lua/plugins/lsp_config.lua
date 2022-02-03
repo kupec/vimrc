@@ -1,4 +1,5 @@
 local lsp_installer_servers = require 'nvim-lsp-installer.servers'
+local python_paths = require 'paths.python'
 
 local on_attach = function(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -29,7 +30,11 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-    pyright = {},
+    pyright = {
+        on_init = function(client)
+            client.config.settings.python.pythonPath = python_paths.get_python_path(client.config.root_dir)
+        end
+    },
     tsserver = {},
     sumneko_lua = {
         settings = {
@@ -52,18 +57,17 @@ local servers = {
     },
 }
 
+local default_lsp_opts = {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+}
+
 for lsp, lsp_opts in pairs(servers) do
     local available, server = lsp_installer_servers.get_server(lsp)
     if available then
-        local opts = {
-            on_attach = on_attach,
-            flags = {
-              debounce_text_changes = 150,
-            }
-        }
-        for k, v in pairs(lsp_opts) do
-            opts[k] = v
-        end
+        local opts = vim.tbl_extend('force', default_lsp_opts, lsp_opts)
 
         server:on_ready(function ()
             server:setup(opts)

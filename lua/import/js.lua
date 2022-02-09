@@ -22,6 +22,7 @@ local lib_tokens_map = {
     ['@testing-library/react'] = '{render, act, fireEvent}',
     ['ts-jest'] = {'{mocked}', 'ts-jest/utils'},
     ['type-fest'] = '{PromiseValue}',
+    ['proper-url-join'] = 'urlJoin',
 }
 
 function E.import_js_file(search_root, opts)

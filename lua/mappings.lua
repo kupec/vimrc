@@ -53,4 +53,5 @@ noremap('n', '<leader>oc', ':tabc<CR>')
 noremap('n', '<leader>ijf', ':lua require"import.js".import_js_file()<CR>')
 noremap('n', '<leader>iid', ':lua require"import.js".import_js_file"node_modules/@infra/intdev"<CR>')
 noremap('n', '<leader>ijn', ':lua require"import.js".import_js_lib()<CR>')
+noremap('n', '<leader>ijl', ':lua require"import.js".import_lodash_func()<CR>')
 

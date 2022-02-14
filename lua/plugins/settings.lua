@@ -34,6 +34,7 @@ vim.g.ale_linters = {
 }
 vim.g.ale_fixers = {
     javascript = {'eslint'},
+    typescript = {'eslint'},
     python = {'autopep8'},
 }
 vim.g.ale_fix_on_save = 0

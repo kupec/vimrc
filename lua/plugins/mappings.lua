@@ -38,6 +38,7 @@ noremap('n', ']l', ':ALENext<CR>')
 noremap('n', '[l', ':ALEPrevious<CR>')
 noremap('n', '<leader>ll', ':ALEHover<CR>')
 noremap('n', '<leader>ld', ':ALEDetail<CR><C-W>J')
+noremap('n', '<leader>lf', ':ALEFix<CR>')
 
 -- emmet-vim
 map('n', '<leader>cts', 'va"<esc>`<BcwclassName<esc>f"lcs"{lsstyles.<esc>WX')

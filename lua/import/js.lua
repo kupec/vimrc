@@ -86,8 +86,8 @@ end
 
 function E.get_import_js_file_path(path)
     local rel_path
-    if vim.startswith(path, 'node_modules/') then
-        rel_path = string.gsub(path, '^node_modules/', '')
+    if string.find(path, '.*node_modules/') then
+        rel_path = string.gsub(path, '.*node_modules/', '')
     else
         rel_path = E.get_relative_path(path)
 
@@ -116,17 +116,23 @@ function E.get_relative_path(file_path)
     return vim.trim(result[1])
 end
 
-function E.find_package_json()
+function E.find_project_root()
     local cur_dir = Path:new(vim.fn.expand("%:h"))
 
     for _, dir in ipairs(cur_dir:parents()) do
         local package_json_path = tostring(Path:new(dir) / 'package.json')
         if vim.fn.filereadable(package_json_path) == 1 then
-            return vim.fn.json_decode(vim.fn.readfile(package_json_path))
+            return Path:new(dir)
         end
     end
 
     error('Cannot find package.json', 2)
+end
+
+function E.find_package_json()
+    local root = E.find_project_root()
+    local package_json_path = tostring(root / 'package.json')
+    return vim.fn.json_decode(vim.fn.readfile(package_json_path))
 end
 
 function E.import_js_lib(opts)

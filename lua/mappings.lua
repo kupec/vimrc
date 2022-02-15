@@ -51,7 +51,15 @@ noremap('n', '<leader>oc', ':tabc<CR>')
 
 -- js import
 noremap('n', '<leader>ijf', ':lua require"import.js".import_js_file()<CR>')
-noremap('n', '<leader>iid', ':lua require"import.js".import_js_file"node_modules/@infra/intdev"<CR>')
+noremap('n', '<leader>iid', [[
+:lua << EOF
+local import = require 'import.js'
+local root = import.find_project_root()
+local lib_path = root / 'node_modules/@infra/intdev'
+local rel_lib_path = lib_path:make_relative(vim.fn.getcwd())
+import.import_js_file(tostring(rel_lib_path))
+EOF
+]])
 noremap('n', '<leader>ijn', ':lua require"import.js".import_js_lib()<CR>')
 noremap('n', '<leader>ijl', ':lua require"import.js".import_lodash_func()<CR>')
 

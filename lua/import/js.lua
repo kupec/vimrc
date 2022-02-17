@@ -117,9 +117,15 @@ function E.get_relative_path(file_path)
 end
 
 function E.find_project_root()
-    local cur_dir = Path:new(vim.fn.expand("%:h"))
+    local start_dir = vim.fn.expand('%:h')
+    if start_dir == '' then
+        start_dir = vim.fn.getcwd()
+    end
 
-    for _, dir in ipairs(cur_dir:parents()) do
+    local candidate_dirs = Path:new(start_dir):parents()
+    table.insert(candidate_dirs, 1, start_dir)
+
+    for _, dir in ipairs(candidate_dirs) do
         local package_json_path = tostring(Path:new(dir) / 'package.json')
         if vim.fn.filereadable(package_json_path) == 1 then
             return Path:new(dir)
@@ -169,7 +175,7 @@ end
 
 -- TODO: refactor, extract
 function E.scan_dir_to_list(path, callback)
-    vim.loop.fs_scandir(path, function (err, fs)
+    vim.loop.fs_scandir(tostring(path), function (err, fs)
         if err then
             return vim.defer_fn(partial(callback, err), 0)
         end
@@ -192,7 +198,9 @@ end
 function E.import_lodash_func(opts)
     opts = opts or themes.get_cursor()
 
-    E.scan_dir_to_list('node_modules/lodash', function (err, items)
+    local project_root = E.find_project_root()
+
+    E.scan_dir_to_list(project_root / 'node_modules/lodash', function (err, items)
         if err then
             print('Cannot find lodash in node_modules')
             return

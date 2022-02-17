@@ -54,8 +54,13 @@ noremap('n', '<leader>ijf', ':lua require"import.js".import_js_file()<CR>')
 noremap('n', '<leader>iid', [[
 :lua << EOF
 local import = require 'import.js'
-local root = import.find_project_root()
-local lib_path = root / 'node_modules/@infra/intdev'
+local err, project_paths = import.find_project_paths()
+if err then
+    print(err)
+    return
+end
+
+local lib_path = project_paths.node_modules / '@infra/intdev'
 local rel_lib_path = lib_path:make_relative(vim.fn.getcwd())
 import.import_js_file(tostring(rel_lib_path))
 EOF

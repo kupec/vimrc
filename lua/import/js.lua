@@ -116,7 +116,7 @@ function E.get_relative_path(file_path)
     return vim.trim(result[1])
 end
 
-function E.find_project_root()
+function E.find_project_paths()
     local start_dir = vim.fn.expand('%:h')
     if start_dir == '' then
         start_dir = vim.fn.getcwd()
@@ -125,27 +125,49 @@ function E.find_project_root()
     local candidate_dirs = Path:new(start_dir):parents()
     table.insert(candidate_dirs, 1, start_dir)
 
+    local found_dir
     for _, dir in ipairs(candidate_dirs) do
         local package_json_path = tostring(Path:new(dir) / 'package.json')
         if vim.fn.filereadable(package_json_path) == 1 then
-            return Path:new(dir)
+            found_dir = Path:new(dir)
+            break
         end
     end
 
-    error('Cannot find package.json', 2)
+    if not found_dir then
+        return 'Cannot find package.json'
+    end
+    if vim.fn.isdirectory(tostring(found_dir / 'node_modules')) ~= 1 then
+        return 'No node_modules, please install dependencies'
+    end
+
+    return nil, {
+        root = found_dir,
+        package_json = found_dir / 'package.json',
+        node_modules = found_dir / 'node_modules',
+    }
 end
 
 function E.find_package_json()
-    local root = E.find_project_root()
-    local package_json_path = tostring(root / 'package.json')
-    return vim.fn.json_decode(vim.fn.readfile(package_json_path))
+    local err, project_paths = E.find_project_paths()
+    if err then
+        return err
+    end
+
+    local package_json_path = tostring(project_paths.package_json)
+    return nil, vim.fn.json_decode(vim.fn.readfile(package_json_path))
 end
 
 function E.import_js_lib(opts)
     opts = opts or themes.get_cursor()
 
     local source = {}
-    local package_json = E.find_package_json()
+    local err, package_json = E.find_package_json()
+    if err then
+        print(err)
+        return
+    end
+
     vim.list_extend(source, vim.tbl_keys(package_json.dependencies or {}))
     vim.list_extend(source, vim.tbl_keys(package_json.devDependencies or {}))
 
@@ -198,9 +220,13 @@ end
 function E.import_lodash_func(opts)
     opts = opts or themes.get_cursor()
 
-    local project_root = E.find_project_root()
+    local err, project_paths = E.find_project_paths()
+    if err then
+        print(err)
+        return
+    end
 
-    E.scan_dir_to_list(project_root / 'node_modules/lodash', function (err, items)
+    E.scan_dir_to_list(project_paths.node_modules / 'lodash', function (err, items)
         if err then
             print('Cannot find lodash in node_modules')
             return

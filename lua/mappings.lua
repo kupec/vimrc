@@ -22,7 +22,9 @@ noremap('n', '0', '^')
 noremap('i', '<C-\\><C-f><C-n>', '<C-R>=expand("%:t:r")<CR>')
 
 -- find on internet
-noremap('n', '<leader>dd', [[:lua require'search.internet'.find_cword_on_any_site()<CR>]])
+vim.keymap.set('n', '<leader>dd', function()
+    require'search.internet'.find_cword_on_any_site()
+end)
 
 -- vim config
 noremap('n', '<leader>rcl', ':so $MYVIMRC<CR>')

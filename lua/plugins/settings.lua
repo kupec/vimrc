@@ -43,8 +43,13 @@ vim.cmd [[autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>]]
 -- windowswap
 vim.g.windowswap_map_keys = 0
 
--- vim-airline
-vim.g.airline_theme = 'papercolor'
+-- nvim-lualine
+require('lualine').setup {
+    options = {
+        icons_enabled = false,
+        theme = 'PaperColor'
+    },
+}
 
 -- vim-rainbow
 vim.g.rainbow_active = 1

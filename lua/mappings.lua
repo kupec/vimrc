@@ -28,45 +28,37 @@ end)
 
 -- vim config
 noremap('n', '<leader>rcl', ':so $MYVIMRC<CR>')
-noremap('n', '<leader>rco', [[
-:lua require"search.project".open_project_in_new_tab(vim.fn.stdpath("config"))
-:e $MYVIMRC
-]])
+vim.keymap.set('n', '<leader>rco', function()
+    require'search.project'.open_project_in_new_tab(vim.fn.stdpath('config'))
+    vim.cmd('edit ' .. vim.env.MYVIMRC)
+end)
 
 -- project
-noremap('n', '<leader>op', [[
-:lua << EOF
-local project = require 'search.project'
-project.select_project_and_run(project.open_project_in_new_tab)
-EOF
-]])
+vim.keymap.set('n', '<leader>op', function()
+    local project = require 'search.project'
+    project.select_project_and_run(project.open_project_in_new_tab)
+end)
+vim.keymap.set('n', '<leader>oo', function()
+    local project = require 'search.project'
+    project.select_project_and_run(project.open_project)
+end)
 
-noremap('n', '<leader>oo', [[
-:lua << EOF
-local project = require 'search.project'
-project.select_project_and_run(project.open_project)
-EOF
-]])
-
-noremap('n', '<leader>ol', ':lua require"search.project".select_tab_by_project()<CR>')
+vim.keymap.set('n', '<leader>ol', function() require'search.project'.select_tab_by_project() end)
 noremap('n', '<leader>oc', ':tabc<CR>')
 
 -- js import
-noremap('n', '<leader>ijf', ':lua require"import.js".import_js_file()<CR>')
-noremap('n', '<leader>iid', [[
-:lua << EOF
-local import = require 'import.js'
-local err, project_paths = import.find_project_paths()
-if err then
-    print(err)
-    return
-end
+vim.keymap.set('n', '<leader>ijf', function() require'import.js'.import_js_file() end)
+vim.keymap.set('n', '<leader>iid', function()
+    local import = require 'import.js'
+    local err, project_paths = import.find_project_paths()
+    if err then
+        print(err)
+        return
+    end
 
-local lib_path = project_paths.node_modules / '@infra/intdev'
-local rel_lib_path = lib_path:make_relative(vim.fn.getcwd())
-import.import_js_file(tostring(rel_lib_path))
-EOF
-]])
-noremap('n', '<leader>ijn', ':lua require"import.js".import_js_lib()<CR>')
-noremap('n', '<leader>ijl', ':lua require"import.js".import_lodash_func()<CR>')
-
+    local lib_path = project_paths.node_modules / '@infra/intdev'
+    local rel_lib_path = lib_path:make_relative(vim.fn.getcwd())
+    import.import_js_file(tostring(rel_lib_path))
+end)
+vim.keymap.set('n', '<leader>ijn', function() require'import.js'.import_js_lib() end)
+vim.keymap.set('n', '<leader>ijl', function() require'import.js'.import_lodash_func() end)

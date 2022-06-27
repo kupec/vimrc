@@ -90,10 +90,6 @@ require('packer').startup(function(use, use_rocks)
 
     -- color scheme
     use 'NLKNguyen/papercolor-theme'
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons' }
-    }
 
     -- highlight
     use 'lfv89/vim-interestingwords'

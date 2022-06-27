@@ -11,5 +11,10 @@ vim.opt.splitbelow = true
 vim.opt.lazyredraw = true
 vim.opt.background = 'light'
 
-vim.g.netrw_browsex_viewer = 'setsid xdg-open'
+if vim.fn.executable('xdg-open') then
+    vim.g.netrw_browsex_viewer = 'setsid xdg-open'
+elseif vim.fn.executable('open') then
+    vim.g.netrw_browsex_viewer = 'open'
+end
+
 vim.g.mapleader = ','

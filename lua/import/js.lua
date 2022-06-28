@@ -253,4 +253,20 @@ function E.import_lodash_func(opts)
     end)
 end
 
+function E.find_import_current_file(opts)
+    opts = opts or {}
+
+    local file_name = vim.fn.expand('%:t:r')
+    local import_pattern = '(import|require|from).*\\b' .. file_name .. '\\b'
+    local file_pattern = '\\b' .. file_name .. '\\b'
+
+    local find_cmd = {'rg', '-l', import_pattern}
+
+    pickers.new(opts, {
+        prompt_title = 'Files which import the current file',
+        finder = finders.new_oneshot_job(find_cmd, opts),
+        sorter = conf.generic_sorter(opts),
+    }):find()
+end
+
 return E

@@ -232,5 +232,5 @@ nnoremap <silent> <leader>iff :call <SID>write_import_js_file_path()<CR>
 "nnoremap <silent> <leader>ijl :call <SID>import_lodash_lib()<CR>
 nnoremap <silent> <leader>imj :call <SID>mock_js_file()<CR>
 
-nnoremap <silent> <leader>fif :call <SID>find_js_import_current_file()<CR>
+"nnoremap <silent> <leader>fif :call <SID>find_js_import_current_file()<CR>
 nnoremap <silent> <leader>ftt :call <SID>find_js_target_of_current_test_file()<CR>

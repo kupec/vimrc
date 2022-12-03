@@ -269,4 +269,30 @@ function E.find_import_current_file(opts)
     }):find()
 end
 
+function E.find_target_of_current_test_file(opts)
+    opts = opts or {}
+
+    local file_path = vim.fn.expand('%:r:r:r')
+    local js_exts = {'js', 'jsx', 'ts', 'tsx'}
+
+    local find_cmd = {vim.g.fd_prog}
+    for _, ext in ipairs(js_exts) do
+        table.insert(find_cmd, '-e')
+        table.insert(find_cmd, ext)
+    end
+    local cmd_opts = {
+        '-p', '-F',  '-E', '*.test.*',
+        file_path,
+    }
+    for _, opt in ipairs(cmd_opts) do
+        table.insert(find_cmd, opt)
+    end
+
+    pickers.new(opts, {
+        prompt_title = 'Target of the current test file',
+        finder = finders.new_oneshot_job(find_cmd, opts),
+        sorter = conf.generic_sorter(opts),
+    }):find()
+end
+
 return E

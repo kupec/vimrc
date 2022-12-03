@@ -11,7 +11,6 @@ endfunction
 nnoremap <silent> <leader>rcg :call <SID>vimrc_commit_and_push()<CR>
 
 " navigation
-runtime conf/qp_js_import.vim
 runtime conf/qp_file_lines_view.vim
 runtime conf/qp_js_file_lines_view.vim
 runtime conf/qp_python_file_lines_view.vim

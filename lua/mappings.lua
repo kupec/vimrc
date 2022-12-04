@@ -64,3 +64,19 @@ vim.keymap.set('n', '<leader>ijn', function() require'import.js'.import_js_lib()
 vim.keymap.set('n', '<leader>ijl', function() require'import.js'.import_lodash_func() end)
 vim.keymap.set('n', '<leader>fif', function() require'import.js'.find_import_current_file() end)
 vim.keymap.set('n', '<leader>ftt', function() require'import.js'.find_target_of_current_test_file() end)
+
+-- js navigation
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx'},
+    callback = function()
+        local show_file_lines = require'navigation.utils'.show_file_lines
+        local js = require'navigation.js'
+
+        vim.keymap.set('n', '<space>t', function()
+            show_file_lines(js.get_test_lines())
+        end)
+        vim.keymap.set('n', '<space>s', function()
+            show_file_lines(js.symbols_regexp())
+        end)
+    end,
+})

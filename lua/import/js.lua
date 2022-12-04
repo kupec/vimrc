@@ -258,7 +258,6 @@ function E.find_import_current_file(opts)
 
     local file_name = vim.fn.expand('%:t:r')
     local import_pattern = '(import|require|from).*\\b' .. file_name .. '\\b'
-    local file_pattern = '\\b' .. file_name .. '\\b'
 
     local find_cmd = {'rg', '-l', import_pattern}
 

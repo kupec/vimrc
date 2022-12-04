@@ -1,15 +1,5 @@
 autocmd VimEnter * colorscheme PaperColor
 
-" vimrc
-
-function! s:vimrc_commit_and_push()
-    Git add --all
-    autocmd BufDelete .git/COMMIT_EDITMSG ++once execute "Gpush | echom 'pushed!'"
-    Gcommit
-endfunction
-
-nnoremap <silent> <leader>rcg :call <SID>vimrc_commit_and_push()<CR>
-
 " fast macro
 
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>

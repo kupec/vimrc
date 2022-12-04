@@ -32,6 +32,15 @@ vim.keymap.set('n', '<leader>rco', function()
     require'search.project'.open_project_in_new_tab(vim.fn.stdpath('config'))
     vim.cmd('edit ' .. vim.env.MYVIMRC)
 end)
+vim.keymap.set('n', '<leader>rcg', function()
+    vim.cmd('Git add --all')
+    vim.api.nvim_create_autocmd('BufDelete', {
+        pattern = '.git/COMMIT_EDITMSG',
+        once = true,
+        command = 'Git push | echom "pushed!"',
+    })
+    vim.cmd('Git commit')
+end)
 
 -- project
 vim.keymap.set('n', '<leader>op', function()

@@ -83,31 +83,11 @@ vim.keymap.set('n', '<leader>ftt', function() require'import.js'.find_target_of_
 -- js navigation
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx'},
-    callback = function()
-        local show_file_lines = require'navigation.utils'.show_file_lines
-        local js = require'navigation.js'
-
-        vim.keymap.set('n', '<space>t', function()
-            show_file_lines(js.get_test_lines())
-        end)
-        vim.keymap.set('n', '<space>s', function()
-            show_file_lines(js.symbols_regexp())
-        end)
-    end,
+    callback = require'mappings.js',
 })
 
 -- python navigation
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'python',
-    callback = function()
-        local show_file_lines = require'navigation.utils'.show_file_lines
-        local python = require'navigation.python'
-
-        vim.keymap.set('n', '<space>t', function()
-            show_file_lines(python.tests_regexp())
-        end)
-        vim.keymap.set('n', '<space>s', function()
-            show_file_lines(python.symbols_regexp())
-        end)
-    end,
+    callback = require'mappings.python',
 })

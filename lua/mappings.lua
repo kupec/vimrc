@@ -37,12 +37,13 @@ vim.keymap.set('n', '<leader>rcg', function()
         pattern = '.git/COMMIT_EDITMSG',
         once = true,
         callback = function()
-            print('__start__')
-            vim.cmd('Git push | echom "pushed!"')
-            print('__end__')
+            print('git pushing...')
+            vim.cmd('silent Git push')
+            print('git pushed')
         end
     })
-    vim.cmd('Git add --all | Git commit')
+    vim.cmd('Git add --all')
+    vim.cmd('Git commit')
 end)
 
 -- project

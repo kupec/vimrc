@@ -41,7 +41,7 @@ vim.keymap.set('n', '<leader>rcg', function()
                 print('git pushing...')
                 vim.cmd('silent Git push')
                 print('git pushed')
-            end)
+            end, 100)
         end
     })
     vim.cmd('Git add --all')

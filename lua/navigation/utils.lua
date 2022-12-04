@@ -52,9 +52,9 @@ function E.show_file_lines(regexp_or_list)
             results = E.prepare_lines(regexp_or_list),
             entry_maker = function(value)
                 return {
-                    value = value[2],
+                    value = value,
                     display = value[2],
-                    ordinal = tostring(value[1]),
+                    ordinal = value[2],
                     path = vim.fn.expand('%'),
                     lnum = value[1],
                 }

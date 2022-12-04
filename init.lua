@@ -9,6 +9,7 @@ end
 
 require 'options'
 require 'mappings'
+require 'autocmds'
 
 require 'plugins.lsp_config'
 require 'plugins.settings'
@@ -16,7 +17,3 @@ require 'plugins.mappings'
 require 'plugins.autocompletion'
 
 vim.cmd 'syntax enable'
-
-
-
-vim.cmd 'runtime legacy.init.vim'

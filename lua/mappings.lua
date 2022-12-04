@@ -33,13 +33,16 @@ vim.keymap.set('n', '<leader>rco', function()
     vim.cmd('edit ' .. vim.env.MYVIMRC)
 end)
 vim.keymap.set('n', '<leader>rcg', function()
-    vim.cmd('Git add --all')
     vim.api.nvim_create_autocmd('BufDelete', {
         pattern = '.git/COMMIT_EDITMSG',
         once = true,
-        command = 'Git push | echom "pushed!"',
+        callback = function()
+            print('__start__')
+            vim.cmd('Git push | echom "pushed!"')
+            print('__end__')
+        end
     })
-    vim.cmd('Git commit')
+    vim.cmd('Git add --all | Git commit')
 end)
 
 -- project

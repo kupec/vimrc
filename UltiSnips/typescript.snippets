@@ -250,10 +250,10 @@ import `!p base_file_name()` from './`!p base_file_name()`';
 import {render, act, fireEvent} from '@testing-library/react';
 
 function renderComponent({}) {
-    const qs = render(<`!p base_file_name()` />);
+    const view = render(<`!p base_file_name()` />);
 
 	return {
-		...qs,
+		...view,
 	};
 }
 
@@ -274,10 +274,10 @@ interface RenderOptions {
 }
 
 function renderComponent({}: RenderOptions = {}) {
-    const qs = render(<`!p base_file_name()` />);
+    const view = render(<`!p base_file_name()` />);
 
 	return {
-		...qs,
+		...view,
 	};
 }
 
@@ -306,11 +306,11 @@ const FETCH_LIST_REQUEST = {
 };
 
 function renderComponent() {
-    const qs = renderBuilder().withRedux().render(`!p base_file_name()`);
+    const view = renderBuilder().withRedux().render(`!p base_file_name()`);
 
     return {
-        ...qs,
-        querySpinner: () => qs.queryByRole('progressbar'),
+        ...view,
+        querySpinner: () => view.queryByRole('progressbar'),
     };
 }
 
@@ -318,9 +318,9 @@ describe('`!p base_file_name()` - render', () => {
     test('loading', () => {
         mockApi.mock(FETCH_LIST_REQUEST, apiResponseProcessing());
 
-        const qs = renderComponent();
+        const view = renderComponent();
 
-        expect(qs.querySpinner()).toBeInTheDocument();
+        expect(view.querySpinner()).toBeInTheDocument();
     });
 });
 endsnippet
@@ -346,11 +346,11 @@ const FETCH_LIST_REQUEST = {
 };
 
 function render`!p base_file_name()`() {
-    const qs = renderWithRedux(<`!p base_file_name()` />);
+    const view = renderWithRedux(<`!p base_file_name()` />);
 
     return {
-        ...qs,
-        querySpinner: () => qs.queryByRole('progressbar'),
+        ...view,
+        querySpinner: () => view.queryByRole('progressbar'),
     };
 }
 
@@ -362,9 +362,9 @@ describe('`!p base_file_name()` - render', () => {
     test('loading', () => {
         mockApi.mock(FETCH_LIST_REQUEST, apiResponseProcessing());
 
-        const qs = render`!p base_file_name()`();
+        const view = render`!p base_file_name()`();
 
-        expect(qs.querySpinner()).toBeInTheDocument();
+        expect(view.querySpinner()).toBeInTheDocument();
     });
 });
 endsnippet

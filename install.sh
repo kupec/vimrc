@@ -10,9 +10,13 @@ function is-macos {
 }
 
 function pip-install {
+    if [[ -z "$PIP_LIST" ]]; then
+        PIP_LIST="$("$PYTHON3" -m pip list 2>/dev/null)"
+    fi;
+
     NOT_INSTALLED_PACKAGES=()
     for package; do
-        if ! "$PYTHON3" -m pip show "$package" >/dev/null; then
+        if ! echo "$PIP_LIST" | grep "$package" >/dev/null; then
             NOT_INSTALLED_PACKAGES+=("$package")
         fi;
     done;
@@ -25,36 +29,52 @@ function pip-install {
     fi;
 }
 
-function packages-install {
+function check-package-installed {
     if is-ubuntu; then
-        local NEED_INSTALL=""
-        for package; do
-            if ! dpkg-query -s "$package" >/dev/null; then
-                NEED_INSTALL=yes
-                break
-            fi;
-        done;
-
-        if [[ $NEED_INSTALL == "yes" ]]; then
-            sudo apt update
-            sudo apt install "$@" -y
-        else
-            echo "All system packages are installed already"
-        fi;
+        dpkg-query -s "$1" >/dev/null;
     elif is-macos; then
-        brew install "$@"
+        if [[ -z "$BREW_LIST" ]]; then
+            BREW_LIST="$(brew list)"
+        fi;
+
+        echo $BREW_LIST | grep "$1" >/dev/null;
     fi;
-    
 }
 
-PACKAGES=(git curl wget xsel python3 ripgrep watchman)
+function packages-install {
+    local NEED_INSTALL=""
+    for package; do
+        if ! check-package-installed "$package"; then
+            NEED_INSTALL=yes
+            break
+        fi;
+    done;
+
+    if [[ $NEED_INSTALL == "yes" ]]; then
+        if is-ubuntu; then
+            sudo apt update
+            sudo apt install "$@" -y
+        elif is-macos; then
+            brew install "$@"
+        fi;
+    else
+        return 1
+    fi;
+}
+
+echo "Installing system dependencies"
+
+PACKAGES=(git curl wget xsel ripgrep watchman)
+
 # check if npm installed from other sources first (download manually, for example)
 which npm >/dev/null || PACKAGES+=(npm)
 
 # python
 PYTHON3=python3
 if is-ubuntu; then
-    PACKAGES+=(python3-pip)
+    PACKAGES+=(python3 python3-pip)
+else
+    PACKAGES+=(python)
 fi;
 
 # fd (fzf)
@@ -64,7 +84,8 @@ else
     PACKAGES+=(fd)
 fi;
 
-packages-install "${PACKAGES[@]}"
+packages-install "${PACKAGES[@]}" || echo "All system packages are installed already"
+
 
 # Install neovim python modules + plugin modules
 pip-install pynvim flake8 autopep8 isort jedi
@@ -106,7 +127,8 @@ if is-ubuntu; then
 fi;
 
 if is-macos; then
-    packages-install neovim
+    packages-install neovim || echo "neovim package is up to date"
+
 fi
 
 NVIM_DATA_DIR=$("$NVIM" -u NONE --headless -c 'echo stdpath("data") | quitall' 2>&1)

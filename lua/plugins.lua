@@ -1,6 +1,6 @@
 vim.cmd [[packadd packer.nvim]]
 
-require('packer').startup(function(use, use_rocks)
+require'packer'.startup(function(use, use_rocks)
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
@@ -100,5 +100,11 @@ require('packer').startup(function(use, use_rocks)
     -- snippets
     use 'SirVer/ultisnips'
     use 'honza/vim-snippets'
+
+    -- dev libs
+    use_rocks {
+        'memoize'
+    }
 end)
 
+require'packer.luarocks'.setup_paths()

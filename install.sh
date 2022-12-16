@@ -64,7 +64,7 @@ function packages-install {
 
 echo "Installing system dependencies"
 
-PACKAGES=(git curl wget xsel ripgrep watchman)
+PACKAGES=(git curl wget xsel ripgrep watchman luarocks)
 
 # check if npm installed from other sources first (download manually, for example)
 which npm >/dev/null || PACKAGES+=(npm)

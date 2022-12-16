@@ -1,3 +1,4 @@
+local memoize = require('memoize')
 local util = require('lspconfig/util')
 local path = util.path
 
@@ -16,19 +17,6 @@ local venv_variants = {
     {'poetry.lock', 'poetry env info -p'},
     {'Pipfile', function(match) return 'PIPENV_PIPFILE=' .. match .. ' pipenv --venv' end},
 }
-
--- TODO: use lua rocks
-local _cache = {}
-
-local function memoize(f)
-    return function(s)
-        if not _cache[s] then
-            _cache[s] = f(s)
-        end
-
-        return _cache[s]
-    end
-end
 
 E.get_python_virtual_env = memoize(function(workspace)
     if vim.env.VIRTUAL_ENV then

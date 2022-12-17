@@ -1,5 +1,10 @@
-require 'plugins'
+require 'options'
+local setup_plugins = require 'plugins'
+
 if vim.env.NVIM_INSTALL_PLUGIN_MODE == 'yes' then
+    vim.env.MACOSX_DEPLOYMENT_TARGET = 11.0
+
+    setup_plugins('install')
     vim.cmd [[
         autocmd User PackerComplete quitall
         PackerSync
@@ -7,7 +12,8 @@ if vim.env.NVIM_INSTALL_PLUGIN_MODE == 'yes' then
     return
 end
 
-require 'options'
+setup_plugins()
+
 require 'mappings'
 require 'autocmds'
 

@@ -1,6 +1,9 @@
+local packer = require 'packer'
+local luarocks = require 'packer.luarocks'
+
 vim.cmd [[packadd packer.nvim]]
 
-require'packer'.startup(function(use, use_rocks)
+packer.startup(function(use, use_rocks)
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
@@ -103,8 +106,9 @@ require'packer'.startup(function(use, use_rocks)
 
     -- dev libs
     use_rocks {
-        'memoize'
+        'memoize',
     }
 end)
 
-require'packer.luarocks'.setup_paths()
+luarocks.install_hererocks()
+luarocks.setup_paths()

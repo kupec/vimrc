@@ -1,12 +1,25 @@
 local packer = require 'packer'
 local luarocks = require 'packer.luarocks'
 
-return function(mode)
-    vim.cmd [[packadd packer.nvim]]
+local E = {}
 
-    if mode ~= 'install' then
-        luarocks.setup_paths()
-    end
+function E.init()
+    luarocks.setup_paths()
+    E.prepare()
+end
+
+function E.install()
+    vim.env.MACOSX_DEPLOYMENT_TARGET = 11.0
+
+    E.prepare()
+
+    vim.cmd 'autocmd User PackerComplete quitall'
+    packer.sync()
+end
+
+
+function E.prepare()
+    vim.cmd [[packadd packer.nvim]]
 
     packer.init {
         luarocks = {
@@ -120,3 +133,5 @@ return function(mode)
         }
     end)
 end
+
+return E

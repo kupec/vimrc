@@ -33,11 +33,14 @@ local python_path_list = {
     '/usr/bin/python',
     vim.fn.system('which python3'),
     vim.fn.system('which python'),
-    vim.trim(vim.fn.system(
+}
+pcall(function()
+    local python_path_on_windows = vim.trim(vim.fn.system(
         {'powershell', '-Command', '-'},
         '(Get-Command python3 | Select-Object).Source'
-    )),
-}
+    ))
+    table.insert(python_path_list, python_path_on_windows)
+end)
 for _, python_path in ipairs(python_path_list) do
     local version
     if pcall(function ()

@@ -23,6 +23,8 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 
+-- TODO: extract `which` to function
+
 -- python path
 local python_path_list = {
     '/usr/local/bin/python3',
@@ -31,6 +33,10 @@ local python_path_list = {
     '/usr/bin/python',
     vim.fn.system('which python3'),
     vim.fn.system('which python'),
+    vim.trim(vim.fn.system(
+        {'powershell', '-Command', '-'},
+        '(Get-Command python3 | Select-Object).Source'
+    )),
 }
 for _, python_path in ipairs(python_path_list) do
     local version

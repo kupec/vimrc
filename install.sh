@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# TODO: use `uname -o` to determine OS
+# TODO: add package manager checker
+
 function has-executable {
     which $1 >/dev/null 2>&1;
 }
@@ -13,9 +16,21 @@ function is-macos {
     has-executable brew;
 }
 
+function is-windows {
+    has-executable scoop;
+}
+
+function run-python {
+    if is-windows; then
+        echo "$PYTHON3" "$@" | powershell -Command -
+    else
+        "$PYTHON3" "$@"
+    fi;
+}
+
 function pip-install {
     if [[ -z "$PIP_LIST" ]]; then
-        PIP_LIST="$("$PYTHON3" -m pip list 2>/dev/null)"
+        PIP_LIST="$(run-python -m pip list 2>/dev/null)"
     fi;
 
     NOT_INSTALLED_PACKAGES=()
@@ -27,7 +42,7 @@ function pip-install {
 
     if [[ ${#NOT_INSTALLED_PACKAGES[@]} -gt 0 ]]; then
         echo "Installing python packages: ${NOT_INSTALLED_PACKAGES[@]}"
-        "$PYTHON3" -m pip install --user "${NOT_INSTALLED_PACKAGES[@]}"
+        run-python -m pip install --user "${NOT_INSTALLED_PACKAGES[@]}"
     else
         echo "All python packages are installed already"
     fi;
@@ -42,6 +57,12 @@ function check-package-installed {
         fi;
 
         echo $BREW_LIST | grep "$1" >/dev/null;
+    elif is-windows; then
+        if [[ -z "$SCOOP_LIST" ]]; then
+            SCOOP_LIST="$(echo '(scoop export | ConvertFrom-Json).apps | ForEach-Object {$_.Name}' | powershell -command -)"
+        fi;
+
+        echo $SCOOP_LIST | grep "$1" >/dev/null;
     fi;
 }
 
@@ -60,6 +81,8 @@ function packages-install {
             sudo apt install "$@" -y
         elif is-macos; then
             brew install "$@"
+        elif is-windows; then
+            scoop install "$@"
         fi;
     else
         return 1
@@ -68,13 +91,27 @@ function packages-install {
 
 echo "Installing system dependencies"
 
-PACKAGES=(git curl wget xsel ripgrep watchman)
+PACKAGES=(wget ripgrep watchman)
+# 1. git bash on windows already has git + curl
+# 2. windows do not have xsel
+if ! is-windows; then
+    PACKAGES+=(git curl xsel)
+fi
 
 # check if npm installed from other sources first (download manually, for example)
-has-executable npm || PACKAGES+=(npm)
+if ! has-executable npm; then
+    if is-ubuntu; then
+        PACKAGES+=(npm)
+    elif is-macos; then
+        PACKAGES+=(node)
+    elif is-windows; then
+        PACKAGES+=(nodejs)
+    fi;
+fi;
 
 # python
 PYTHON3=python3
+
 if is-ubuntu; then
     PACKAGES+=(python3 python3-pip)
 else
@@ -103,7 +140,7 @@ if is-ubuntu; then
     NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
 
     NVIM_NEW_VERSION=$(curl -s "$NVIM_APPIMAGE_DESC_URL" \
-        | "$PYTHON3" -c 'import sys; import json; print(json.load(sys.stdin)["html_url"])')
+        | run-python -c 'import sys; import json; print(json.load(sys.stdin)["html_url"])')
     touch "$NVIM_VERSION_FILE"
     NVIM_CUR_VERSION=$(<"$NVIM_VERSION_FILE")
 
@@ -128,11 +165,10 @@ if is-ubuntu; then
         sudo cp neovim.svg /usr/share/icons/neovim.svg;
         )
     fi;
-fi;
-
-if is-macos; then
+elif is-macos; then
     packages-install neovim || echo "neovim package is up to date"
-
+elif is-windows; then
+    packages-install neovim || echo "neovim package is up to date"
 fi
 
 NVIM_DATA_DIR=$("$NVIM" -u NONE --headless -c 'echo stdpath("data") | quitall' 2>&1)

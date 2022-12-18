@@ -1,12 +1,16 @@
 #!/bin/bash
 set -e
 
+function has-executable {
+    which $1 >/dev/null 2>&1;
+}
+
 function is-ubuntu {
-    which apt-get >/dev/null;
+    has-executable apt-get;
 }
 
 function is-macos {
-    which brew >/dev/null;
+    has-executable brew;
 }
 
 function pip-install {
@@ -67,7 +71,7 @@ echo "Installing system dependencies"
 PACKAGES=(git curl wget xsel ripgrep watchman)
 
 # check if npm installed from other sources first (download manually, for example)
-which npm >/dev/null || PACKAGES+=(npm)
+has-executable npm || PACKAGES+=(npm)
 
 # python
 PYTHON3=python3

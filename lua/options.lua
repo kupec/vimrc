@@ -1,3 +1,5 @@
+local which = require 'utils.which'
+
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -23,24 +25,15 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- TODO: extract `which` to function
-
 -- python path
 local python_path_list = {
     '/usr/local/bin/python3',
     '/usr/local/bin/python',
     '/usr/bin/python3',
     '/usr/bin/python',
-    vim.fn.system('which python3'),
-    vim.fn.system('which python'),
+    which('python3'),
+    which('python'),
 }
-pcall(function()
-    local python_path_on_windows = vim.trim(vim.fn.system(
-        {'powershell', '-Command', '-'},
-        '(Get-Command python3 | Select-Object).Source'
-    ))
-    table.insert(python_path_list, python_path_on_windows)
-end)
 for _, python_path in ipairs(python_path_list) do
     local version
     if pcall(function ()

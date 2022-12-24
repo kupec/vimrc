@@ -1,3 +1,4 @@
+local a = require'plenary.async'
 local Job = require'plenary.job'
 local Path = require'plenary.path'
 local partial = require'plenary.functional'.partial
@@ -8,6 +9,7 @@ local action_set = require "telescope.actions.set"
 local action_state = require "telescope.actions.state"
 local conf = require("telescope.config").values
 local themes = require('telescope.themes')
+local fs = require('utils.fs')
 
 local E = {}
 
@@ -195,29 +197,7 @@ function E.parse_lib_for_import(name)
     return import_tokens, import_path
 end
 
--- TODO: refactor, extract
-function E.scan_dir_to_list(path, callback)
-    vim.loop.fs_scandir(tostring(path), function (err, fs)
-        if err then
-            return vim.defer_fn(partial(callback, err), 0)
-        end
-
-        local iter = function()
-            return vim.loop.fs_scandir_next(fs)
-        end
-
-        local result = {}
-        for item in iter do
-            table.insert(result, item)
-        end
-
-        vim.defer_fn(function()
-            callback(nil, result)
-        end, 0)
-    end)
-end
-
-function E.import_lodash_func(opts)
+E.import_lodash_func = a.void(function(opts)
     opts = opts or themes.get_cursor()
 
     local err, project_paths = E.find_project_paths()
@@ -226,32 +206,31 @@ function E.import_lodash_func(opts)
         return
     end
 
-    E.scan_dir_to_list(project_paths.node_modules / 'lodash', function (err, items)
-        if err then
-            print('Cannot find lodash in node_modules')
-            return
-        end
+    local err, items = fs.async_scan_dir_to_list(project_paths.node_modules / 'lodash')
+    if err then
+        print('Cannot find lodash in node_modules')
+        return
+    end
 
-        local source = {}
-        for _, item in ipairs(items) do
-            if string.find(item, '^[a-z].*%.js') then
-                local func_name = vim.fn.fnamemodify(item, ':r')
-                table.insert(source, func_name)
+    local source = {}
+    for _, item in ipairs(items) do
+        if string.find(item, '^[a-z].*%.js') then
+            local func_name = vim.fn.fnamemodify(item, ':r')
+            table.insert(source, func_name)
+        end
+    end
+
+    pickers.new(opts, {
+        prompt_title = 'Select lodash func to import',
+        finder = finders.new_table {results = source},
+        sorter = conf.generic_sorter(opts),
+        attach_mappings = E.make_mapping_for_insert_import_statement {
+            parse = function (item)
+                return item, 'lodash/' .. item
             end
-        end
-
-        pickers.new(opts, {
-            prompt_title = 'Select lodash func to import',
-            finder = finders.new_table {results = source},
-            sorter = conf.generic_sorter(opts),
-            attach_mappings = E.make_mapping_for_insert_import_statement {
-                parse = function (item)
-                    return item, 'lodash/' .. item
-                end
-            },
-        }):find()
-    end)
-end
+        },
+    }):find()
+end)
 
 function E.find_import_current_file(opts)
     opts = opts or {}

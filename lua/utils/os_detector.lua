@@ -1,7 +1,5 @@
 local E = {}
 
-E.win = 'win'
-
 function E.get_os()
     return string.lower(jit.os)
 end

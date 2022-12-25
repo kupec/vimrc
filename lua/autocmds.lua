@@ -1,3 +1,5 @@
+local helpers = require 'autocmds_helpers'
+
 vim.api.nvim_create_autocmd('VimEnter', {
     command = 'colorscheme PaperColor'
 })
@@ -10,9 +12,9 @@ vim.api.nvim_create_autocmd({
     'CursorHoldI',
 }, {
     callback = function()
-        local mode_regex = vim.regex('\v(c|r.?|!|t)')
         local mode = vim.fn.mode()
-        if mode_regex:match_str(mode) and vim.fn.getcmdwintype() == '' then
+        local is_mode_right = helpers.does_vim_mode_allow_file_changes(mode)
+        if is_mode_right and vim.fn.getcmdwintype() == '' then
             vim.cmd('checktime')
         end
     end,

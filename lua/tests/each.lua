@@ -14,7 +14,7 @@ function P.multi_each(test_params_list_groups)
             local iter_number = #iteration
             if group_count == iter_number then
                 it(P.make_test_name(test_pattern, iteration), function ()
-                    local params = P.reduce_test_params(test_params_list_groups)
+                    local params = P.reduce_test_params(iteration)
                     test_func(unpack(params))
                 end)
                 return
@@ -46,9 +46,9 @@ function P.multi_each(test_params_list_groups)
     return self
 end
 
-function P.reduce_test_params(test_params_list_groups)
+function P.reduce_test_params(iteration)
     local params = {}
-    for _, item in ipairs(test_params_list_groups) do
+    for _, item in ipairs(iteration) do
         local _, params_chunk = unpack(item)
         for _, param in ipairs(params_chunk) do
             table.insert(params, param)

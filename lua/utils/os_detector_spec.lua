@@ -30,7 +30,7 @@ describe('os_detector', function ()
         {'Linux', false},
         {'OSX', true},
         {'Windows', false},
-    }).it('is_linux $1 -> $2', function (jit_os, expected)
+    }).it('is_macos $1 -> $2', function (jit_os, expected)
         jit.os = jit_os
 
         assert.equals(expected, os_detector.is_macos())
@@ -40,7 +40,7 @@ describe('os_detector', function ()
         {'Linux', false},
         {'OSX', false},
         {'Windows', true},
-    }).it('is_linux $1 -> $2', function (jit_os, expected)
+    }).it('is_windows $1 -> $2', function (jit_os, expected)
         jit.os = jit_os
 
         assert.equals(expected, os_detector.is_windows())
@@ -50,7 +50,7 @@ describe('os_detector', function ()
         {'Linux', true},
         {'OSX', true},
         {'Windows', false},
-    }).it('is_linux $1 -> $2', function (jit_os, expected)
+    }).it('is_posix $1 -> $2', function (jit_os, expected)
         jit.os = jit_os
 
         assert.equals(expected, os_detector.is_posix())

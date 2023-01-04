@@ -8,4 +8,7 @@ return function()
     vim.keymap.set('n', '<space>s', function()
         show_file_lines(python.symbols_regexp())
     end)
+    vim.keymap.set('n', '<leader>p', function()
+        vim.cmd 'ALEFix'
+    end)
 end

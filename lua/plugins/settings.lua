@@ -38,7 +38,6 @@ vim.g.ale_fixers = {
     python = {'autopep8'},
 }
 vim.g.ale_fix_on_save = 0
-vim.cmd [[autocmd FileType python nnoremap <buffer> <leader>p :ALEFix<CR>]]
 
 -- windowswap
 vim.g.windowswap_map_keys = 0

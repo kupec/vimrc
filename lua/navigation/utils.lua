@@ -34,7 +34,7 @@ function E.prepare_lines(regexp_or_list)
     end
 
     table.sort(lines, function(a, b)
-        if  b[1] < a[1] then
+        if b[1] < a[1] then
             return true
         end
         return false

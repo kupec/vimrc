@@ -10,6 +10,6 @@ describe('fs', function ()
         local error, result = fs.async_scan_dir_to_list(path)
 
         assert.is_nil(error)
-        assert_helper.assert_array_equals(result, {'1', '2'})
+        assert_helper.assert_equals(result, {'1', '2'})
     end)
 end)

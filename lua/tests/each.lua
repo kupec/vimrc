@@ -62,7 +62,7 @@ function P.make_test_name(test_pattern, params_groups)
     for _, item in ipairs(params_groups) do
         local _, params_chunk = unpack(item)
         for _, param in ipairs(params_chunk) do
-            test_pattern = string.gsub(test_pattern, '$' .. index, tostring(param))
+            test_pattern = string.gsub(test_pattern, '$' .. index, vim.inspect(param))
             index = index + 1
         end
     end

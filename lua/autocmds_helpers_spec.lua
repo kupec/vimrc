@@ -1,7 +1,7 @@
 local helpers = require 'autocmds_helpers'
 local each = require 'tests.each'
 
-describe('autocmds_helpers', function ()
+describe('autocmds_helpers', function()
     each({
         {'n', true},
         {'no', true},
@@ -38,11 +38,8 @@ describe('autocmds_helpers', function ()
         {'r?', false},
         {'!', false},
         {'t', false},
-    }).it(
-        'does_vim_mode_allow_file_changes mode=$1 - $2',
-        function (mode, expected)
-            local actual = helpers.does_vim_mode_allow_file_changes(mode)
-            assert.equals(expected, actual)
-        end
-    )
+    }).it('does_vim_mode_allow_file_changes mode=$1 - $2', function(mode, expected)
+        local actual = helpers.does_vim_mode_allow_file_changes(mode)
+        assert.equals(expected, actual)
+    end)
 end)

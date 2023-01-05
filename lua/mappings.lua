@@ -1,4 +1,4 @@
-local mappings = require'utils.mappings'
+local mappings = require 'utils.mappings'
 local noremap = mappings.noremap
 
 -- escape
@@ -42,7 +42,7 @@ vim.keymap.set('n', '<leader>rcg', function()
                 vim.cmd('silent Git push')
                 print('git pushed')
             end, 100)
-        end
+        end,
     })
     vim.cmd('Git add --all')
     vim.cmd('Git commit')
@@ -58,11 +58,15 @@ vim.keymap.set('n', '<leader>oo', function()
     project.select_project_and_run(project.open_project)
 end)
 
-vim.keymap.set('n', '<leader>ol', function() require'search.project'.select_tab_by_project() end)
+vim.keymap.set('n', '<leader>ol', function()
+    require'search.project'.select_tab_by_project()
+end)
 noremap('n', '<leader>oc', ':tabc<CR>')
 
 -- js import
-vim.keymap.set('n', '<leader>ijf', function() require'import.js'.import_js_file() end)
+vim.keymap.set('n', '<leader>ijf', function()
+    require'import.js'.import_js_file()
+end)
 vim.keymap.set('n', '<leader>iid', function()
     local import = require 'import.js'
     local err, project_paths = import.find_project_paths()
@@ -75,19 +79,24 @@ vim.keymap.set('n', '<leader>iid', function()
     local rel_lib_path = lib_path:make_relative(vim.fn.getcwd())
     import.import_js_file(tostring(rel_lib_path))
 end)
-vim.keymap.set('n', '<leader>ijn', function() require'import.js'.import_js_lib() end)
-vim.keymap.set('n', '<leader>ijl', function() require'import.js'.import_lodash_func() end)
-vim.keymap.set('n', '<leader>fif', function() require'import.js'.find_import_current_file() end)
-vim.keymap.set('n', '<leader>ftt', function() require'import.js'.find_target_of_current_test_file() end)
+vim.keymap.set('n', '<leader>ijn', function()
+    require'import.js'.import_js_lib()
+end)
+vim.keymap.set('n', '<leader>ijl', function()
+    require'import.js'.import_lodash_func()
+end)
+vim.keymap.set('n', '<leader>fif', function()
+    require'import.js'.find_import_current_file()
+end)
+vim.keymap.set('n', '<leader>ftt', function()
+    require'import.js'.find_target_of_current_test_file()
+end)
 
 -- js navigation
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx'},
-    callback = require'mappings.js',
+    callback = require 'mappings.js',
 })
 
 -- python navigation
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'python',
-    callback = require'mappings.python',
-})
+vim.api.nvim_create_autocmd('FileType', {pattern = 'python', callback = require 'mappings.python'})

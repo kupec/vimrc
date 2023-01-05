@@ -1,4 +1,4 @@
-local utils = require'navigation.utils'
+local utils = require 'navigation.utils'
 
 local E = {}
 

@@ -1,10 +1,10 @@
-local a = require'plenary.async'
+local a = require 'plenary.async'
 local partial = require'plenary.functional'.partial
 
 local E = {}
 
 function E.async_scan_dir_to_list_cb(path, callback)
-    vim.loop.fs_scandir(tostring(path), function (err, fs)
+    vim.loop.fs_scandir(tostring(path), function(err, fs)
         if err then
             return vim.defer_fn(partial(callback, err), 0)
         end

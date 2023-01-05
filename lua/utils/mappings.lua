@@ -12,13 +12,5 @@ local function create_mapping_func(default_opts)
     end
 end
 
-return {
-    noremap = create_mapping_func {
-        noremap = true,
-        silent = true,
-    },
-    map = create_mapping_func {
-        silent = true,
-    },
-}
+return {noremap = create_mapping_func {noremap = true, silent = true}, map = create_mapping_func {silent = true}}
 

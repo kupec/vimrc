@@ -17,15 +17,10 @@ function E.install()
     packer.sync()
 end
 
-
 function E.prepare()
     vim.cmd [[packadd packer.nvim]]
 
-    packer.init {
-        luarocks = {
-            python_cmd = vim.g.python3_host_prog
-        },
-    }
+    packer.init {luarocks = {python_cmd = vim.g.python3_host_prog}}
     packer.startup(function(use, use_rocks)
         -- Packer itself
         use 'wbthomason/packer.nvim'
@@ -39,10 +34,7 @@ function E.prepare()
 
         -- format
         use 'editorconfig/editorconfig-vim'
-        use {
-        'prettier/vim-prettier',
-        run = 'npm i -g prettier',
-        }
+        use {'prettier/vim-prettier', run = 'npm i -g prettier'}
         use 'frazrepo/vim-rainbow'
 
         -- format js
@@ -65,47 +57,36 @@ function E.prepare()
         use 'tpope/vim-surround'
         use 'tpope/vim-abolish'
         use 'arthurxavierx/vim-caser'
-        use {
-        'heavenshell/vim-jsdoc',
-        ft = {'javascript', 'javascript.jsx','typescript'},
-        run = 'make install',
-        }
+        use {'heavenshell/vim-jsdoc', ft = {'javascript', 'javascript.jsx', 'typescript'}, run = 'make install'}
 
         -- autocomplete
         use 'wellle/tmux-complete.vim'
         use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lua',
-            'quangnguyen30192/cmp-nvim-ultisnips',
-        }
+            'hrsh7th/nvim-cmp',
+            requires = {
+                'hrsh7th/cmp-path',
+                'hrsh7th/cmp-nvim-lsp',
+                'hrsh7th/cmp-nvim-lua',
+                'quangnguyen30192/cmp-nvim-ultisnips',
+            },
         }
 
         -- search
         use {
-        'junegunn/fzf',
-        run = function() vim.fn['fzf#install']() end
+            'junegunn/fzf',
+            run = function()
+                vim.fn['fzf#install']()
+            end,
         }
         use 'junegunn/fzf.vim'
-        use {
-        'nvim-telescope/telescope.nvim',
-        requires = { {'nvim-lua/plenary.nvim'} },
-        }
-        use {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'make',
-        }
+        use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
+        use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
 
         -- file manager
         use 'scrooloose/nerdtree'
 
         -- markdown preview
-        use {
-        'shime/vim-livedown',
-        run = 'sudo npm i -g livedown',
-        }
+        use {'shime/vim-livedown', run = 'sudo npm i -g livedown'}
 
         -- git plugin
         use 'tpope/vim-fugitive'
@@ -128,13 +109,8 @@ function E.prepare()
         use 'honza/vim-snippets'
 
         -- dev libs
-        use_rocks {
-            'memoize',
-        }
-        use_rocks {
-            'luaformatter',
-            server = 'https://luarocks.org/dev'
-        }
+        use_rocks {'memoize'}
+        use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
     end)
 end
 

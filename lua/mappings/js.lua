@@ -1,5 +1,5 @@
 local show_file_lines = require'navigation.utils'.show_file_lines
-local js = require'navigation.js'
+local js = require 'navigation.js'
 
 return function()
     vim.keymap.set('n', '<space>t', function()

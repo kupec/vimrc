@@ -11,30 +11,15 @@ vim.env.FZF_DEFAULT_COMMAND = vim.g.fd_prog .. ' ' .. fzf_command_args
 
 -- telescope.nvim
 local telescope = require 'telescope'
-telescope.setup {
-    defaults = {
-        file_ignore_patterns = {"^%.git/"},
-    },
-}
+telescope.setup {defaults = {file_ignore_patterns = {'^%.git/'}}}
 telescope.load_extension('fzf')
 
 -- emmet-vim
-vim.g.user_emmet_settings = {
-    ['javascript.jsx'] = {
-        extends = 'jsx',
-    },
-}
+vim.g.user_emmet_settings = {['javascript.jsx'] = {extends = 'jsx'}}
 
 -- ale
-vim.g.ale_linters = {
-    javascript = {'eslint'},
-    python = {'flake8'},
-}
-vim.g.ale_fixers = {
-    javascript = {'eslint'},
-    typescript = {'eslint'},
-    python = {'autopep8'},
-}
+vim.g.ale_linters = {javascript = {'eslint'}, python = {'flake8'}}
+vim.g.ale_fixers = {javascript = {'eslint'}, typescript = {'eslint'}, python = {'autopep8'}}
 vim.g.ale_fix_on_save = 0
 
 -- windowswap

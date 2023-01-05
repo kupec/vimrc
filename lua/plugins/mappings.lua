@@ -1,4 +1,4 @@
-local mappings = require'utils.mappings'
+local mappings = require 'utils.mappings'
 local noremap = mappings.noremap
 local map = mappings.map
 

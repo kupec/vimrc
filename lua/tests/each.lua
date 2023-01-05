@@ -1,4 +1,4 @@
-local a = require'plenary.async'
+local a = require 'plenary.async'
 
 local P = {}
 
@@ -13,7 +13,7 @@ function P.multi_each(test_params_list_groups)
             local group_count = #test_params_list_groups
             local iter_number = #iteration
             if group_count == iter_number then
-                it(P.make_test_name(test_pattern, iteration), function ()
+                it(P.make_test_name(test_pattern, iteration), function()
                     local params = P.reduce_test_params(iteration)
                     test_func(unpack(params))
                 end)
@@ -28,7 +28,7 @@ function P.multi_each(test_params_list_groups)
             end
         end
 
-        return function (test_pattern, test_func)
+        return function(test_pattern, test_func)
             reduce.test_func(test_pattern, test_func, {})
         end
     end
@@ -67,7 +67,7 @@ function P.make_test_name(test_pattern, params_groups)
         end
     end
 
-    local test_indices = vim.tbl_map(function (item)
+    local test_indices = vim.tbl_map(function(item)
         local test_index, _ = unpack(item)
         return tostring(test_index)
     end, params_groups)

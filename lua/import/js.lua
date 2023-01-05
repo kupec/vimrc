@@ -1,13 +1,13 @@
-local a = require'plenary.async'
-local Job = require'plenary.job'
-local Path = require'plenary.path'
+local a = require 'plenary.async'
+local Job = require 'plenary.job'
+local Path = require 'plenary.path'
 local partial = require'plenary.functional'.partial
-local pickers = require "telescope.pickers"
-local finders = require "telescope.finders"
-local actions = require "telescope.actions"
-local action_set = require "telescope.actions.set"
-local action_state = require "telescope.actions.state"
-local conf = require("telescope.config").values
+local pickers = require 'telescope.pickers'
+local finders = require 'telescope.finders'
+local actions = require 'telescope.actions'
+local action_set = require 'telescope.actions.set'
+local action_state = require 'telescope.actions.state'
+local conf = require('telescope.config').values
 local themes = require('telescope.themes')
 local fs = require('utils.fs')
 
@@ -32,19 +32,13 @@ function E.import_js_file(search_root, opts)
     search_root = search_root or vim.fn.getcwd()
     opts = opts or themes.get_cursor()
 
-    local find_cmd = {
-        vim.g.fd_prog,
-        '.', search_root,
-        '--type', 'f',
-    }
+    local find_cmd = {vim.g.fd_prog, '.', search_root, '--type', 'f'}
 
     pickers.new(opts, {
         prompt_title = 'Select file to import',
         finder = finders.new_oneshot_job(find_cmd, opts),
         sorter = conf.file_sorter(opts),
-        attach_mappings = E.make_mapping_for_insert_import_statement {
-            parse = E.parse_path_for_import,
-        },
+        attach_mappings = E.make_mapping_for_insert_import_statement {parse = E.parse_path_for_import},
     }):find()
 end
 
@@ -53,10 +47,7 @@ function E.make_mapping_for_insert_import_statement(options)
 
     return function(prompt_bufnr, map)
         local function handler(options)
-            options = vim.tbl_extend('force', {
-                after = false,
-                kind = 'import',
-            }, options)
+            options = vim.tbl_extend('force', {after = false, kind = 'import'}, options)
 
             actions.close(prompt_bufnr)
             local selection = action_state.get_selected_entry()
@@ -68,8 +59,12 @@ function E.make_mapping_for_insert_import_statement(options)
             end
         end
 
-        action_set.select:replace(function() handler({after = false}) end)
-        map('i', '<c-d>', function() handler({after = true}) end)
+        action_set.select:replace(function()
+            handler({after = false})
+        end)
+        map('i', '<c-d>', function()
+            handler({after = true})
+        end)
 
         return true
     end
@@ -77,12 +72,12 @@ end
 
 function E.parse_path_for_import(path)
     local rel_path = E.get_import_js_file_path(path)
-    local base_file_name = vim.fn.fnamemodify(rel_path, ":p:t:r")
+    local base_file_name = vim.fn.fnamemodify(rel_path, ':p:t:r')
     return base_file_name, rel_path
 end
 
 function E.insert_js_import_statement(import_tokens, import_path, options)
-    local import_statement = string.format("import %s from '%s'", import_tokens, import_path)
+    local import_statement = string.format('import %s from \'%s\'', import_tokens, import_path)
     vim.api.nvim_put({import_statement}, 'l', options.after, not options.after)
 end
 
@@ -110,10 +105,7 @@ function E.get_relative_path(file_path)
     local cur_path = vim.fn.expand('%:p:h')
     file_path = vim.fn.fnamemodify(file_path, ':p')
 
-    local result = Job:new({
-        command = 'realpath',
-        args = {'-m', '--relative-to', cur_path, file_path},
-    }):sync()
+    local result = Job:new({command = 'realpath', args = {'-m', '--relative-to', cur_path, file_path}}):sync()
 
     return vim.trim(result[1])
 end
@@ -143,11 +135,7 @@ function E.find_project_paths()
         return 'No node_modules, please install dependencies'
     end
 
-    return nil, {
-        root = found_dir,
-        package_json = found_dir / 'package.json',
-        node_modules = found_dir / 'node_modules',
-    }
+    return nil, {root = found_dir, package_json = found_dir / 'package.json', node_modules = found_dir / 'node_modules'}
 end
 
 function E.find_package_json()
@@ -177,9 +165,7 @@ function E.import_js_lib(opts)
         prompt_title = 'Select lib to import',
         finder = finders.new_table {results = source},
         sorter = conf.generic_sorter(opts),
-        attach_mappings = E.make_mapping_for_insert_import_statement {
-            parse = E.parse_lib_for_import,
-        },
+        attach_mappings = E.make_mapping_for_insert_import_statement {parse = E.parse_lib_for_import},
     }):find()
 end
 
@@ -225,9 +211,9 @@ E.import_lodash_func = a.void(function(opts)
         finder = finders.new_table {results = source},
         sorter = conf.generic_sorter(opts),
         attach_mappings = E.make_mapping_for_insert_import_statement {
-            parse = function (item)
+            parse = function(item)
                 return item, 'lodash/' .. item
-            end
+            end,
         },
     }):find()
 end)
@@ -258,10 +244,7 @@ function E.find_target_of_current_test_file(opts)
         table.insert(find_cmd, '-e')
         table.insert(find_cmd, ext)
     end
-    local cmd_opts = {
-        '-p', '-F',  '-E', '*.test.*',
-        file_path,
-    }
+    local cmd_opts = {'-p', '-F', '-E', '*.test.*', file_path}
     for _, opt in ipairs(cmd_opts) do
         table.insert(find_cmd, opt)
     end

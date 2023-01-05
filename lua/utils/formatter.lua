@@ -48,10 +48,7 @@ function E.make_base_formatter_cmd(options)
     local jit_version = string.gsub(jit.version, 'LuaJIT ', '')
     local cache_path = vim.fn.stdpath 'cache'
 
-    local luarocks_prog = table.concat(
-        {cache_path, 'packer_hererocks', jit_version, 'bin', 'lua-format'},
-        '/'
-    )
+    local luarocks_prog = table.concat({cache_path, 'packer_hererocks', jit_version, 'bin', 'lua-format'}, '/')
 
     local cmd = {luarocks_prog}
     table.insert(cmd, '--config=luaformatter.config')
@@ -64,12 +61,7 @@ function E.make_base_formatter_cmd(options)
 end
 
 function E.find_lua_files()
-    return vim.fn.systemlist {
-        executables.find_fd_prog(),
-        '--type', 'file',
-        '\\.lua$'
-
-    }
+    return vim.fn.systemlist {executables.find_fd_prog(), '--type', 'file', '\\.lua$'}
 end
 
 return E

@@ -12,16 +12,8 @@ end
 function E.assert_equals(actual, expected, key_path)
     key_path = key_path or {}
 
-    assert.equals(
-        E.get_type(expected),
-        E.get_type(actual),
-        'Different types' ..
-        '\n\n' .. vim.inspect({
-            actual=actual,
-            expected=expected,
-            key_path=key_path
-        })
-    )
+    assert.equals(E.get_type(expected), E.get_type(actual), 'Different types' .. '\n\n' ..
+                      vim.inspect({actual = actual, expected = expected, key_path = key_path}))
 
     local _type = E.get_type(actual)
 
@@ -32,38 +24,20 @@ function E.assert_equals(actual, expected, key_path)
     else
         local assert_prefix = ''
         if next(key_path) ~= nil then
-            assert_prefix =
-                'Different values on path ' ..
-                table.concat(key_path, '.') ..
-                '\n\n'
+            assert_prefix = 'Different values on path ' .. table.concat(key_path, '.') .. '\n\n'
         end
 
-        assert.equals(
-            expected,
-            actual,
-            assert_prefix .. vim.inspect({
-                actual=actual,
-                expected=expected,
-                key_path=key_path
-            })
-        )
+        assert.equals(expected, actual,
+                      assert_prefix .. vim.inspect({actual = actual, expected = expected, key_path = key_path}))
     end
 end
 
 function E.assert_array_equals(actual, expected, key_path)
     key_path = key_path or {}
 
-    assert.equals(
-        #expected,
-        #actual,
-        'Expected array with length=' .. #expected ..
-        ' but see array with length=' .. #actual ..
-        '\n\n' .. vim.inspect({
-            actual=actual,
-            expected=expected,
-            key_path=key_path
-        })
-    )
+    assert.equals(#expected, #actual,
+                  'Expected array with length=' .. #expected .. ' but see array with length=' .. #actual .. '\n\n' ..
+                      vim.inspect({actual = actual, expected = expected, key_path = key_path}))
 
     for index, actual_item in ipairs(actual) do
         local expected_item = expected[index]

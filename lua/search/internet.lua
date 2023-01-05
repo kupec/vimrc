@@ -1,9 +1,9 @@
-local pickers = require "telescope.pickers"
-local finders = require "telescope.finders"
-local actions = require "telescope.actions"
-local action_set = require "telescope.actions.set"
-local action_state = require "telescope.actions.state"
-local conf = require("telescope.config").values
+local pickers = require 'telescope.pickers'
+local finders = require 'telescope.finders'
+local actions = require 'telescope.actions'
+local action_set = require 'telescope.actions.set'
+local action_state = require 'telescope.actions.state'
+local conf = require('telescope.config').values
 local themes = require('telescope.themes')
 
 local E = {}
@@ -42,15 +42,11 @@ function E.find_cword_on_any_site(opts)
     pickers.new(opts, {
         prompt_title = 'Select internet source',
         finder = finders.new_table {
-          results = internet_sources,
-          entry_maker = function(value)
-              local name, url = unpack(value)
-              return {
-                  value = url,
-                  display = name,
-                  ordinal = name,
-              }
-          end,
+            results = internet_sources,
+            entry_maker = function(value)
+                local name, url = unpack(value)
+                return {value = url, display = name, ordinal = name}
+            end,
         },
         sorter = conf.generic_sorter(opts),
         attach_mappings = function(prompt_bufnr)

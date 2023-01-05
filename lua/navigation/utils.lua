@@ -1,6 +1,6 @@
-local pickers = require "telescope.pickers"
-local finders = require "telescope.finders"
-local conf = require("telescope.config").values
+local pickers = require 'telescope.pickers'
+local finders = require 'telescope.finders'
+local conf = require('telescope.config').values
 
 local E = {}
 
@@ -62,10 +62,7 @@ function E.show_file_lines(regexp_or_list)
         },
         sorter = conf.generic_sorter(opts),
         previewer = conf.grep_previewer(opts),
-        layout_config = {
-            width = 0.9,
-            height = 0.9,
-        },
+        layout_config = {width = 0.9, height = 0.9},
     }):find()
 end
 

@@ -15,7 +15,12 @@ end
 
 local venv_variants = {
     {'poetry.lock', 'poetry env info -p'},
-    {'Pipfile', function(match) return 'PIPENV_PIPFILE=' .. match .. ' pipenv --venv' end},
+    {
+        'Pipfile',
+        function(match)
+            return 'PIPENV_PIPFILE=' .. match .. ' pipenv --venv'
+        end,
+    },
 }
 
 E.get_python_virtual_env = memoize(function(workspace)
@@ -27,7 +32,9 @@ E.get_python_virtual_env = memoize(function(workspace)
         local key_file, get_venv_path_cmd = unpack(variant)
         if type(get_venv_path_cmd) == 'string' then
             local value = get_venv_path_cmd
-            get_venv_path_cmd = function(_) return value end
+            get_venv_path_cmd = function(_)
+                return value
+            end
         end
 
         local match = vim.fn.glob(path.join(workspace, key_file))

@@ -36,10 +36,8 @@ local python_path_list = {
 }
 for _, python_path in ipairs(python_path_list) do
     local version
-    if pcall(function ()
-        version = vim.trim(vim.fn.system({
-            python_path, '-c', 'import sys;print(sys.version_info.major)'
-        }))
+    if pcall(function()
+        version = vim.trim(vim.fn.system({python_path, '-c', 'import sys;print(sys.version_info.major)'}))
     end) then
         if version == '3' then
             vim.g.python3_host_prog = python_path

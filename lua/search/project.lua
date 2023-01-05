@@ -1,16 +1,16 @@
-local builtin = require "telescope.builtin"
-local pickers = require "telescope.pickers"
-local finders = require "telescope.finders"
-local actions = require "telescope.actions"
-local action_set = require "telescope.actions.set"
-local action_state = require "telescope.actions.state"
-local conf = require("telescope.config").values
-local make_entry = require "telescope.make_entry"
+local builtin = require 'telescope.builtin'
+local pickers = require 'telescope.pickers'
+local finders = require 'telescope.finders'
+local actions = require 'telescope.actions'
+local action_set = require 'telescope.actions.set'
+local action_state = require 'telescope.actions.state'
+local conf = require('telescope.config').values
+local make_entry = require 'telescope.make_entry'
 local themes = require('telescope.themes')
 
 local E = {}
 
-local possible_projects_dirs = {"~/proj", "~/projects"}
+local possible_projects_dirs = {'~/proj', '~/projects'}
 
 function E.open_project(path)
     vim.cmd('tcd ' .. path)
@@ -21,15 +21,12 @@ function E.open_project(path)
     local win_height = vim.api.nvim_win_get_height(0)
 
     local valign = {}
-    for i=1, win_height / 3 - 1 do
+    for i = 1, win_height / 3 - 1 do
         valign[i] = ''
     end
     vim.api.nvim_buf_set_lines(0, 0, 0, true, valign)
 
-    vim.api.nvim_buf_set_lines(0, #valign, #valign, true, {
-        'Project: ' .. path,
-        'Please open a file',
-    })
+    vim.api.nvim_buf_set_lines(0, #valign, #valign, true, {'Project: ' .. path, 'Please open a file'})
     vim.cmd('$-2,$center ' .. win_width)
     vim.bo.buftype = 'nofile'
     vim.bo.bufhidden = 'wipe'
@@ -46,7 +43,7 @@ end
 
 local function get_projects_dir()
     for _, dir in ipairs(possible_projects_dirs) do
-        if vim.fn.glob(dir) ~= "" then
+        if vim.fn.glob(dir) ~= '' then
             return vim.fn.expand(dir)
         end
     end
@@ -72,12 +69,7 @@ function E.select_project_and_run(sink, opts)
     opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
     local projects_dir = get_projects_dir()
-    local find_cmd = {
-        vim.g.fd_prog,
-        '.', projects_dir,
-        '--type', 'd',
-        '--max-depth', '1',
-    }
+    local find_cmd = {vim.g.fd_prog, '.', projects_dir, '--type', 'd', '--max-depth', '1'}
 
     pickers.new(opts, {
         prompt_title = 'Select project',
@@ -135,11 +127,7 @@ function E.select_tab_by_project(opts)
         local projects_dir = get_projects_dir()
         local short_dir, count = string.gsub(dir, '^' .. projects_dir .. '/', '')
         if count == 1 then
-            table.insert(source, {
-                tabnr = info.tabnr,
-                dir = dir,
-                short_dir = short_dir,
-            })
+            table.insert(source, {tabnr = info.tabnr, dir = dir, short_dir = short_dir})
         end
     end
 
@@ -151,14 +139,10 @@ function E.select_tab_by_project(opts)
     pickers.new(opts, {
         prompt_title = 'Select tab by project',
         finder = finders.new_table {
-          results = source,
-          entry_maker = function(value)
-              return {
-                  value = value,
-                  display = value.short_dir,
-                  ordinal = value.short_dir,
-              }
-          end,
+            results = source,
+            entry_maker = function(value)
+                return {value = value, display = value.short_dir, ordinal = value.short_dir}
+            end,
         },
         sorter = conf.generic_sorter(opts),
         attach_mappings = function(prompt_bufnr, map)

@@ -1,12 +1,10 @@
+local executables = require 'utils.executables'
+
 -- suda
 vim.g['suda#prefix'] = {'suda://', 'sudo://'}
 
 -- fzf
-if vim.fn.executable('fd') == 1 then
-    vim.g.fd_prog = 'fd'
-else
-    vim.g.fd_prog = 'fdfind'
-end
+vim.g.fd_prog = executables.find_fd_prog()
 
 local fzf_command_args = '--type file --hidden --exclude .git --exclude node_modules'
 vim.env.FZF_DEFAULT_COMMAND = vim.g.fd_prog .. ' ' .. fzf_command_args

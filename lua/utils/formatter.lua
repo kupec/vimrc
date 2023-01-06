@@ -45,12 +45,10 @@ function E.run_formatter(options)
 end
 
 function E.make_base_formatter_cmd(options)
-    local jit_version = string.gsub(jit.version, 'LuaJIT ', '')
-    local cache_path = vim.fn.stdpath 'cache'
+    local data_path = vim.fn.stdpath 'data'
+    local lua_format_prog = data_path .. '/bin/lua-format'
 
-    local luarocks_prog = table.concat({cache_path, 'packer_hererocks', jit_version, 'bin', 'lua-format'}, '/')
-
-    local cmd = {luarocks_prog}
+    local cmd = {lua_format_prog}
     table.insert(cmd, '--config=luaformatter.config')
     for _, opt in ipairs(options) do
         table.insert(cmd, opt)

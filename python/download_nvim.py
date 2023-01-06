@@ -1,8 +1,9 @@
 import os
 from pathlib import Path
 import requests
-import sys
 from typing import Callable, TypeVar, Optional, List
+
+from download_file import fetch_file
 
 T = TypeVar('T')
 
@@ -58,18 +59,11 @@ def fetch_last_version() -> str:
 
 
 def fetch_linux_appimage_file():
-    resp = requests.get('https://github.com/neovim/neovim/releases/download/stable/nvim.appimage', stream=True)
-    with open(get_exe_path(), 'wb', 0o755) as fd:
-        total_fetched = 0
-        total_size = int(resp.headers['content-length'])
-
-        for chunk in resp.iter_content(chunk_size=4096):
-            fd.write(chunk)
-
-            total_fetched += len(chunk)
-            percent = 100 * total_fetched / total_size
-            sys.stdout.write(f'\r\tdownloading {percent:.1f}%')
-    sys.stdout.write('\r')
+    fetch_file(
+        url='https://github.com/neovim/neovim/releases/download/stable/nvim.appimage',
+        path=get_exe_path(),
+        mode=0o755,
+    )
 
 
 def download_linux_appimage():

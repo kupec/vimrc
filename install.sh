@@ -155,6 +155,11 @@ elif is-windows; then
     packages-install neovim || echo "neovim package is up to date"
 fi
 
+run-python -c '
+from python.download_lua_format import download
+download()
+'
+
 NVIM_DATA_DIR=$("$NVIM" -u NONE --headless -c 'echo stdpath("data") | quitall' 2>&1)
 NVIM_PACKER="$NVIM_DATA_DIR/site/pack/packer/start/packer.nvim"
 

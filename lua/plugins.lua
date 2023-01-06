@@ -110,7 +110,6 @@ function E.prepare()
 
         -- dev libs
         use_rocks {'memoize'}
-        use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
     end)
 end
 

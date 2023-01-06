@@ -133,26 +133,10 @@ pip-install pynvim flake8 autopep8 isort jedi
 
 NVIM=nvim
 if is-ubuntu; then
-    NVIM_APPIMAGE_DIR="$HOME/.local/bin"
-    NVIM="$NVIM_APPIMAGE_DIR/nvim"
-    NVIM_VERSION_FILE="$NVIM_APPIMAGE_DIR/.nvim.version"
-    NVIM_APPIMAGE_DESC_URL="https://api.github.com/repos/neovim/neovim/releases/latest"
-    NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
-
-    NVIM_NEW_VERSION=$(curl -s "$NVIM_APPIMAGE_DESC_URL" \
-        | run-python -c 'import sys; import json; print(json.load(sys.stdin)["html_url"])')
-    touch "$NVIM_VERSION_FILE"
-    NVIM_CUR_VERSION=$(<"$NVIM_VERSION_FILE")
-
-    if [[ $NVIM_NEW_VERSION != $NVIM_CUR_VERSION ]]; then
-        echo "Downloading new version of neovim"
-        wget "$NVIM_APPIMAGE_URL" -O "$NVIM"
-        chmod +x "$NVIM"
-
-        echo $NVIM_NEW_VERSION > $NVIM_VERSION_FILE
-    else
-        echo "Installed neovim version is already latest"
-    fi;
+    run-python -c '
+from python.download_nvim import download_linux_appimage
+download_linux_appimage()
+    '
 
     # Install neovim gui wrapper
     if [[ ! -d neovim-gnome-terminal ]]; then

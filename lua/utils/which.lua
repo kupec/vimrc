@@ -5,6 +5,6 @@ return function(exe)
         return vim.fn.system({'which', exe})
     elseif os_detector.is_windows() then
         return vim.trim(vim.fn
-                            .system({'powershell', '-Command', '-'}, '(Get-Command ' .. exe ' | Select-Object).Source'))
+                            .system({'powershell', '-Command', '-'}, '(Get-Command ' .. exe .. ' | Select-Object).Source'))
     end
 end

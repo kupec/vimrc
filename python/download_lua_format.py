@@ -5,7 +5,7 @@ import platform
 import requests
 import subprocess
 
-from download_file import fetch_file
+from .download_file import fetch_file
 
 
 DOWNLOAD_BASE_URL = 'https://raw.githubusercontent.com/Koihik/vscode-lua-format/master/bin'
@@ -21,6 +21,8 @@ def get_nvim_stdpath(key: str) -> Path:
     process = subprocess.run(
         [
             'nvim',
+            '-u',
+            'NONE',
             '--headless',
             '-c',
             f'echo stdpath("{key}") | quit',

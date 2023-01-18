@@ -59,7 +59,8 @@ def get_exe_url() -> str:
 
 
 def get_exe_path() -> Path:
-    return get_bin_path() / 'lua-format'
+    exe_name = 'lua-format.exe' if platform.system() == 'Windows' else 'lua-format'
+    return get_bin_path() / exe_name
 
 
 def fetch_exe_etag() -> str:

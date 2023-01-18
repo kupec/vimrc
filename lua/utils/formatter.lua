@@ -1,3 +1,4 @@
+local os_detector = require 'utils.os_detector'
 local executables = require 'utils.executables'
 local as_shell_script = require 'utils.as_shell_script'
 
@@ -47,6 +48,10 @@ end
 function E.make_base_formatter_cmd(options)
     local data_path = vim.fn.stdpath 'data'
     local lua_format_prog = data_path .. '/bin/lua-format'
+
+    if os_detector.is_windows() then
+        lua_format_prog = lua_format_prog .. '.exe'
+    end
 
     local cmd = {lua_format_prog}
     table.insert(cmd, '--config=luaformatter.config')

@@ -129,7 +129,7 @@ packages-install "${PACKAGES[@]}" || echo "All system packages are installed alr
 
 
 # Install neovim python modules + plugin modules
-pip-install pynvim flake8 autopep8 isort jedi
+pip-install pynvim flake8 autopep8 isort jedi keyring
 
 NVIM=nvim
 if is-ubuntu; then

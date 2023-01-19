@@ -100,3 +100,8 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- python navigation
 vim.api.nvim_create_autocmd('FileType', {pattern = 'python', callback = require 'mappings.python'})
+
+-- jira
+vim.keymap.set('n', '<leader>j', function()
+    require'jira.jira'.init()
+end)

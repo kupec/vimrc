@@ -3,7 +3,7 @@ from pathlib import Path
 import requests
 from typing import Callable, TypeVar, Optional, List
 
-from download_file import fetch_file
+from .download_file import fetch_file
 
 T = TypeVar('T')
 

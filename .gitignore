@@ -1,2 +1,4 @@
 plugin/packer_compiled.lua
 neovim-gnome-terminal/
+__pycache__
+*.swp

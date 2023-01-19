@@ -22,7 +22,13 @@ function is-windows {
 
 function run-python {
     if is-windows; then
-        echo "$PYTHON3" "$@" | powershell -Command -
+	{
+		echo -n "$PYTHON3";
+		for arg in "$@"; do
+			echo -n " \"$arg\""
+		done;
+		echo;
+	} | powershell -command -
     else
         "$PYTHON3" "$@"
     fi;
@@ -129,7 +135,7 @@ packages-install "${PACKAGES[@]}" || echo "All system packages are installed alr
 
 
 # Install neovim python modules + plugin modules
-pip-install pynvim flake8 autopep8 isort jedi
+pip-install pynvim flake8 autopep8 isort jedi requests
 
 NVIM=nvim
 if is-ubuntu; then
@@ -155,10 +161,7 @@ elif is-windows; then
     packages-install neovim || echo "neovim package is up to date"
 fi
 
-run-python -c '
-from python.download_lua_format import download
-download()
-'
+run-python -c 'from python.download_lua_format import download; download()'
 
 NVIM_DATA_DIR=$("$NVIM" -u NONE --headless -c 'echo stdpath("data") | quitall' 2>&1)
 NVIM_PACKER="$NVIM_DATA_DIR/site/pack/packer/start/packer.nvim"

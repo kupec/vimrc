@@ -41,20 +41,6 @@ local servers = {
         end,
     },
     tsserver = {},
-    sumneko_lua = {
-        settings = {
-            Lua = {
-                runtime = {version = 'LuaJIT', path = vim.split(package.path, ';')},
-                diagnostics = {globals = {'vim'}},
-                workspace = {
-                    library = {
-                        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                    },
-                },
-            },
-        },
-    },
 }
 
 local default_lsp_opts = {on_attach = on_attach, flags = {debounce_text_changes = 150}}

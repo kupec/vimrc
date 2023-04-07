@@ -57,6 +57,7 @@ function E.show_file_lines(regexp_or_list)
                     ordinal = value[2],
                     path = vim.fn.expand('%'),
                     lnum = value[1],
+                    col = 1,
                 }
             end,
         },

@@ -14,7 +14,7 @@ function E.get_python_path(workspace)
 end
 
 local venv_variants = {
-    {'poetry.lock', 'poetry env info -p'},
+    {'poetry.lock', 'poetry env list --full-path'},
     {
         'Pipfile',
         function(match)
@@ -38,8 +38,11 @@ E.get_python_virtual_env = memoize(function(workspace)
         end
 
         local match = vim.fn.glob(path.join(workspace, key_file))
+        print(match)
         if match ~= '' then
             local cmd = get_venv_path_cmd(match)
+            print(cmd)
+            print(vim.fn.system(cmd))
             return vim.fn.trim(vim.fn.system(cmd))
         end
     end

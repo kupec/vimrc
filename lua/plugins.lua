@@ -1,10 +1,8 @@
 local packer = require 'packer'
-local luarocks = require 'packer.luarocks'
 
 local E = {}
 
 function E.init()
-    luarocks.setup_paths()
     E.prepare()
 end
 
@@ -20,7 +18,6 @@ end
 function E.prepare()
     vim.cmd [[packadd packer.nvim]]
 
-    packer.init {luarocks = {python_cmd = vim.g.python3_host_prog}}
     packer.startup(function(use, use_rocks)
         -- Packer itself
         use 'wbthomason/packer.nvim'
@@ -108,9 +105,6 @@ function E.prepare()
         -- snippets
         use 'SirVer/ultisnips'
         use 'honza/vim-snippets'
-
-        -- dev libs
-        use_rocks {'memoize'}
     end)
 end
 

@@ -1,4 +1,4 @@
-local memoize = require('memoize')
+local memoize = require('utils.memoize')
 local util = require('lspconfig/util')
 local path = util.path
 

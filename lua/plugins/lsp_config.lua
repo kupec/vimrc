@@ -1,6 +1,6 @@
 local on_attach = require('plugins.lsp_config_util').on_attach
 local python_paths = require 'paths.python'
-local util = require "lspconfig/util"
+local util = require 'lspconfig/util'
 
 local servers = {
     pyright = {
@@ -14,9 +14,7 @@ local servers = {
 }
 
 require('mason').setup()
-require('mason-lspconfig').setup {
-    ensure_installed = vim.tbl_keys(servers),
-}
+require('mason-lspconfig').setup {ensure_installed = vim.tbl_keys(servers)}
 
 local default_lsp_opts = {on_attach = on_attach, flags = {debounce_text_changes = 150}}
 

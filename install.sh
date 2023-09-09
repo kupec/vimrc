@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+### USAGE
+#
+# env-s:
+#   UPDATE=1 - force update pip packages, default - only check that some version of package is installed
+###
+
 # TODO: use `uname -o` to determine OS
 # TODO: add package manager checker
 
@@ -35,20 +41,24 @@ function run-python {
 }
 
 function pip-install {
-    if [[ -z "$PIP_LIST" ]]; then
-        PIP_LIST="$(run-python -m pip list 2>/dev/null)"
-    fi;
-
-    NOT_INSTALLED_PACKAGES=()
-    for package; do
-        if ! echo "$PIP_LIST" | grep "$package" >/dev/null; then
-            NOT_INSTALLED_PACKAGES+=("$package")
+    if [[ -n "$UPDATE" ]]; then
+        NOT_INSTALLED_PACKAGES=("$@")
+    else
+        if [[ -z "$PIP_LIST" ]]; then
+            PIP_LIST="$(run-python -m pip list 2>/dev/null)"
         fi;
-    done;
+
+        NOT_INSTALLED_PACKAGES=()
+        for package; do
+            if ! echo "$PIP_LIST" | grep "$package" >/dev/null; then
+                NOT_INSTALLED_PACKAGES+=("$package")
+            fi;
+        done;
+    fi;
 
     if [[ ${#NOT_INSTALLED_PACKAGES[@]} -gt 0 ]]; then
         echo "Installing python packages: ${NOT_INSTALLED_PACKAGES[@]}"
-        run-python -m pip install --user "${NOT_INSTALLED_PACKAGES[@]}"
+        run-python -m pip install --user "${NOT_INSTALLED_PACKAGES[@]}" ${UPDATE:+--upgrade}
     else
         echo "All python packages are installed already"
     fi;

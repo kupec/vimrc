@@ -26,8 +26,9 @@ function E.prepare()
         use 'wbthomason/packer.nvim'
 
         -- LSP
+        use 'williamboman/mason.nvim'
+        use 'williamboman/mason-lspconfig.nvim'
         use 'neovim/nvim-lspconfig'
-        use 'williamboman/nvim-lsp-installer'
 
         -- sudo
         use 'lambdalisue/suda.vim'
@@ -90,7 +91,7 @@ function E.prepare()
 
         -- git plugin
         use 'tpope/vim-fugitive'
-        use 'airblade/vim-gitgutter'
+        use {'airblade/vim-gitgutter', branch = 'main'}
 
         -- linter
         use 'w0rp/ale'

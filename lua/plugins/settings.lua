@@ -28,6 +28,9 @@ vim.g.windowswap_map_keys = 0
 -- vim-rainbow
 vim.g.rainbow_active = 1
 
+-- vim-livedown
+vim.g.livedown_autorun = 0
+
 -- python
 vim.g.python_highlight_all = 1
 

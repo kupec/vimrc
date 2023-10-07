@@ -51,7 +51,10 @@ def read_cache() -> dict:
 
 def write_cache(value: dict):
     json_data = json.dumps(value)
-    return get_cache_path().write_text(json_data)
+
+    cache_path = get_cache_path()
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    return cache_path.write_text(json_data)
 
 
 def get_exe_url() -> str:

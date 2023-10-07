@@ -1,4 +1,5 @@
 local mappings = require 'utils.mappings'
+local selection = require 'buffer.selection'
 local noremap = mappings.noremap
 local map = mappings.map
 
@@ -12,16 +13,26 @@ noremap('n', '<leader>ww', ':call WindowSwap#EasyWindowSwap()<CR>')
 noremap('n', '<tab>t', ':Telescope<CR>')
 noremap('n', '<tab>c', ':Telescope commands<CR>')
 noremap('n', '<CR><CR>', ':Telescope find_files hidden=true<CR>')
-noremap('n', '<space><tab>', ':Telescope grep_string<CR>')
 noremap('n', '<space><space>', ':Telescope live_grep<CR>')
+noremap('n', '<space>/', ':Telescope current_buffer_fuzzy_find<CR>')
+
+vim.keymap.set({'n', 'v'}, '<cr><tab>', function()
+    local text = selection.get_smart_selection()
+    require'telescope.builtin'.find_files({
+        search_file = text,
+        hidden = true,
+    })
+end)
+vim.keymap.set({'n', 'v'}, '<space><tab>', function()
+    local text = selection.get_smart_selection()
+    require'telescope.builtin'.grep_string({search = text})
+end)
 
 -- fzf
-noremap('n', '<CR><tab>', ':FZF -q <C-R><C-W><CR>')
-noremap('v', '<CR><tab>', '"wy:FZF -q <C-R>w<CR>')
 noremap('n', '<space><leader><space>', ':Rg<CR>')
 noremap('n', '<space><leader><tab>', ':Rg \\b<C-R><C-W>\\b<CR>')
 noremap('v', '<space><leader><tab>', '"wy:Rg <C-R>w<CR>')
-noremap('n', '<space>/', ':Lines<CR>')
+noremap('n', '<space><leader>/', ':Lines<CR>')
 
 map('i', '<c-\\><c-k>', '<plug>(fzf-complete-word)')
 map('i', '<c-\\><c-f>', '<plug>(fzf-complete-path)')

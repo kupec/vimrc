@@ -1,4 +1,5 @@
 local mappings = require 'utils.mappings'
+local selection = require 'buffer.selection'
 local noremap = mappings.noremap
 
 -- escape
@@ -22,8 +23,9 @@ noremap('n', '0', '^')
 noremap('i', '<C-\\><C-f><C-n>', '<C-R>=expand("%:t:r")<CR>')
 
 -- find on internet
-vim.keymap.set('n', '<leader>dd', function()
-    require'search.internet'.find_cword_on_any_site()
+vim.keymap.set({'n', 'v'}, '<leader>dd', function()
+    local text = selection.get_smart_selection()
+    require'search.internet'.find_text_on_any_site(text)
 end)
 
 -- vim config

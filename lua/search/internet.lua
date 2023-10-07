@@ -17,27 +17,15 @@ local internet_sources = {
     {'github', 'https://github.com/search?q=%s'},
 }
 
-function E.find_cword_on_site(site_fmt)
+function E.find_text_on_site(text, site_fmt)
     local cmd = vim.split(vim.g.netrw_browsex_viewer, '%s+')
 
-    local cword = vim.fn.expand '<cword>'
-    if #cword == 0 then
-        print('No word under the cursor')
-        return
-    end
-
-    table.insert(cmd, string.format(site_fmt, cword))
+    table.insert(cmd, string.format(site_fmt, text))
     vim.fn.system(cmd)
 end
 
-function E.find_cword_on_any_site(opts)
+function E.find_text_on_any_site(text, opts)
     opts = opts or themes.get_cursor()
-
-    local cword = vim.fn.expand '<cword>'
-    if #cword == 0 then
-        print('No word under the cursor')
-        return
-    end
 
     pickers.new(opts, {
         prompt_title = 'Select internet source',
@@ -53,7 +41,7 @@ function E.find_cword_on_any_site(opts)
             action_set.select:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
-                E.find_cword_on_site(selection.value)
+                E.find_text_on_site(text, selection.value)
             end)
             return true
         end,

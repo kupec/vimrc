@@ -10,7 +10,21 @@ local servers = {
         end,
     },
     tsserver = {},
-    lua_ls = {},
+    lua_ls = {
+        settings = {
+            Lua = {
+                runtime = {
+                    version = 'LuaJIT',
+                },
+                workspace = {
+                    checkThirdParty = false,
+                    library = {
+                      vim.env.VIMRUNTIME
+                    }
+                },
+            },
+        },
+    },
 }
 
 require('mason').setup()

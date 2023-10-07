@@ -1,0 +1,9 @@
+FROM ubuntu:20.04
+
+RUN apt update && \
+    apt install -y sudo libfuse2
+
+WORKDIR /root/.config/nvim
+COPY . .
+
+ENTRYPOINT ["bash", "tests/entrypoint.sh"]

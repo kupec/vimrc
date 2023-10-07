@@ -18,10 +18,7 @@ noremap('n', '<space>/', ':Telescope current_buffer_fuzzy_find<CR>')
 
 vim.keymap.set({'n', 'v'}, '<cr><tab>', function()
     local text = selection.get_smart_selection()
-    require'telescope.builtin'.find_files({
-        search_file = text,
-        hidden = true,
-    })
+    require'telescope.builtin'.find_files({search_file = text, hidden = true})
 end)
 vim.keymap.set({'n', 'v'}, '<space><tab>', function()
     local text = selection.get_smart_selection()

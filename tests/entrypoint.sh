@@ -2,5 +2,6 @@
 set -e
 export PATH="$PATH:$HOME/.local/bin"
 
-./install.sh
-./test.sh
+#./install.sh
+#./test.sh
+bash

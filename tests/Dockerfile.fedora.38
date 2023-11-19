@@ -1,0 +1,6 @@
+FROM fedora:38
+
+WORKDIR /root/.config/nvim
+COPY . .
+
+ENTRYPOINT ["bash", "tests/entrypoint.sh"]

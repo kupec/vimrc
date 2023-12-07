@@ -1,5 +1,6 @@
 local memoize = require('utils.memoize')
 local util = require('lspconfig/util')
+local exec = require('utils.exec')
 local path = util.path
 
 local E = {}
@@ -10,11 +11,12 @@ function E.get_python_path(workspace)
         return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
     end
 
+    print('Found python virtual env -', venv)
     return path.join(venv, 'bin', 'python')
 end
 
 local venv_variants = {
-    {'poetry.lock', 'poetry env list --full-path'},
+    {'poetry.lock', 'poetry env info -p'},
     {
         'Pipfile',
         function(match)
@@ -38,12 +40,18 @@ E.get_python_virtual_env = memoize(function(workspace)
         end
 
         local match = vim.fn.glob(path.join(workspace, key_file))
-        print(match)
         if match ~= '' then
             local cmd = get_venv_path_cmd(match)
-            print(cmd)
-            print(vim.fn.system(cmd))
-            return vim.fn.trim(vim.fn.system(cmd))
+            local result = exec.exec_sync(cmd)
+            if result.exit_code ~= 0 then
+                print(
+                    'Cannot find python because of cmd = <', cmd, '>',
+                    'returns code=', result.exit_code,
+                    'and stderr is ', result.stderr
+                )
+            end
+
+            return vim.fn.trim(result.stdout[1])
         end
     end
 end)

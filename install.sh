@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+
 ### USAGE
 #
 # env-s:
@@ -40,6 +42,14 @@ function run-python {
     fi;
 }
 
+function use-python-venv {
+    if [[ ! -d venv ]]; then
+        run-python -m venv "$SCRIPT_DIR/venv"
+    fi;
+
+    PYTHON3="$SCRIPT_DIR/venv/bin/python"
+}
+
 function pip-install {
     if [[ -n "$UPDATE" ]]; then
         NOT_INSTALLED_PACKAGES=("$@")
@@ -58,7 +68,7 @@ function pip-install {
 
     if [[ ${#NOT_INSTALLED_PACKAGES[@]} -gt 0 ]]; then
         echo "Installing python packages: ${NOT_INSTALLED_PACKAGES[@]}"
-        run-python -m pip install --user "${NOT_INSTALLED_PACKAGES[@]}" ${UPDATE:+--upgrade}
+        run-python -m pip install "${NOT_INSTALLED_PACKAGES[@]}" ${UPDATE:+--upgrade}
     else
         echo "All python packages are installed already"
     fi;
@@ -66,7 +76,7 @@ function pip-install {
 
 function check-package-installed {
     if is-ubuntu; then
-        dpkg-query -s "$1" >/dev/null;
+        dpkg-query -s "$1" >/dev/null 2>&1;
     elif is-macos; then
         if [[ -z "$BREW_LIST" ]]; then
             BREW_LIST="$(brew list)"
@@ -129,7 +139,7 @@ fi;
 PYTHON3=python3
 
 if is-ubuntu; then
-    PACKAGES+=(python3 python3-pip)
+    PACKAGES+=(python3 python3-pip python3-venv)
 else
     PACKAGES+=(python)
 fi;
@@ -143,7 +153,7 @@ fi;
 
 packages-install "${PACKAGES[@]}" || echo "All system packages are installed already"
 
-
+use-python-venv
 # Install neovim python modules + plugin modules
 pip-install pynvim flake8 autopep8 isort jedi requests
 

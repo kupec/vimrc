@@ -25,23 +25,4 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- python path
-local python_path_list = {
-    '/usr/local/bin/python3',
-    '/usr/local/bin/python',
-    '/usr/bin/python3',
-    '/usr/bin/python',
-    which('python3'),
-    which('python'),
-}
-for _, python_path in ipairs(python_path_list) do
-    local version
-    if pcall(function()
-        version = vim.trim(vim.fn.system({python_path, '-c', 'import sys;print(sys.version_info.major)'}))
-    end) then
-        if version == '3' then
-            vim.g.python3_host_prog = python_path
-            break
-        end
-    end
-end
+vim.g.python3_host_prog = vim.fn.stdpath('config') .. '/venv/bin/python'

@@ -47,7 +47,7 @@ E.get_python_virtual_env = memoize(function(workspace)
                 print(
                     'Cannot find python because of cmd = <', cmd, '>',
                     'returns code=', result.exit_code,
-                    'and stderr is ', result.stderr
+                    'and stderr is ', vim.inspect(result.stderr)
                 )
             end
 

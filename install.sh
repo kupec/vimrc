@@ -48,6 +48,11 @@ function use-python-venv {
     fi;
 
     PYTHON3="$SCRIPT_DIR/venv/bin/python"
+
+    if ! run-python -m pip --version >/dev/null; then
+        echo "Cannot find pip in venv. Please remove venv and rerun script"
+        exit 1;
+    fi;
 }
 
 function pip-install {

@@ -1,7 +1,5 @@
 local helpers = require 'autocmds_helpers'
 
-vim.api.nvim_create_autocmd('VimEnter', {command = 'colorscheme PaperColor'})
-
 -- check file changes on focus
 vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI'}, {
     callback = function()

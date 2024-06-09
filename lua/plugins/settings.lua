@@ -42,3 +42,13 @@ vim.g.UltiSnipsExpandTrigger = '<tab>'
 vim.g.UltiSnipsJumpForwardTrigger = '<c-b>'
 vim.g.UltiSnipsJumpBackwardTrigger = '<c-z>'
 vim.g.UltiSnipsEditSplit = 'vertical'
+
+
+-- theme
+require('vscode').setup({
+    italic_comments = true,
+    underline_links = true,
+    disable_nvimtree_bg = true,
+})
+require('vscode').load()
+vim.cmd.colorscheme "vscode"

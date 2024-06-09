@@ -94,7 +94,7 @@ function E.prepare()
         use 'w0rp/ale'
 
         -- color scheme
-        use 'NLKNguyen/papercolor-theme'
+        use 'Mofiqul/vscode.nvim'
 
         -- highlight
         use 'lfv89/vim-interestingwords'

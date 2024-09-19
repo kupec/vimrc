@@ -9,7 +9,7 @@ local servers = {
             client.config.settings.python.typeCheckingMode = 'strict'
         end,
     },
-    tsserver = {},
+    ts_ls = {},
     lua_ls = {
         settings = {
             Lua = {

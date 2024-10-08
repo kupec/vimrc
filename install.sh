@@ -175,6 +175,7 @@ download_linux_appimage()
         (
         git clone https://github.com/fmoralesc/neovim-gnome-terminal-wrapper.git neovim-gnome-terminal;
         cd neovim-gnome-terminal;
+        sed -i 's|Exec=.*|Exec=bash -c "source ~/.bashrc; nvim-wrapper %F"|' neovim.desktop
         sudo cp nvim-wrapper /usr/bin/nvim-wrapper;
         sudo cp neovim.desktop /usr/share/applications/neovim.desktop;
         sudo cp neovim.svg /usr/share/icons/neovim.svg;

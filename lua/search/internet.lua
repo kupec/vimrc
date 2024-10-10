@@ -15,6 +15,7 @@ local internet_sources = {
     {'python docs', 'https://docs.python.org/3/search.html?check_keywords=yes&area=default&q=%s'},
     {'pypi package', 'https://pypi.org/search/?q=%s'},
     {'github', 'https://github.com/search?q=%s'},
+    {'go docs', 'https://pkg.go.dev/search?q=%s'},
 }
 
 function E.find_text_on_site(text, site_fmt)

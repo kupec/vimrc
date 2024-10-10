@@ -102,3 +102,6 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- python navigation
 vim.api.nvim_create_autocmd('FileType', {pattern = 'python', callback = require 'mappings.python'})
+
+-- go navigation
+vim.api.nvim_create_autocmd('FileType', {pattern = 'go', callback = require 'mappings.go'})

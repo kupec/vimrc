@@ -13,6 +13,7 @@ noremap('n', '<leader>ww', ':call WindowSwap#EasyWindowSwap()<CR>')
 noremap('n', '<tab>t', ':Telescope<CR>')
 noremap('n', '<tab>c', ':Telescope commands<CR>')
 noremap('n', '<CR><CR>', ':Telescope find_files hidden=true<CR>')
+noremap('n', '<CR>b', ':Telescope buffers<CR>')
 noremap('n', '<space><space>', ':Telescope live_grep<CR>')
 noremap('n', '<space>/', ':Telescope current_buffer_fuzzy_find<CR>')
 

@@ -90,9 +90,6 @@ function E.prepare()
         use 'tpope/vim-fugitive'
         use {'airblade/vim-gitgutter', branch = 'main'}
 
-        -- linter
-        use 'w0rp/ale'
-
         -- color scheme
         use 'Mofiqul/vscode.nvim'
 

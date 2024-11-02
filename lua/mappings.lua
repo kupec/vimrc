@@ -65,6 +65,13 @@ vim.keymap.set('n', '<leader>ol', function()
 end)
 noremap('n', '<leader>oc', ':tabc<CR>')
 
+-- autoformatter
+vim.keymap.set('n', '<leader>P', function()
+    vim.cmd('w')
+    vim.fn.system('yarn format')
+    vim.cmd('e!')
+end)
+
 -- js import
 vim.keymap.set('n', '<leader>ijf', function()
     require'import.js'.import_js_file()

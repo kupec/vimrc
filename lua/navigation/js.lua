@@ -3,7 +3,7 @@ local utils = require 'navigation.utils'
 local E = {}
 
 function E.find_oneline_test_lines()
-    return utils.find_lines_by_regexp('\\v^\\s*(describe|test|it)\\(')
+    return utils.find_lines_by_regexp('\\v^\\s*(describe|test|it).*\'')
 end
 
 function E.find_multiline_test_each_lines()

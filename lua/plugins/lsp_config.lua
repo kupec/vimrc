@@ -13,15 +13,8 @@ local servers = {
     lua_ls = {
         settings = {
             Lua = {
-                runtime = {
-                    version = 'LuaJIT',
-                },
-                workspace = {
-                    checkThirdParty = false,
-                    library = {
-                      vim.env.VIMRUNTIME
-                    }
-                },
+                runtime = {version = 'LuaJIT'},
+                workspace = {checkThirdParty = false, library = {vim.env.VIMRUNTIME}},
             },
         },
     },

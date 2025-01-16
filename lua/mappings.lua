@@ -112,3 +112,11 @@ vim.api.nvim_create_autocmd('FileType', {pattern = 'python', callback = require 
 
 -- go navigation
 vim.api.nvim_create_autocmd('FileType', {pattern = 'go', callback = require 'mappings.go'})
+
+-- git
+vim.api.nvim_create_user_command('MergetoolLocal', function(opts)
+    require'git.mergetool'.show_local_diff()
+end, {})
+vim.api.nvim_create_user_command('MergetoolRemote', function(opts)
+    require'git.mergetool'.show_remote_diff()
+end, {})

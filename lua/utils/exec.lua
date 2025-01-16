@@ -8,10 +8,10 @@ function E.exec_sync(cmd, opts)
     local job = vim.fn.jobstart(cmd, {
         stdout_buffered = true,
         stderr_buffered = true,
-        on_stdout = function (_, s)
+        on_stdout = function(_, s)
             stdout = s
         end,
-        on_stderr = function (_, s)
+        on_stderr = function(_, s)
             stderr = s
         end,
     })
@@ -27,11 +27,7 @@ function E.exec_sync(cmd, opts)
         error('Timeout in jobwait or something else, cmd = ', vim.inspect(cmd))
     end
 
-    return {
-        exit_code = exit_code,
-        stdout = stdout,
-        stderr = stderr,
-    }
+    return {exit_code = exit_code, stdout = stdout, stderr = stderr}
 end
 
 return E

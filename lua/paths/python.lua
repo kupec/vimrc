@@ -44,11 +44,8 @@ E.get_python_virtual_env = memoize(function(workspace)
             local cmd = get_venv_path_cmd(match)
             local result = exec.exec_sync(cmd)
             if result.exit_code ~= 0 then
-                print(
-                    'Cannot find python because of cmd = <', cmd, '>',
-                    'returns code=', result.exit_code,
-                    'and stderr is ', vim.inspect(result.stderr)
-                )
+                print('Cannot find python because of cmd = <', cmd, '>', 'returns code=', result.exit_code,
+                      'and stderr is ', vim.inspect(result.stderr))
             end
 
             return vim.fn.trim(result.stdout[1])

@@ -60,7 +60,7 @@ def fetch_last_version() -> str:
 
 def fetch_linux_appimage_file():
     fetch_file(
-        url='https://github.com/neovim/neovim/releases/download/stable/nvim.appimage',
+        url='https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage',
         path=get_exe_path(),
         mode=0o755,
     )

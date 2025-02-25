@@ -132,3 +132,9 @@ end, {})
 vim.api.nvim_create_user_command('MergetoolRemote', function(opts)
     require'git.mergetool'.show_remote_diff()
 end, {})
+
+-- git navigation
+vim.keymap.set('n', '<leader>og', function()
+    local git = require 'search.git'
+    git.select_git_commit()
+end)

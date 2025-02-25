@@ -22,6 +22,17 @@ noremap('n', '0', '^')
 -- paste current filename
 noremap('i', '<C-\\><C-f><C-n>', '<C-R>=expand("%:t:r")<CR>')
 
+-- copy current filename/path/line
+vim.api.nvim_create_user_command('CopyFileName', function(opts)
+    vim.fn.setreg('+', vim.fn.expand('%:t'))
+end, {})
+vim.api.nvim_create_user_command('CopyFilePath', function(opts)
+    vim.fn.setreg('+', vim.fn.expand('%'))
+end, {})
+vim.api.nvim_create_user_command('CopyFilePathWithLine', function(opts)
+    vim.fn.setreg('+', vim.fn.expand('%') .. ':' .. vim.fn.line('.'))
+end, {})
+
 -- find on internet
 vim.keymap.set({'n', 'v'}, '<leader>dd', function()
     local text = selection.get_smart_selection()
@@ -29,6 +40,7 @@ vim.keymap.set({'n', 'v'}, '<leader>dd', function()
 end)
 
 -- vim config
+--
 noremap('n', '<leader>rcl', ':so $MYVIMRC<CR>')
 vim.keymap.set('n', '<leader>rco', function()
     require'search.project'.open_project_in_new_tab(vim.fn.stdpath('config'))

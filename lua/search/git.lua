@@ -68,7 +68,7 @@ function E.select_git_commit(opts)
     opts.entry_maker = make_entry.gen_from_git_commits(opts)
     opts.maximum_results = 10000
 
-    local git_command = {'git', 'log', '--oneline', '--decorate'}
+    local git_command = {'git', 'log', '--oneline', '--decorate', '--all'}
 
     pickers.new(opts, {
         prompt_title = 'Git commits',

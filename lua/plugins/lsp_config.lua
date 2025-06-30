@@ -18,6 +18,7 @@ local servers = {
             },
         },
     },
+    clangd = {},
 }
 
 require('mason').setup()

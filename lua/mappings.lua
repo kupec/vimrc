@@ -138,3 +138,7 @@ vim.keymap.set('n', '<leader>og', function()
     local git = require 'search.git'
     git.select_git_commit()
 end)
+vim.api.nvim_create_user_command('FindFileInCommit', function(opts)
+    local git = require 'search.git'
+    git.select_file_in_commit(opts.args)
+end, {nargs = 1})

@@ -28,5 +28,6 @@ local default_lsp_opts = {on_attach = on_attach, flags = {debounce_text_changes 
 
 for lsp, lsp_opts in pairs(servers) do
     local opts = vim.tbl_extend('force', default_lsp_opts, lsp_opts)
-    require('lspconfig')[lsp].setup(opts)
+    vim.lsp.config[lsp] = opts
+    vim.lsp.enable(lsp)
 end
